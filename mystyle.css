@@ -8,6 +8,7 @@ header{
 header img{
     height: 7vw;
     padding: 0%;
+    cursor: pointer;
 }
 
 header p{
@@ -17,10 +18,19 @@ header p{
     border: 0;
     border-radius: 17% / 40%;
     text-align: center;
-    margin-top: 3%;
+    margin-top: 2.1%;
     margin-right: 2%;
     padding: 0.6%;
     padding-left: 2.3%;
     padding-right: 2.3%;
     border: solid rgb(196 61 20) ;
+    font-size: 1.2vw;
+    user-select: none;
+    cursor: pointer;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+header p:hover{
+    background-color: rgb(196 61 20);
+    
 }
