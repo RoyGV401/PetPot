@@ -41,7 +41,7 @@ nav{
     display: block;
     width: 100%;
     overflow: hidden;
-
+    max-height: max-content;
 }
 
 ul{
@@ -73,3 +73,9 @@ li a{
     cursor: pointer;
     font-size: 2vmin;
 }
+
+ @media (max-width:  759.2px){
+    li a{
+        margin-left: 0.01%;
+      }
+  }
