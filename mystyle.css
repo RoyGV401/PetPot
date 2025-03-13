@@ -18,20 +18,20 @@ header p{
     border: 0;
     border-radius: 3vw / 3.5vw;
     text-align: center;
-    margin-top: 2vmax;
+    margin-top: 2%;
     margin-right: 2%;
-    padding: 0.6%;
-    
-    margin-bottom: 0%;
-    padding-left: 2.3vmax;
-    padding-right: 2.3vmax;
+    padding: 4px;
+    margin-bottom: 1.002%;
+    padding-left: 3vmax;
+       padding-right: 3vmax;
+    display: flex;
+    align-items: center;
     border: solid rgb(196 61 20) ;
-    font-size: 1.2vmax;
     user-select: none;
     cursor: pointer;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    height: 2vw;
-    font-size: 2vmin;
+    height: 30%;
+    font-size: 2.5vmin;
     box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.5);
 }
 
@@ -111,7 +111,7 @@ li a{
         height: 7vmax;
     }
     header p{
-        font-size: small;
+        
         height: 35%;
         
     }
