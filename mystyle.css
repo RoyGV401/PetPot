@@ -47,21 +47,13 @@ nav{
 ul{
     float: right;
     padding: 20px;
-
     border-top: 0;
     list-style-type: none;
-
-
     margin: 0;
-    
-    
-
 }
 
 li{
-
    float: left;
- 
 }
 
 li a{
@@ -74,8 +66,32 @@ li a{
     font-size: 2vmin;
 }
 
+.menu{
+    display: none;
+    margin-left:3vmax;
+    padding-left: 2vmax;
+    padding-top: 1.1%;
+    color: aliceblue;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    font-size: 2vmin;
+    float: right;
+
+}
+
+
+
  @media (max-width:  759.2px){
     li a{
         margin-left: 0.01%;
       }
+  }
+
+  @media(max-width:   511px){
+    li a{
+        display: none;
+    }
+    .menu{
+        display: block;
+    }
   }
