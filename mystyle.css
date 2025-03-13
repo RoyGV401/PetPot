@@ -47,11 +47,12 @@ nav{
     width: 100%;
     overflow: hidden;
     max-height: max-content;
+   
 }
 
 ul{
     float: right;
-    padding: 20px;
+    padding: 13px;
     border-top: 0;
     list-style-type: none;
     margin: 0;
@@ -69,7 +70,7 @@ li a{
     color: aliceblue;
     text-shadow: 0px 3px 5px rgba(0, 0, 0, 0.5);
     cursor: pointer;
-    font-size: 2vmin;
+    font-size: 2.6vmin;
 }
 
 .menu{
@@ -80,15 +81,25 @@ li a{
     color: aliceblue;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
     cursor: pointer;
-    font-size: 2vmax;
+    font-size: 15px;
     float: right;
 }
 
+section p{
+    text-align: center;
+    color: aliceblue;
+    font-size: 3vmax;
+    margin-top: 0vmax;
+    margin-bottom: 1vmax;
+    background-color: rgb(242 93 13);
+    padding: 1.2vw;
+}
 
 
- @media (max-width:  759.2px){
+ @media (max-width:   947px){
     li a{
         margin-left: 0.01%;
+        font-size: 2.4vmin;
       }
       header p{
        height: 30%;
@@ -97,7 +108,7 @@ li a{
       }
   }
 
-  @media(max-width:   600px){
+  @media(max-width:   677px){
     li a{
         display: none;
     }
