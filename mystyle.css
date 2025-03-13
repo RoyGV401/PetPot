@@ -34,3 +34,42 @@ header p:hover{
     background-color: rgb(196 61 20);
     
 }
+
+nav{
+    background-color: rgb(245 133 73);
+    border-top: 0;
+    display: block;
+    width: 100%;
+    overflow: hidden;
+
+}
+
+ul{
+    float: right;
+    padding: 20px;
+
+    border-top: 0;
+    list-style-type: none;
+
+
+    margin: 0;
+    
+    
+
+}
+
+li{
+
+   float: left;
+ 
+}
+
+li a{
+    margin-left:3vmax;
+    padding-left: 2vmax;
+    padding-top: 0%;
+    color: aliceblue;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    font-size: 2vmin;
+}
