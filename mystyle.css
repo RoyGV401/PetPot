@@ -204,3 +204,15 @@ body{
         height: 35%;
     }
   }
+
+
+.main_div
+{
+    margin-top: 0;
+    background-color: rgb(253 236 220);
+    width: 90%;
+    height: 100vh;
+    border-radius: 2vh;
+    margin-left: auto;
+    margin-right: auto;
+}
