@@ -3,6 +3,7 @@ header{
     height: 7vw;
     padding: 0%;
     border: 0;
+    margin-top: 0%;
 }
 
 header img{
@@ -105,6 +106,40 @@ section p{
     margin-bottom: 1vmax;
     background-color: rgb(242 93 13);
     padding: 1.2vw;
+    padding-bottom: 2vw;
+}
+
+
+
+#buscar_div{
+    position: absolute;
+    top: 15.6vmax;
+    background-color: rgb(255 255 255);
+    left: 23vmax;
+    display: flex;
+    border-radius: 2vw / 2vw;
+    padding: 1vw;
+
+
+
+    
+}
+
+#buscar_div form input{
+    width: 50vw;
+    border: 0cap;
+    
+}
+
+#buscar_div img{
+    width: 20px;
+    float: right;
+}
+
+body{
+    background-color: rgb(242 166 90);
+    margin: 0;
+    padding: 0;
 }
 
 
