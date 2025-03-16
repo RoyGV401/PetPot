@@ -93,33 +93,74 @@ li a{
     float: right;
 }
 
+#access_button_th
+{
+    padding-top: 1%;
+    padding-bottom: 2%;
+    text-align: right;
+    padding-right: 1%;
+    width: 100%;
+}
+
+.main_button{
+    font-weight: bold;
+    text-align: center;
+    color: aliceblue;
+    width: 15%;
+    height: 8vmin;
+    max-height: fit-content;
+    min-width: 80px;
+    min-height: 25px;
+    border-radius: 10px;
+    font-size: 1.3vmax;
+    border-style: hidden;
+    background-color: rgb(242 93 13);
+    padding: 0.4vw;
+}
+
 section p{
     text-align: center;
     color: aliceblue;
+    min-height: 40px;
     font-size: 3vmax;
     margin-top: 0vmax;
     margin-bottom: 1vmax;
-    background-color: rgb(242 93 13);
+    background-color: rgb(255, 89, 0);
     padding: 1.2vw;
     padding-bottom: 2vw;
 }
 
 #buscar_div{
-    position: absolute;
-    top: 15.6vmax;
+    width: 60%;
+    position: relative;
+
+    top: -9vmin; /* Ajusta este valor según sea necesario */
+    left: 30%;
+    right: 30%;
+    transform: translate(-50%, 50%);
+    margin-left: auto;
+    margin-right: auto;
     background-color: rgb(255 255 255);
-    left: 23vmax;
-    display: flex;
     border-radius: 2vw / 2vw;
     padding: 1vw;
 }
 
+
 #buscar_div form input{
-    width: 50vw;
+    border-style: hidden;
     border: 0cap; 
+    width: 100%;
+}
+
+
+#search_bar
+{
+    width: 70vw;
 }
 
 #buscar_div img{
+    margin-left: 1vw; 
+    margin-right: 0px;
     width: 20px;
     float: right;
 }
