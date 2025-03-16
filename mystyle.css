@@ -18,31 +18,9 @@ header img{
     cursor: pointer;
 }
 
-header p{
-    float: right;
-    background-color: rgb(245 76 25);
-    color: aliceblue;
-    border: 0;
-    border-radius: 3vw / 3.5vw;
-    text-align: center;
-    margin-top: 2%;
-    margin-right: 2%;
-    padding: 4px;
-    margin-bottom: 1.002%;
-    padding-left: 3vmax;
-    padding-right: 3vmax;
-    display: flex;
-    align-items: center;
-    border: solid rgb(196 61 20) ;
-    user-select: none;
-    cursor: pointer;
-    height: 30%;
-    font-size: 2.5vmin;
-    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.5);
-}
-
-header p:hover{
+header button:hover{
     background-color: rgb(196 61 20);
+    cursor: pointer;
 }
 
 nav{
