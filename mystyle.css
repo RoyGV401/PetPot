@@ -133,8 +133,7 @@ section p{
 #buscar_div{
     width: 60%;
     position: relative;
-
-    top: -9vmin; /* Ajusta este valor según sea necesario */
+    top: -4vmax; 
     left: 30%;
     right: 30%;
     transform: translate(-50%, 50%);
