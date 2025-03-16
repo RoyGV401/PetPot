@@ -1,3 +1,9 @@
+head,body
+{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}
+
 header{
     background-color: rgb(253 236 220);
     height: 7vw;
@@ -30,7 +36,6 @@ header p{
     border: solid rgb(196 61 20) ;
     user-select: none;
     cursor: pointer;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     height: 30%;
     font-size: 2.5vmin;
     box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.5);
@@ -78,7 +83,7 @@ li a{
     color: aliceblue;
     text-shadow: 0px 3px 5px rgba(0, 0, 0, 0.5);
     cursor: pointer;
-    font-size: 2.6vmin;
+    font-size: 2.0vh;
 }
 
 .menu{
