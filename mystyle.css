@@ -108,9 +108,20 @@ section p{
     font-size: 3vmax;
     margin-top: 0vmax;
     margin-bottom: 1vmax;
-    background-color: rgb(255, 89, 0);
     padding: 1.2vw;
     padding-bottom: 2vw;
+}
+
+section{
+    display: flex;
+    background-color: rgb(255, 89, 0);
+    align-items: center;
+    justify-content: center;
+}
+
+section img{
+    width: 3.7vmax;
+    margin-bottom: 30px;
 }
 
 #buscar_div{
