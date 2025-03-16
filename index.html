@@ -1,77 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Petpot</title>
     <script src="javas.js"></script>
     <link
-    rel="icon"
-    type="image/png"
-    sizes="32x32"
-    href="favicon.png"
-    data-href-light="favicon-32x32.png"
-    data-href-dark="favicon-32x32-dark.png"
-    >
-<link rel="stylesheet" href="mystyle.css">
-   
-
-</head>
-<body>
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="favicon.png"
+      data-href-light="favicon-32x32.png"
+      data-href-dark="favicon-32x32-dark.png"
+    />
+    <link rel="stylesheet" href="mystyle.css" />
+  </head>
+  <body>
     <header>
-        <table>
-           <tr>
-            <th>
-                <img src="logo.png" alt="logo">
-            </th>
-            <th id="access_button_th">
-                <button class="main_button">Acceder</button>
-            </th>
-           </tr>
-        </table>
+      <table>
+        <tr>
+          <th>
+            <img src="logo.png" alt="logo" />
+          </th>
+          <th id="access_button_th">
+            <button class="main_button">Acceder</button>
+          </th>
+        </tr>
+      </table>
     </header>
-    
 
     <nav>
-        <ul>
-            <li><a>Busqueda por ubicación</a></li>
-            <li><a>Soy rescatista</a></li>
-            <li><a>Busco Adoptar</a></li>
-            <li><a>Quiero Ayudar</a></li>
-            <li><a>¿Quiénes Somos?</a></li>
-        </ul>
-        <p class="menu">Menú</p>
+      <ul>
+        <li><a>Busqueda por ubicación</a></li>
+        <li><a>Soy rescatista</a></li>
+        <li><a>Busco Adoptar</a></li>
+        <li><a>Quiero Ayudar</a></li>
+        <li><a>¿Quiénes Somos?</a></li>
+      </ul>
+      <p class="menu">Menú</p>
     </nav>
 
     <section>
-        <p>Encuentra tu mascota ideal hoy</p>
+      <p>Encuentra tu mascota ideal hoy</p>
     </section>
 
     <div id="buscar_div">
-        <table>
-            <tr>
-                <th id="search_bar">
-                    <form action="">
-                        <input type="text" placeholder="Palabras clave (tranquilo, alegre, inteligente, etc...)">
-                    </form>
-                </th>
-                <th>
-                    <img src="lupa.png">
-                </th>
-            </tr>
-        </table>
+      <table>
+        <tr>
+          <th id="search_bar">
+            <form action="">
+              <input
+                type="text"
+                placeholder="Palabras clave (tranquilo, alegre, inteligente, etc...)"
+              />
+            </form>
+          </th>
+          <th>
+            <img src="lupa.png" />
+          </th>
+        </tr>
+      </table>
     </div>
 
     <div class="main_div">
-        <div class="main_div">
-            <br>
-            <div class="sub_div">
-                <img class="contained_image" src="resources/landing_kittens_darkened.jpg">
-                <h1 class="over_image_text">¡Encuentra a tu nuevo mejor amigo!</h1>
-            </div>
-        </div>    
+      <div class="main_div">
+        <br />
+        <div class="sub_div">
+          <div class="module mid">
+            <h2>¡Encuentra a tu nuevo mejor amigo!</h2>
+          </div>
+        </div>
+        <h2 class="big_title">Explora mascotas cerca de ti</h2>
+        <div id="bottom_buttons" class="auto_margin">
+            <table>
+                <tr>
+                    <th>
+                        <button class="main_button" id="checkCats"><img src="resources/cat_logo_white.png"><p>Gatos</p></button>
+                    </th>
+                    <th>
+                        <button class="main_button" id="checkDogs"><img src="resources/dog_logo_white.png"><p>Perros</p></button>
+                    </th>
+                    <th>
+                        <button class="main_button" id="checkOthers"><img src="resources/turtle_logo_white.png"><p>Otros</p></button>
+                    </th>
+                   
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <button class="main_button" id="whyAdopt">¿Porqué debería adoptar?</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+      </div>
     </div>
-
-
-</body>
+  </body>
 </html>

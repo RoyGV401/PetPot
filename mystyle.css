@@ -18,7 +18,7 @@ header img{
     cursor: pointer;
 }
 
-header button:hover{
+.main_button:hover{
     background-color: rgb(196 61 20);
     cursor: pointer;
 }
@@ -120,8 +120,8 @@ section{
 }
 
 section img{
-    width: 3.5vmax;
-    margin-bottom: 2.5vmax;
+    width: 3.7vmax;
+    margin-bottom: 30px;
 }
 
 #buscar_div{
@@ -207,6 +207,7 @@ aside{
     margin-top: 0;
     background-color: rgb(253 236 220);
     width: 90%;
+    height: 2000px;
     padding-bottom: 2vh;
     border-radius: 2vh;
     margin-left: auto;
@@ -221,15 +222,102 @@ aside{
     padding: 0.5%;
     height: 40vh;
     border-radius: 2vh;
+    padding-bottom: 0;
     margin-left: auto;
     margin-right: auto;
 }
 
-.contained_image
+.module 
 {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 2vh;
+    background: 
+      linear-gradient(
+        rgba(0, 0, 0, 0.6),
+        rgba(0, 0, 0, 0.6)
+      ),
+      url('resources/landing_kittens.jpg');
+    background-size: cover;
+    background-position: vmax;
+    align-items: center;
+    border-radius: 1vh;
+    width: 97%;
+    height: 90%;
+    margin: 10px 0 0 10px;
+    position: relative;
+    float: left;
+}
+  
+.mid h2 
+{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 900;
+    color: white;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 0;
+    position: absolute;
+    width: 95%;
+    top: 50%;
+    left: 50%;
+    font-size: 3.3vmax;
+    transform: translate(-50%, -50%);
 }
 
+.big_title
+{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 900;
+    color: rgb(242 93 13);;
+    text-transform: uppercase ;
+    text-align: center;
+    width: 95%;
+    font-size: 3.3vmax;
+}
+
+.auto_margin
+{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+#bottom_buttons .main_button
+{
+    width: 10vw;
+    min-height: 160px;
+    min-width: 100%;
+    max-height: 100%;
+    height: 22vh;
+}
+
+#bottom_buttons table,th
+{
+    padding: 0.4vh
+}
+
+#bottom_buttons table
+{
+   text-align: center;
+   margin-left: auto;
+   margin-right: auto;
+   align-self: center;
+}
+
+#bottom_buttons .main_button p
+{
+    font-size: 3vh;
+}
+
+#bottom_buttons .main_button img
+{
+    height: 5vmax;
+    width: 5vmax;
+}
+
+
+#bottom_buttons #whyAdopt
+{
+    width: 100%;
+    padding: 10vmin;
+    font-size: 3vh;
+    background-color: #8E4F94;
+}
