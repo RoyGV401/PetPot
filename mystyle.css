@@ -164,6 +164,13 @@ body{
     padding: 0;
 }
 
+aside{
+    background-color: white;
+    width: 17.5vw;
+    margin-left: 3vw;
+    
+}
+
 @media (max-width:   947px){
     li a{
         margin-left: 0.01%;
