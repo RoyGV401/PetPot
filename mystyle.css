@@ -24,7 +24,7 @@ header p{
     padding: 4px;
     margin-bottom: 1.002%;
     padding-left: 3vmax;
-       padding-right: 3vmax;
+    padding-right: 3vmax;
     display: flex;
     align-items: center;
     border: solid rgb(196 61 20) ;
@@ -38,18 +38,15 @@ header p{
 
 header p:hover{
     background-color: rgb(196 61 20);
-    
 }
 
 nav{
     background-color: rgb(245 133 73);
-    
     border-top: 0;
     display: block;
     width: 100%;
     overflow: hidden;
     max-height: max-content;
-   
 }
 
 nav li a:hover{
@@ -84,8 +81,6 @@ li a{
     font-size: 2.6vmin;
 }
 
-
-
 .menu{
     display: none;
     margin-left:3vmax;
@@ -109,8 +104,6 @@ section p{
     padding-bottom: 2vw;
 }
 
-
-
 #buscar_div{
     position: absolute;
     top: 15.6vmax;
@@ -119,16 +112,11 @@ section p{
     display: flex;
     border-radius: 2vw / 2vw;
     padding: 1vw;
-
-
-
-    
 }
 
 #buscar_div form input{
     width: 50vw;
-    border: 0cap;
-    
+    border: 0cap; 
 }
 
 #buscar_div img{
@@ -142,8 +130,7 @@ body{
     padding: 0;
 }
 
-
- @media (max-width:   947px){
+@media (max-width:   947px){
     li a{
         margin-left: 0.01%;
         font-size: 2.4vmin;
@@ -153,9 +140,9 @@ body{
        padding-left: 3vmax;
        padding-right: 3vmax;
       }
-  }
+}
 
-  @media(max-width:   677px){
+@media(max-width:   677px){
     li a{
         display: none;
     }
@@ -169,8 +156,6 @@ body{
         height: 7vmax;
     }
     header p{
-        
         height: 35%;
-        
     }
   }
