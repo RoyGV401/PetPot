@@ -200,8 +200,7 @@ body{
     margin-top: 0;
     background-color: rgb(253 236 220);
     width: 90%;
-    
-    height: 100vh;
+    padding-bottom: 2vh;
     border-radius: 2vh;
     margin-left: auto;
     margin-right: auto;
@@ -210,11 +209,10 @@ body{
 
 .sub_div
 {
-
     background-color: rgb(255, 255, 255);
     width: 100%;
     padding: 0.5%;
-    height: 50vh;
+    height: 40vh;
     border-radius: 2vh;
     margin-left: auto;
     margin-right: auto;
@@ -227,3 +225,4 @@ body{
     object-fit: cover;
     border-radius: 2vh;
 }
+
