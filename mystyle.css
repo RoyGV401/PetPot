@@ -178,15 +178,18 @@ aside{
     margin-left: 3vw;
     padding: 1v1;
     border-radius: 1.5vh;
-    height: 30vw;
+    height: max-content;
+    margin-right: 6vw;
+    margin-top: 2.5vw;
     
 }
 
 aside p{
     margin-top: 1vw;
     margin-left: 0.5vw;
-    padding-top: 1vw;
-   
+    padding-top: 0vw;
+    font-size: 1vw;
+    
 
 }
 
@@ -207,11 +210,6 @@ aside p{
     margin-left: 0.5vw;
     margin-top: 0.3vw;
     font-size: 1vmax;
-}
-
-aside p{
-    font-size: 1vw;
-    
 }
 
 .div_aside{
@@ -266,6 +264,38 @@ aside p{
     border-radius: 2vh;
     margin-left: auto;
     margin-right: auto;
+    display: flex;
+}
+
+#div_perro{
+    background-color: white;
+    margin-top: 2.5vw;
+    padding-top: 0%;
+    width: fit-content;
+    border-radius: 8px;
+}
+
+#div_perro img{
+    margin: 1vw;
+    width: 25vw;
+    border-radius: 4px;
+}
+
+#div_perro h1{
+    margin-left: 1vw;
+    margin-top: 0;
+    margin-bottom: 0%;
+}
+
+#div_perro hr{
+    margin-left: 1vw;
+    margin-right: 1vw;
+    margin-top: 0%;
+    margin-bottom: 1vw;
+    color: rgb(190 189 203) ;
+    height: 1px;
+    border-width: 0cap;
+    background-color: rgb(190 189 203);
 }
 
 

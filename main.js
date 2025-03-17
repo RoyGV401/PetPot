@@ -30,3 +30,24 @@ window.onload = function() {
     location.href = `index.html`;
   };
 }
+
+
+
+window.onload = function listar_perros(){
+  let dmain = document.getElementById("main_div");
+  let perros= [
+    {name: "Dogi", raza: "Mestizo", Tamano: "Grande", personalidad: "Tranquilo", img: "prueba1.png"},
+    {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "prueba2.png"},
+  ];
+
+  let cuadro = document.createElement("div");
+  cuadro.id = "div_perro";
+
+  cuadro.innerHTML = `
+    <img src = "${perros[1].img}">
+    <h1>${perros[1].name}</h1>
+    <hr>
+  `;
+  
+  dmain.appendChild(cuadro);
+}
