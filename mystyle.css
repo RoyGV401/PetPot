@@ -18,6 +18,14 @@ header img{
     cursor: pointer;
 }
 
+#img_logo_section
+{
+    min-width: 30px;
+    width: 4vmax;
+    padding: 1vmax;
+}
+
+
 .main_button:hover{
     background-color: rgb(196 61 20);
     cursor: pointer;

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Petpot</title>
-    <script src="javas.js"></script>
+    <script src="main.js"></script>
     <link
       rel="icon"
       type="image/png"
@@ -20,7 +20,7 @@
       <table>
         <tr>
           <th>
-            <img src="logo.png" alt="logo" />
+            <img id="main_logo" src="logo.png" alt="logo" />
           </th>
           <th id="access_button_th">
             <button class="main_button">Acceder</button>
@@ -75,10 +75,10 @@
             <table>
                 <tr>
                     <th>
-                        <button class="main_button" id="checkCats"><img src="resources/cat_logo_white.png"><p>Gatos</p></button>
+                        <button class="main_button" id="checkCats" onclick="changeTo('gatos')"><img src="resources/cat_logo_white.png"><p>Gatos</p></button>
                     </th>
                     <th>
-                        <button class="main_button" id="checkDogs"><img src="resources/dog_logo_white.png"><p>Perros</p></button>
+                        <button class="main_button" id="checkDogs" onclick="changeTo('perros')"><img src="resources/dog_logo_white.png"><p>Perros</p></button>
                     </th>
                     <th>
                         <button class="main_button" id="checkOthers"><img src="resources/turtle_logo_white.png"><p>Otros</p></button>
