@@ -264,7 +264,18 @@ aside p{
     border-radius: 2vh;
     margin-left: auto;
     margin-right: auto;
+}
+
+.main_div_perros{
     display: flex;
+    margin-top: 0;
+    background-color: rgb(253 236 220);
+    width: 90%;
+    height: 2000px;
+    padding-bottom: 2vh;
+    border-radius: 2vh;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #div_perro{
