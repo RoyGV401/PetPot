@@ -168,7 +168,53 @@ aside{
     background-color: white;
     width: 17.5vw;
     margin-left: 3vw;
+    padding: 1v1;
+    border-radius: 1.5vh;
+    height: 30vw;
     
+}
+
+aside p{
+    margin-top: 1vw;
+    margin-left: 0.5vw;
+    padding-top: 1vw;
+   
+
+}
+
+.aside_titulo{
+    font-size: 1.3vmax;
+    font-weight: bolder;
+}
+
+.radio_aside{
+    margin-left: 2vw;
+    display: flex;
+    accent-color: rgb(242 166 90);
+}
+
+.radio_aside_p{
+    margin: 0%;
+    padding: 0%;
+    margin-left: 0.5vw;
+    margin-top: 0.3vw;
+    font-size: 1vmax;
+}
+
+aside p{
+    font-size: 1vw;
+    
+}
+
+.div_aside{
+    display: flex;
+    align-items: center;
+    align-content: center;
+}
+
+.range_aside{
+    margin-left: 0.5vw;
+    accent-color: rgb(242 166 90);
 }
 
 @media (max-width:   947px){
