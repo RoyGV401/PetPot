@@ -179,7 +179,7 @@ aside{
     padding: 1v1;
     border-radius: 1.5vh;
     height: max-content;
-    margin-right: 6vw;
+    margin-right: 3vw;
     margin-top: 2.5vw;
     
 }
@@ -278,12 +278,54 @@ aside p{
     margin-right: auto;
 }
 
+.flexer{
+    display: flex;
+    align-items: center;
+    align-content: center;
+    margin-bottom: 0.5vw;
+}
+
+.flexer h6{
+    margin: 0%;
+    font-size: 1vw;
+    font-weight: normal;
+    margin-top: 0.18vw;
+    margin-left: 0.5vw;
+}
+.flexer h2{
+    font-weight: 500;
+    font-size: 1.3vw;
+}
+
+.perso{
+    float: right;
+    display: block;
+    width: 7.7vw;
+    margin-right: 2.5vw;
+}
+
+.perso h2{
+    margin: 0%;
+    float: right;
+    padding: 0%;
+    margin-left: 5vw;
+    font-weight: 500;
+    font-size: 1.3vw;
+}
+
+.perso li{
+    font-size: 1vw;
+    font-weight: normal;
+}
+
 #div_perro{
     background-color: white;
     margin-top: 2.5vw;
     padding-top: 0%;
     width: fit-content;
     border-radius: 8px;
+    height: fit-content;
+    margin-left: 3vw;
 }
 
 #div_perro img{
@@ -292,11 +334,14 @@ aside p{
     border-radius: 4px;
 }
 
-#div_perro h1{
+#div_perro h1, h2 {
     margin-left: 1vw;
     margin-top: 0;
     margin-bottom: 0%;
+    font-size: 2.5vw;
 }
+
+
 
 #div_perro hr{
     margin-left: 1vw;

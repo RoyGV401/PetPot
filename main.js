@@ -35,19 +35,35 @@ window.onload = function() {
 
 window.onload = function listar_perros(){
   let dmain = document.getElementById("main_div");
-  let perros= [
-    {name: "Dogi", raza: "Mestizo", Tamano: "Grande", personalidad: "Tranquilo", img: "prueba1.png"},
-    {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "prueba2.png"},
+  const perros= [
+    {name: "Dogi", raza: "Mestizo", Tamano: "Grande", personalidad: "Tranquilo", img: "prueba1.png",sexo:"Macho",color:"Cafe", edad:"5 años"},
+    {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
   ];
 
-  let cuadro = document.createElement("div");
-  cuadro.id = "div_perro";
-
-  cuadro.innerHTML = `
-    <img src = "${perros[1].img}">
-    <h1>${perros[1].name}</h1>
+  let i =1;
+  perros.forEach(perro => {
+    
+    let cuadro = document.createElement("div");
+    cuadro.id = "div_perro";
+    cuadro.innerHTML = `
+    <img src = "${perro.img}">
+    <h1>${perro.name}</h1>
     <hr>
+      <div class="perso"><h2>Personalidad</h2>
+      <li>${perro.personalidad}</li>
+      </div>
+    <div class="flexer"> <h2>Sexo: </h2><h6>${perro.sexo}</h6></div>
+    <div class="flexer"><h2>Tamaño: </h2><h6>${perro.Tamano}</h6></div>
+    <div class="flexer"><h2>Color: </h2><h6>${perro.color}</h6></div>
+    <div class="flexer"><h2>Edad: </h2><h6>${perro.edad}</h6></div>
+    <br>
+    <div class="flexer"><h2>Cercanía: </h2></div>
   `;
+ 
   
   dmain.appendChild(cuadro);
+  alert(i);
+  i++;
+  });
+  
 }
