@@ -41,7 +41,7 @@ function listar_perros(){
   let mascotas;
   if(document.location.href.includes("perros.html")){
     dmain = document.getElementById("main_div_perros");
-
+    
     mascotas= [
       {name: "Dogi", raza: "Mestizo", Tamano: "Grande", personalidad: "Tranquilo", img: "resources/prueba1.png",sexo:"Macho",color:"Cafe", edad:"5 años"},
       {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "resources/prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
@@ -67,7 +67,7 @@ function listar_perros(){
   }else{
     dmain = document.getElementById("main_div_otros");
   }
-  
+  if (dmain == undefined) return;
 
   let i =1;
   mascotas.forEach(mascota => {
@@ -75,7 +75,7 @@ function listar_perros(){
     let cuadro = document.createElement("div");
     cuadro.id = "div_perro";
     cuadro.innerHTML = `
-    <img src = "${mascota.img}">
+    <img src = "${mascota.img}" onclick="changeTo('pet_selected')">
     <h1>${mascota.name}</h1>
     <hr>
       <div class="perso"><h2>Personalidad</h2>
