@@ -23,9 +23,15 @@ function changeTo(path)
   location.href = `${path}.html`;
 }
 
-window.onload = function() {
+window.onload = function(){
+  onLoad();
+}
 
-  //Logo returns to landing page
+
+function onLoad()
+{
+  listar_perros();
+  listar_gatos();
   document.getElementById('main_logo').onclick = function(){
     location.href = `index.html`;
   };
@@ -33,18 +39,20 @@ window.onload = function() {
 
 
 
-window.onload = function listar_perros(){
-  let dmain = document.getElementById("main_div_perros");
+
+function listar_gatos(){
+  let dmain = document.getElementById("main_div_gatos");
+  if (dmain == undefined) return 0;
   const perros= [
-    {name: "Dogi", raza: "Mestizo", Tamano: "Grande", personalidad: "Tranquilo", img: "prueba1.png",sexo:"Macho",color:"Cafe", edad:"5 años"},
-    {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
-    {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
-    {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
-    {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
-    {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
-    {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
-    {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
-    {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
+    {name: "Dogi", raza: "Mestizo", Tamano: "Grande", personalidad: "Tranquilo", img: "resources/prueba1.png",sexo:"Macho",color:"Cafe", edad:"5 años"},
+    {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "resources/prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
+    {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "resources/prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
+    {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "resources/prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
+    {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "resources/prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
+    {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "resources/prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
+    {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "resources/prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
+    {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "resources/prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
+    {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "resources/prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
 
   ];
 
@@ -54,7 +62,7 @@ window.onload = function listar_perros(){
     let cuadro = document.createElement("div");
     cuadro.id = "div_perro";
     cuadro.innerHTML = `
-    <img src = "${perro.img}">
+    <img src = "${perro.img}" onclick="takeToPet()">
     <h1>${perro.name}</h1>
     <hr>
       <div class="perso"><h2>Personalidad</h2>
@@ -76,18 +84,19 @@ window.onload = function listar_perros(){
   
 }
 
-window.onload = function listar_perros(){
-  let dmain = document.getElementById("main_div_gatos");
+function listar_perros(){
+  let dmain = document.getElementById("main_div_perros");
+  if (dmain == undefined) return 0;
   const perros= [
-    {name: "Dogi", raza: "Mestizo", Tamano: "Grande", personalidad: "Tranquilo", img: "prueba1.png",sexo:"Macho",color:"Cafe", edad:"5 años"},
-    {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
-    {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
-    {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
-    {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
-    {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
-    {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
-    {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
-    {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
+    {name: "Dogi", raza: "Mestizo", Tamano: "Grande", personalidad: "Tranquilo", img: "resources/prueba1.png",sexo:"Macho",color:"Cafe", edad:"5 años"},
+    {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "resources/prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
+    {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "resources/prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
+    {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "resources/prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
+    {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "resources/prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
+    {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "resources/prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
+    {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "resources/prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
+    {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "resources/prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
+    {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "resources/prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
 
   ];
 
@@ -97,7 +106,7 @@ window.onload = function listar_perros(){
     let cuadro = document.createElement("div");
     cuadro.id = "div_perro";
     cuadro.innerHTML = `
-    <img src = "${perro.img}">
+    <img src = "${perro.img}" onclick="takeToPet()">
     <h1>${perro.name}</h1>
     <hr>
       <div class="perso"><h2>Personalidad</h2>
@@ -117,4 +126,11 @@ window.onload = function listar_perros(){
   i++;
   });
   
+}
+
+
+function takeToPet()
+{
+  location.href = `pet_selected.html`;
+
 }
