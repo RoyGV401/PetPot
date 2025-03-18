@@ -43,6 +43,18 @@ function onLoad() {
   }
 }
 
+/*window.onresize = function(){
+
+  anchoVentana = window.innerWidth;
+  if(anchoVentana<=677){
+    listar_mascotas();
+  }
+ 
+No era el problema
+
+ };*/ 
+
+
 function listar_mascotas(){
   let dmain;
   let mascotas;

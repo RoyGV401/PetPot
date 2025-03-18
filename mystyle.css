@@ -260,6 +260,14 @@ aside p {
     header p {
         height: 35%;
     }
+
+    aside{
+        display: flex;
+        width: 95%;
+    }
+    .conte_div{
+        margin-left: 4vw;
+    }
 }
 
 
