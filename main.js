@@ -19,7 +19,7 @@ radios.forEach((x) => {
 });
 
 function changeTo(path) {
-  location.href = `${path}.html`;
+  location.href = `${path}`;
 }
 
 //IMPORANTE: Ahora todo lo que se quiera hacer al cargar se debe colocar en la funcion onLoad, dado que JS solo reconoce el último window.onload, asi que
@@ -30,13 +30,20 @@ window.onload = function () {
 
 
 function onLoad() {
-  listar_perros();
+  listar_mascotas();
   document.getElementById('main_logo').onclick = function () {
     location.href = `index.html`;
   };
+  const whyAdoptBtn = document.getElementById('whyAdopt')
+  if (whyAdoptBtn != undefined)
+  {
+    whyAdoptBtn.onclick = function () {
+      changeTo('https://www.purina.es/encuentra-mascota/nuevo-perro-en-casa/adopcion/por-que-adoptar-un-perro');
+     }
+  }
 }
 
-function listar_perros(){
+function listar_mascotas(){
   let dmain;
   let mascotas;
   if(document.location.href.includes("perros.html")){
@@ -75,7 +82,7 @@ function listar_perros(){
     let cuadro = document.createElement("div");
     cuadro.id = "div_perro";
     cuadro.innerHTML = `
-    <img src = "${mascota.img}" onclick="changeTo('pet_selected')">
+    <img src = "${mascota.img}" onclick="changeTo('pet_selected.html')">
     <h1>${mascota.name}</h1>
     <hr>
       <div class="perso"><h2>Personalidad</h2>
