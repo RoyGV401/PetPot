@@ -271,11 +271,15 @@ aside p{
     margin-top: 0;
     background-color: rgb(253 236 220);
     width: 90%;
-    height: 2000px;
+    height: fit-content;
     padding-bottom: 2vh;
     border-radius: 2vh;
     margin-left: auto;
     margin-right: auto;
+    flex-wrap: wrap;
+    
+   
+    
 }
 
 .flexer{
@@ -325,7 +329,7 @@ aside p{
     width: fit-content;
     border-radius: 8px;
     height: fit-content;
-    margin-left: 3vw;
+    margin-left: 2vw;
     
 }
 
