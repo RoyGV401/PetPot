@@ -23,9 +23,15 @@ function changeTo(path)
   location.href = `${path}.html`;
 }
 
-window.onload = function() {
+window.onload = function(){
+  onLoad();
+}
 
-  //Logo returns to landing page
+
+function onLoad()
+{
+  listar_perros();
+  listar_gatos();
   document.getElementById('main_logo').onclick = function(){
     location.href = `index.html`;
   };
