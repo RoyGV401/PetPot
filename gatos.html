@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petpot</title>
+    <script type="text/javascript" src="main.js"></script>
+    <link
+    rel="icon"
+    type="image/png"
+    sizes="32x32"
+    href="favicon.png"
+    data-href-light="favicon-32x32.png"
+    data-href-dark="favicon-32x32-dark.png"
+    >
+<link rel="stylesheet" href="mystyle.css">
+</head>
+<body>
+    <header>
+        <table>
+           <tr>
+            <th>
+                <img id="main_logo" src="logo.png" alt="logo" />
+              </th>
+            <th id="access_button_th">
+                <button class="main_button">Acceder</button>
+            </th>
+           </tr>
+        </table>
+    </header>
+    <nav>
+        <ul>
+            <li><a>Busqueda por ubicación</a></li>
+            <li><a>Soy rescatista</a></li>
+            <li><a>Busco Adoptar</a></li>
+            <li><a>Quiero Ayudar</a></li>
+            <li><a>¿Quiénes Somos?</a></li>
+        </ul>
+        <p class="menu">Menú</p>
+    </nav>
+
+    <section>
+        <p>Gatos</p>
+        <img src="resources/cat_logo_white.png" id="img_logo_section" alt="">
+    </section>
+
+    <div id="buscar_div">
+        <table>
+            <tr>
+                <th id="search_bar">
+                    <form action="">
+                        <input type="text" placeholder="Palabras clave (tranquilo, alegre, inteligente, etc...)">
+                    </form>
+                </th>
+                <th>
+                    <img src="lupa.png">
+                </th>
+            </tr>
+        </table>
+    </div>
+
+    <div  class= "main_div_perros" id="main_div_gatos">
+        
+        <aside>
+            <p class="aside_titulo">Sexo:</p>
+            <div class="div_aside">      
+                <input class="radio_aside" type="radio" name="sexo"><label class="radio_aside_p">Macho</label></input>
+            </div>
+            <div class="div_aside">      
+                <input class="radio_aside" type="radio" name="sexo"><label class="radio_aside_p">Hembra</label></input>
+            </div>
+            <br>
+            <p class="aside_titulo">Tamaño:</p>
+            <div class="div_aside">      
+                <input class="radio_aside" type="radio" name="tamano"><label class="radio_aside_p" >Pequeño</label></input>
+            </div>
+            <div class="div_aside">      
+                <input class="radio_aside" type="radio" name="tamano"><label class="radio_aside_p" >Mediano</label></input>
+            </div>
+            <div class="div_aside">      
+                <input class="radio_aside" type="radio" name="tamano"><label class="radio_aside_p" >Grande</label></input>
+            </div>
+            <br>
+            <p class="aside_titulo">Edad:</p>
+            <input class="range_aside" type="range" min="0" max="13">
+            <br>
+            <p class="aside_titulo">Personalidad:</p>
+            <div class="div_aside">
+                <input type="checkbox" name="personalidad" class="radio_aside"><label class="radio_aside_p">Alegre</label></input>
+            </div>
+            <div class="div_aside">
+                <input type="checkbox" name="personalidad" class="radio_aside"><label class="radio_aside_p">Tranquilo</label></input>
+            </div>
+            <div class="div_aside">
+                <input type="checkbox" name="personalidad" class="radio_aside"><label class="radio_aside_p">Cariñoso</label></input>
+            </div>
+            <div class="div_aside">
+                <input type="checkbox" name="personalidad" class="radio_aside"><label class="radio_aside_p">Juquetón</label></input>
+            </div>
+            <div class="div_aside">
+                <input type="checkbox" name="personalidad" class="radio_aside"><label class="radio_aside_p">Vigilante</label></input>
+            </div>
+            <br>
+        </aside>
+    </div>
+    
+</body>
+</html>
