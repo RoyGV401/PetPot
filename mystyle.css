@@ -1,10 +1,10 @@
-head,body
-{
+head,
+body {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 
 }
 
-header{
+header {
     background-color: rgb(253 236 220);
     height: 7vw;
     padding: 0%;
@@ -12,26 +12,25 @@ header{
     margin-top: 0%;
 }
 
-header img{
+header img {
     height: 7vw;
     padding: 0%;
     cursor: pointer;
 }
 
-#img_logo_section
-{
+#img_logo_section {
     min-width: 30px;
     width: 4vmax;
     padding: 1vmax;
 }
 
 
-.main_button:hover{
+.main_button:hover {
     background-color: rgb(196 61 20);
     cursor: pointer;
 }
 
-nav{
+nav {
     background-color: rgb(245 133 73);
     border-top: 0;
     display: block;
@@ -40,13 +39,13 @@ nav{
     max-height: max-content;
 }
 
-nav li a:hover{
+nav li a:hover {
     background-color: rgb(245 76 25);
     transform: scale(20%);
     translate: (2s);
 }
 
-ul{
+ul {
     float: right;
     padding: 13px;
     border-top: 0;
@@ -54,13 +53,13 @@ ul{
     margin: 0;
 }
 
-li{
-   float: left;
+li {
+    float: left;
 }
 
-li a{
+li a {
     border-radius: 2vmax / 3vmax;
-    margin-left:5vmax;
+    margin-left: 5vmax;
     margin-right: 0.01vmax;
     padding-left: 0.5vmax;
     padding-right: 0.5vmax;
@@ -72,9 +71,9 @@ li a{
     font-size: 2.0vh;
 }
 
-.menu{
+.menu {
     display: none;
-    margin-left:3vmax;
+    margin-left: 3vmax;
     padding-left: 2vmax;
     padding-top: 1.1%;
     color: aliceblue;
@@ -84,8 +83,7 @@ li a{
     float: right;
 }
 
-#access_button_th
-{
+#access_button_th {
     padding-top: 1%;
     padding-bottom: 2%;
     text-align: right;
@@ -93,7 +91,7 @@ li a{
     width: 100%;
 }
 
-.main_button{
+.main_button {
     font-weight: bold;
     text-align: center;
     color: aliceblue;
@@ -109,7 +107,7 @@ li a{
     padding: 0.4vw;
 }
 
-section p{
+section p {
     text-align: center;
     color: aliceblue;
     min-height: 40px;
@@ -120,22 +118,22 @@ section p{
     padding-bottom: 2vw;
 }
 
-section{
+section {
     display: flex;
     background-color: rgb(255, 89, 0);
     align-items: center;
     justify-content: center;
 }
 
-section img{
+section img {
     width: 3.7vmax;
     margin-bottom: 30px;
 }
 
-#buscar_div{
+#buscar_div {
     width: 60%;
     position: relative;
-    top: -4vmax; 
+    top: -4vmax;
     left: 30%;
     right: 30%;
     transform: translate(-50%, 50%);
@@ -147,32 +145,31 @@ section img{
 }
 
 
-#buscar_div form input{
+#buscar_div form input {
     border-style: hidden;
-    border: 0cap; 
+    border: 0cap;
     width: 100%;
 }
 
 
-#search_bar
-{
+#search_bar {
     width: 70vw;
 }
 
-#buscar_div img{
-    margin-left: 1vw; 
+#buscar_div img {
+    margin-left: 1vw;
     margin-right: 0px;
     width: 20px;
     float: right;
 }
 
-body{
+body {
     background-color: rgb(242 166 90);
     margin: 0;
     padding: 0;
 }
 
-aside{
+aside {
     background-color: white;
     width: 17.5vw;
     margin-left: 3vw;
@@ -181,30 +178,30 @@ aside{
     height: max-content;
     margin-right: 3vw;
     margin-top: 2.5vw;
-    
+
 }
 
-aside p{
+aside p {
     margin-top: 1vw;
     margin-left: 0.5vw;
     padding-top: 0vw;
     font-size: 1vw;
-    
+
 
 }
 
-.aside_titulo{
+.aside_titulo {
     font-size: 1.3vmax;
     font-weight: bolder;
 }
 
-.radio_aside{
+.radio_aside {
     margin-left: 2vw;
     display: flex;
     accent-color: rgb(242 166 90);
 }
 
-.radio_aside_p{
+.radio_aside_p {
     margin: 0%;
     padding: 0%;
     margin-left: 0.5vw;
@@ -212,51 +209,55 @@ aside p{
     font-size: 1vmax;
 }
 
-.div_aside{
+.div_aside {
     display: flex;
     align-items: center;
     align-content: center;
 }
 
-.range_aside{
+.range_aside {
     margin-left: 0.5vw;
     accent-color: rgb(242 166 90);
     width: 16vw;
 }
 
-@media (max-width:   947px){
-    li a{
+@media (max-width: 947px) {
+    li a {
         margin-left: 0.01%;
         font-size: 2.4vmin;
-      }
-      header p{
-       height: 30%;
-       padding-left: 3vmax;
-       padding-right: 3vmax;
-      }
+    }
+
+    header p {
+        height: 30%;
+        padding-left: 3vmax;
+        padding-right: 3vmax;
+    }
 }
 
-@media(max-width:   677px){
-    li a{
+@media(max-width: 677px) {
+    li a {
         display: none;
     }
-    .menu{
+
+    .menu {
         display: block;
     }
-    header img{
+
+    header img {
         height: 7vmax;
     }
-    header{
+
+    header {
         height: 7vmax;
     }
-    header p{
+
+    header p {
         height: 35%;
     }
-  }
+}
 
 
-.main_div
-{
+.main_div {
     margin-top: 0;
     background-color: rgb(253 236 220);
     width: 90%;
@@ -266,7 +267,7 @@ aside p{
     margin-right: auto;
 }
 
-.main_div_perros{
+.main_div_perros {
     display: flex;
     margin-top: 0;
     background-color: rgb(253 236 220);
@@ -277,39 +278,40 @@ aside p{
     margin-left: auto;
     margin-right: auto;
     flex-wrap: wrap;
-    
+
     justify-content: flex-start;
     align-content: flex-start;
-    
+
 }
 
-.flexer{
+.flexer {
     display: flex;
     align-items: center;
     align-content: center;
     margin-bottom: 0.5vw;
 }
 
-.flexer h6{
+.flexer h6 {
     margin: 0%;
     font-size: 1vw;
     font-weight: normal;
     margin-top: 0.18vw;
     margin-left: 0.5vw;
 }
-.flexer h2{
+
+.flexer h2 {
     font-weight: 500;
     font-size: 1.3vw;
 }
 
-.perso{
+.perso {
     float: right;
     display: block;
     width: 7.7vw;
     margin-right: 2.5vw;
 }
 
-.perso h2{
+.perso h2 {
     margin: 0%;
     float: right;
     padding: 0%;
@@ -318,12 +320,12 @@ aside p{
     font-size: 1.3vw;
 }
 
-.perso li{
+.perso li {
     font-size: 1vw;
     font-weight: normal;
 }
 
-#div_perro{
+#div_perro {
     background-color: white;
     margin-top: 2.5vw;
     padding-top: 0%;
@@ -331,10 +333,10 @@ aside p{
     border-radius: 8px;
     height: fit-content;
     margin-left: 2vw;
-    
+
 }
 
-#div_perro img{
+#div_perro img {
     margin: 1vw;
     width: 25vw;
     height: 17.9vw;
@@ -347,7 +349,8 @@ aside p{
     transform: scale(1.3);
 }
 
-#div_perro h1, h2 {
+#div_perro h1,
+h2 {
     margin-left: 1vw;
     margin-top: 0;
     margin-bottom: 0%;
@@ -356,20 +359,19 @@ aside p{
 
 
 
-#div_perro hr{
+#div_perro hr {
     margin-left: 1vw;
     margin-right: 1vw;
     margin-top: 0%;
     margin-bottom: 1vw;
-    color: rgb(190 189 203) ;
+    color: rgb(190 189 203);
     height: 1px;
     border-width: 0cap;
     background-color: rgb(190 189 203);
 }
 
 
-.sub_div
-{
+.sub_div {
     background-color: rgb(255, 255, 255);
     width: 100%;
     padding: 0.5%;
@@ -379,8 +381,8 @@ aside p{
     margin-left: auto;
     margin-right: auto;
 }
-.sub_div_adaptative
-{
+
+.sub_div_adaptative {
     background-color: rgb(255, 255, 255);
     width: 100%;
     padding: 0.5%;
@@ -390,14 +392,12 @@ aside p{
     margin-left: auto;
     margin-right: auto;
 }
-.module 
-{
-    background: 
-      linear-gradient(
-        rgba(0, 0, 0, 0.6),
-        rgba(0, 0, 0, 0.6)
-      ),
-      url('resources/landing_kittens.jpg');
+
+.module {
+    background:
+        linear-gradient(rgba(0, 0, 0, 0.6),
+            rgba(0, 0, 0, 0.6)),
+        url('resources/landing_kittens.jpg');
     background-size: cover;
     background-position: vmax;
     align-items: center;
@@ -408,9 +408,8 @@ aside p{
     position: relative;
     float: left;
 }
-  
-.mid h2 
-{
+
+.mid h2 {
     font-family: 'Roboto', sans-serif;
     font-weight: 900;
     color: white;
@@ -425,33 +424,32 @@ aside p{
     transform: translate(-50%, -50%);
 }
 
-.big_title
-{
+.big_title {
     font-family: 'Roboto', sans-serif;
     font-weight: 900;
-    color: rgb(242 93 13);;
-    text-transform: uppercase ;
+    color: rgb(242 93 13);
+    ;
+    text-transform: uppercase;
     text-align: center;
     width: 95%;
     font-size: 3.3vmax;
 }
 
-.cropped_image
-{
+.cropped_image {
     object-fit: cover;
     border-radius: 8px;
     width: 100%;
     height: 100%;
 }
 
-.adaptative_image
-{
+.adaptative_image {
     min-width: 50px;
 }
+
 .adoption-card {
     display: flex;
     flex-direction: column;
-    
+
     background: white;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -464,29 +462,30 @@ aside p{
     color: #e87c4a;
     font-weight: bold;
 }
-.details, .traits {
+
+.details,
+.traits {
     display: flex;
     justify-content: center;
     gap: 10px;
     flex-wrap: wrap;
     margin-top: 10px;
 }
+
 .tag {
     padding: 5px 10px;
     border-radius: 5px;
     font-size: 20px;
 }
 
-.attribute
-{
+.attribute {
     padding: 5px 10px;
     border-radius: 5px;
     background: #f1c7a5;
     color: #000000;
 }
 
-.contact_owner
-{
+.contact_owner {
     padding: 5px 10px;
     border-radius: 5px;
     background: #4caf50;
@@ -494,8 +493,7 @@ aside p{
 }
 
 
-.personality
-{
+.personality {
     padding: 5px 10px;
     border-radius: 5px;
     background: #F58549;
@@ -522,75 +520,75 @@ aside p{
     margin-top: 10px;
     width: 100%;
 }
+
 .adopt-btn {
     height: 15vh;
     font-size: 3vmax;
     background: #ff7043;
     font-weight: bold;
 }
+
 .description {
     margin: 1%;
     font-size: 20px;
     margin-top: 15px;
     text-align: left;
 }
+
 .description h3 {
     margin-bottom: 5px;
 }
+
 @media (min-width: 768px) {
     .adoption-card {
         flex-direction: row;
         max-width: 100%;
     }
+
     .image-container {
         flex: 1;
     }
+
     .info-container {
         flex: 2;
         padding-left: 20px;
     }
 }
 
-float_left
-{
+float_left {
     margin-right: 0;
     padding-right: 14%;
     display: flex;
 }
 
-#pet_container_table td
-{
+#pet_container_table td {
     border-style: solid;
     width: 50%;
 }
 
-.text_align_to_left, .text_align_to_left h2
-{
+.text_align_to_left,
+.text_align_to_left h2 {
     text-transform: none;
 
     text-align: left;
 }
 
-turn_black
-{
+turn_black {
     color: rgb(0, 0, 0);
 }
 
-turn_orange
-{
+turn_orange {
     text-transform: none;
     color: rgb(226, 109, 42);
 }
 
-.auto_margin
-{
+.auto_margin {
     margin-left: auto;
     margin-right: auto;
     text-align: center;
 }
 
-#bottom_buttons .main_button
-{
+#bottom_buttons .main_button {
     width: 10vw;
     min-height: 160px;
     min-width: 100%;
@@ -598,33 +596,29 @@ turn_orange
     height: 22vh;
 }
 
-#bottom_buttons table,th
-{
+#bottom_buttons table,
+th {
     padding: 0.4vh
 }
 
-#bottom_buttons table
-{
-   text-align: center;
-   margin-left: auto;
-   margin-right: auto;
-   align-self: center;
+#bottom_buttons table {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    align-self: center;
 }
 
-#bottom_buttons .main_button p
-{
+#bottom_buttons .main_button p {
     font-size: 3vh;
 }
 
-#bottom_buttons .main_button img
-{
+#bottom_buttons .main_button img {
     height: 5vmax;
     width: 5vmax;
 }
 
 
-#bottom_buttons #whyAdopt
-{
+#bottom_buttons #whyAdopt {
     width: 100%;
     padding: 10vmin;
     font-size: 3vh;
