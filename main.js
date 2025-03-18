@@ -31,30 +31,27 @@ window.onload = function () {
 
 function onLoad() {
   listar_perros();
-  listar_gatos();
   document.getElementById('main_logo').onclick = function () {
     location.href = `index.html`;
   };
 }
 
-
-
-window.onload = function listar_perros(){
+function listar_perros(){
   let dmain;
   let mascotas;
   if(document.location.href.includes("perros.html")){
     dmain = document.getElementById("main_div_perros");
 
     mascotas= [
-      {name: "Dogi", raza: "Mestizo", Tamano: "Grande", personalidad: "Tranquilo", img: "prueba1.png",sexo:"Macho",color:"Cafe", edad:"5 años"},
-      {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
-      {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
-      {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
-      {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
-      {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
-      {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
-      {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
-      {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
+      {name: "Dogi", raza: "Mestizo", Tamano: "Grande", personalidad: "Tranquilo", img: "resources/prueba1.png",sexo:"Macho",color:"Cafe", edad:"5 años"},
+      {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "resources/prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
+      {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "resources/prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
+      {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "resources/prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
+      {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "resources/prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
+      {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "resources/prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
+      {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "resources/prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
+      {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "resources/prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
+      {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "resources/prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
   
     ];
 
@@ -99,4 +96,3 @@ window.onload = function listar_perros(){
   });
 
 }
-
