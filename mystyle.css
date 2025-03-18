@@ -221,6 +221,7 @@ aside p{
 .range_aside{
     margin-left: 0.5vw;
     accent-color: rgb(242 166 90);
+    width: 16vw;
 }
 
 @media (max-width:   947px){
@@ -277,8 +278,9 @@ aside p{
     margin-left: auto;
     margin-right: auto;
     flex-wrap: wrap;
-    
-   
+    gap: 10px;
+    justify-content: flex-start;
+    align-content: flex-start;
     
 }
 
