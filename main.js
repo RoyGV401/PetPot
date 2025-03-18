@@ -86,7 +86,7 @@ function listar_mascotas(){
   }else{
     dmain = document.getElementById("main_div_otros");
     mascotas= [
-      {name: "Remi", raza: "Tortuga", Tamano: "Chico", personalidad: "Tranquilo", img: "resources/turti.png",sexo:"Macho",color:"Verde", edad:"5 años"},
+      {name: "Yuan", raza: "Tortuga", Tamano: "Chico", personalidad: "Tranquilo", img: "resources/turti.png",sexo:"Macho",color:"Verde", edad:"5 años"},
     ];
   }
   if (dmain == undefined) return;
