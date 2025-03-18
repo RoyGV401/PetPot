@@ -64,8 +64,8 @@ function listar_mascotas(){
     mascotas= [
       {name: "Dogi", raza: "Mestizo", Tamano: "Grande", personalidad: "Tranquilo", img: "resources/prueba1.png",sexo:"Macho",color:"Cafe", edad:"5 años"},
       {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "resources/prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
-      {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "resources/prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
-      {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "resources/prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
+      {name: "Filis el perro feliz", raza: "Golden", Tamano: "Mediano", personalidad: "Enojado", img: "resources/prueba3.png",sexo:"Macho", color:"Blanco", edad:"3 años"},
+      {name: "Jotchua", raza: "Golden", Tamano: "Chico", personalidad: "Triste", img: "resources/prueba4.png",sexo:"Macho", color:"Dorado", edad:"2 años"},
       {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "resources/prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
       {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "resources/prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
       {name: "El loco matias", raza: "Golden", Tamano: "Grande", personalidad: "Jugueton", img: "resources/prueba2.png",sexo:"Hembra", color:"Blanco", edad:"3 años"},
@@ -85,6 +85,9 @@ function listar_mascotas(){
 
   }else{
     dmain = document.getElementById("main_div_otros");
+    mascotas= [
+      {name: "Remi", raza: "Tortuga", Tamano: "Chico", personalidad: "Tranquilo", img: "resources/turti.png",sexo:"Macho",color:"Verde", edad:"5 años"},
+    ];
   }
   if (dmain == undefined) return;
 
