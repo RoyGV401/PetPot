@@ -2,12 +2,13 @@ export function createPetSelect(pet) {
   
   const name = pet.name;
   const raza = pet.raza;
-  const tamano = pet.tamano;
+  const tamano = pet.Tamano;
   const personalidad = pet.personalidad;
   const img = pet.img;
   const sexo = pet.sexo;
   const color = pet.color;
   const edad = pet.edad;
+  const descripcion = pet.descripcion;
 
   const result = `
     <header>
@@ -60,10 +61,10 @@ export function createPetSelect(pet) {
         
         <div class="adoption-card">
           <div class="image-container">
-              <img class="cropped_image" src="resources/chinese_2.png" alt="La China">
+              <img class="cropped_image" src="${img}" alt="Imagen de la mascota">
           </div>
           <div class="info-container">
-              <h1 class="bit_title"><hBig>¡Hola! soy <span class="highlight">${name}</hBig></span></h1>
+              <h1 class="bit_title"><hBig>¡Hola! soy <span class="highlight">${name}!</hBig></span></h1>
               <div class="details">
                   <span class="tag attribute">${sexo}</span>
                   <span class="tag attribute">${edad}</span>
@@ -87,7 +88,7 @@ export function createPetSelect(pet) {
               </div>
               <div class="description">
                   <h3>Descripción:</h3>
-                  <p>Hola, mi nombre es La China y estoy buscando un hogar lleno de amor. Tengo 8 años, soy alegre, energética y muy amigable, ideal para quienes buscan una compañera fiel y cariñosa. Me encanta jugar, recibir cariño y pasar tiempo con mi familia. ¡Si buscas una mascota amorosa y leal, soy la indicada!</p>
+                  <p>${descripcion}</p>
               </div>
               <button class="adopt-btn">Adóptame</button>
           </div>

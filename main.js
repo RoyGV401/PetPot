@@ -1,4 +1,4 @@
-import { DOGS, CATS, OTHERS } from "./pet_list.js";
+import { DOGS, CATS, OTHERS, PETS } from "./pet_list.js";
 import { createPetSelect } from "./pet_selected.js";
 
 
@@ -7,13 +7,14 @@ function changeTo(path) {
   location.href = `${path}`;
 }
 
-
-
 //IMPORANTE: Ahora todo lo que se quiera hacer al cargar se debe colocar en la funcion onLoad, dado que JS solo reconoce el último window.onload, asi que
 //colocar varios practicamente no hace nada, siendo que solo se ejecutará el último.
 window.onload = function () {
+
   onLoad();
 }
+
+window.doReturnNormally = true;
 
 let radios = document.querySelectorAll("[type='radio']");
 radios.forEach((x) => {
@@ -40,6 +41,8 @@ radios.forEach((x) => {
 function onLoad() {
   listar_mascotas();
   changeBodyToPet();
+  checkForReturn();
+
   document.getElementById('main_logo').onclick = function () {
     location.href = `index.html`;
   };
@@ -119,17 +122,31 @@ function changeBodyToPet()
   try
   {
     const petImages = document.getElementsByClassName('imgPetSelect');
-    alert(petImages);
     for (let p of petImages) {
       p.onclick = function () {
-        const petData = createPetSelect(p);
-        alert();
-     }
+        const petId = p.id;
+        let choosenPet = "";
+        PETS.every(pet => {
+          if (petId == pet.id)
+          {
+            choosenPet = pet;
+            return false;
+          }
+          else 
+          return true;
+        });
+        if (choosenPet != "")
+        {
+          const petInfo = createPetSelect(choosenPet);
+          const body = document.getElementsByTagName('body')[0];
+          window.doReturnNormally = false;
+          body.innerHTML = petInfo;
+
+          
+        }
+       
+      }
     }
-    /*
-    petImages.foreach(p => {
-      
-    });*/
   }
   catch(ex)
   {
@@ -146,4 +163,18 @@ function iniButtons()
       const btnOthers = document.getElementById('checkOthers').onclick = function (){ changeTo('otros.html')};
   }
   catch{}
+}
+
+function checkForReturn()
+{
+ 
+    history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+      if (window.doReturnNormally == false)
+        {  
+          history.go(1);
+          window.location.reload();
+        }
+      }
+
 }
