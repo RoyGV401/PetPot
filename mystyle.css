@@ -301,6 +301,13 @@ aside p {
 
 
 .main_div_perros {
+
+    background-color: rgb(253 236 220);
+    background-image: url(resources/output-onlinepngtools.png);
+    background-repeat:  repeat;
+    background-attachment: local;
+    background-size: 35%;
+
     display: flex;
     margin-top: 0;
     background-color: rgb(253 236 220);
