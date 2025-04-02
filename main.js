@@ -40,13 +40,19 @@ radios.forEach((x) => {
 
 function onLoad() {
   listar_mascotas();
+  
   changeBodyToPet();
   checkForReturn();
-  document.getElementById("div_login").hidden = true;
-  document.getElementById("div_login").onclick = abrir_login();
+  document.getElementById("div_login").style.visibility = "hidden";
+  document.getElementById("btn_login").onclick = function ()
+  {
+    abrir_login();
+  };
+  
   document.getElementById('main_logo').onclick = function () {
     location.href = `index.html`;
   };
+
   const whyAdoptBtn = document.getElementById('whyAdopt')
   iniButtons();
   if (whyAdoptBtn != undefined)
@@ -55,6 +61,7 @@ function onLoad() {
       changeTo('https://www.purina.es/encuentra-mascota/nuevo-perro-en-casa/adopcion/por-que-adoptar-un-perro');
      }
   }
+  abrir_login();
 }
 
 /*window.onresize = function(){
@@ -181,7 +188,7 @@ function checkForReturn()
 }
 
 function abrir_login(){
-  document.getElementById("div_login").hidden = false;
-  document.getElementById("blur")
+  document.getElementById("div_login").style.visibility = "visible";
+  document.getElementById("blur").className = "blur";
    
 }

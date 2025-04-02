@@ -668,6 +668,9 @@ turn_orange {
 
 }
 
+.blur{
+    filter: blur(2px);
+}
 
 .pet_image {
     border-radius: 10px;
