@@ -43,6 +43,7 @@ function onLoad() {
   changeBodyToPet();
   checkForReturn();
   document.getElementById("div_login").hidden = true;
+  document.getElementById("div_login").onclick = abrir_login();
   document.getElementById('main_logo').onclick = function () {
     location.href = `index.html`;
   };
