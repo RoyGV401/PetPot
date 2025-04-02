@@ -809,7 +809,10 @@ th {
 
 @keyframes blink{
     0%,
+    50%,
+    70%,
     89%,
+
     100%{
         opacity: 0;
     }
@@ -817,6 +820,7 @@ th {
     99%{
         opacity: 1;
     }
+    
 }
 
 @keyframes eye-open {
