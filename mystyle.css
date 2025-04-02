@@ -703,7 +703,17 @@ th {
     background-color: #8E4F94;
 }
 
+.bac{
+
+    background:
+    linear-gradient(rgba(0, 0, 0, 0.6),
+        rgba(0, 0, 0, 0.6));
+}
+
+
+
 .div_login{
+    
     background-color: aliceblue;
     width: max-content;
     padding-bottom: 5%;
@@ -777,7 +787,9 @@ th {
 }
 
 #btn_log{
-    margin-left: 42%;
+    
+    margin-left: 40%;
+
     margin-top: 5%;
 }
 
@@ -858,4 +870,22 @@ th {
 }
 .div_login:has([type="password"]:focus) .image{
     animation-play-state: paused;
+}
+
+.div_login input{
+    
+    border: 2cap;
+    border-radius: 2vw /2.5vw;
+    border: solid rgb(226, 109, 42);
+    background-color: rgb(253 236 220);
+    color: rgb(226, 109, 42);
+    padding-left: 10px;
+    padding-right:10px ;
+}
+
+.div_login h1{
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    color: rgb(226, 109, 42);
 }

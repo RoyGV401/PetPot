@@ -42,7 +42,7 @@ function onLoad() {
   listar_mascotas();
   changeBodyToPet();
   checkForReturn();
-
+  document.getElementById("div_login").hidden = true;
   document.getElementById('main_logo').onclick = function () {
     location.href = `index.html`;
   };
@@ -177,4 +177,10 @@ function checkForReturn()
         }
       }
 
+}
+
+function abrir_login(){
+  document.getElementById("div_login").hidden = false;
+  document.getElementById("blur")
+   
 }
