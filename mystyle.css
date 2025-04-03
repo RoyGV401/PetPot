@@ -240,10 +240,17 @@ aside p {
     }
 }
 
+.huge_table th
+{
+    width: 22vw
+}
+
+
 @media(max-width: 677px) {
     li a {
         display: none;
     }
+
 
     .menu {
         display: block;
@@ -373,7 +380,7 @@ aside p {
     border-radius: 8px;
     height: fit-content;
     margin-left: 2vw;
-
+    
 }
 
 #div_perro img {
@@ -397,7 +404,6 @@ h2 {
     margin-bottom: 0%;
     font-size: 2.5vw;
 }
-
 
 
 #div_perro hr {
@@ -604,6 +610,7 @@ hBig {
         max-width: 100%;
     }
 
+  
     .image-logo-container {
         flex: 1;
     }
@@ -650,6 +657,11 @@ turn_orange {
     margin-right: auto;
     width:  fit-content;
     text-align: center;
+}
+
+.image-logo-container
+{
+    text-align: left;
 }
 
 #bottom_buttons{
@@ -803,27 +815,7 @@ th {
 
 
 
-.div_login{
-    border-style: none;
-    ---background-image: url(resources/patas-removebg-preview.png);
-    background-color: rgb(218, 128, 76);
-    width: max-content;
-    padding-bottom: 5vmin;
-    padding-top: 1%;
-    padding-left: 2vw;
-    padding-right: 2vw;
-    position: fixed;
-    top: 50%;
 
-    align-content: center;
-    color: white;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    overflow: hidden;
-    z-index: 9999999;
-    border-radius: 15px;
-    
-}
 
 #login_warning
 {
@@ -914,32 +906,27 @@ th {
     }
 }
 #btn_log{
-    margin-left: 35%;
     width: 30%;
     margin-bottom: 0;
 }
 
 #btn_acceder_login{
-    margin-left: 35%;
     width: 30%;
     margin-bottom: 0;
 }
 
 #btn_regis{
-    margin-left: 35%;
     width: 30%;
     margin-bottom: 0;
 }
 
 
 #btn_cancel_login{
-    margin-left: 35%;
     width: 30%;
     margin-bottom: 0;
 }
 
 #btn_confirm_register{
-    margin-left: 35%;
     width: 30%;
     margin-bottom: 0;
 }
@@ -1016,6 +1003,30 @@ th {
     border-bottom: 5px solid black;
     transition: 0.5s;
 }
+.div_login{
+    border-style: none;
+    ---background-image: url(resources/patas-removebg-preview.png);
+    background-color: rgb(218, 128, 76);
+    width: max-content;
+    max-width: 90%;
+    text-align: center;
+    padding-bottom: 5vmin;
+    padding-top: 1%;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    position: fixed;
+    top: 50%;
+
+    align-content: center;
+    color: white;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+    z-index: 9999999;
+    border-radius: 15px;
+    
+}
+
 .div_login:has([type="password"]:focus) .cortina{
     height: 70%;
     
@@ -1041,3 +1052,50 @@ th {
     margin-right: auto;
     
 }
+
+@media only screen and (max-width: 768px) {
+
+    .div_login input{
+
+        margin-bottom: 0.5vh;
+        width: 70%;
+        padding: 1vh;
+    }
+
+    #btn_log{
+        width: 73%;
+        height: 6vh;
+        font-size: larger;
+        margin-bottom: 0;
+    }
+    
+    #btn_acceder_login{
+        width: 73%;
+        height: 6vh;
+        font-size: larger;
+        margin-bottom: 0;
+    }
+    
+    #btn_regis{
+        width: 73%;
+        height: 6vh;
+        font-size: larger;
+        margin-bottom: 0;
+    }
+    
+    
+    #btn_cancel_login{
+        width: 73%;
+        height: 6vh;
+        font-size: larger;
+        margin-bottom: 0;
+    }
+    
+    #btn_confirm_register{
+        width: 73%;
+        height: 6vh;
+        font-size: larger;
+        margin-bottom: 0;
+    }
+}
+
