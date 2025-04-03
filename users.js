@@ -7,7 +7,8 @@ export const USERS =
         "apellidoM":"Tapia",
         "telefono":"4341358745",
         "email":"renato.medina@gmail.com",
-        "password":"pass"
+        "password":"pass",
+        "foto_perfil":"renato_perfil.png"
     },
     {
         "id": 2,
@@ -16,7 +17,8 @@ export const USERS =
         "apellidoM":"Mendoza",
         "telefono":"4341358745",
         "email":"david.mendoza@gmail.com",
-        "password":"pass"
+        "password":"pass",
+        "foto_perfil":"usuario_perfil.png"
     },
     {
         "id": 3,
@@ -25,6 +27,17 @@ export const USERS =
         "apellidoM":"Liza",
         "telefono":"4341358745",
         "email":"fernando.ulloa@gmail.com",
-        "password":"pass"
+        "password":"pass",
+        "foto_perfil":"usuario2_perfil.png"
+    },
+    {
+        "id": 4,
+        "nombre": "Luis",
+        "apellidoP":"Duran",
+        "apellidoM":"Farias",
+        "telefono":"4341358745",
+        "email":"luis@gmail.com",
+        "password":"pass",
+        "foto_perfil":"luis_perfil.png"
     }
 ]
