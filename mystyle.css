@@ -604,6 +604,10 @@ hBig {
         max-width: 100%;
     }
 
+    .image-logo-container {
+        flex: 1;
+    }
+
     .image-container {
         flex: 1;
     }
@@ -757,7 +761,7 @@ th {
 }
 
 
-.image-container .image{
+.image-logo-container .image{
     position: absolute;
     width: 100%;
     height: 100%;
@@ -768,12 +772,12 @@ th {
     
 }
 
-.image-container .image img{
+.image-logo-container .image img{
     width: 90%;
 }
 
 
-.image-container{
+.image-logo-container{
 
     width: 16.5vmin;
     
@@ -823,29 +827,29 @@ th {
     margin-bottom: 0;
 }
 
-.image-container image:active{
+.image-logo-container image:active{
     translate: 0 50px;
 }
 
-.image-container img{
+.image-logo-container img{
     display: inline-block;
     position: absolute;
     transition: 100ms;
 }
 
-.image-container img.ojos{
+.image-logo-container img.ojos{
     width: 30%;
     left: 27%;
     bottom: 64%;
     opacity: 0;
 }
 
-.image-container .ojos1{
+.image-logo-container .ojos1{
     opacity: 1;
     animation: eye-open 2s ease-in-out infinite;
 }
 
-.image-container .ojos2{
+.image-logo-container .ojos2{
     animation: blink 2s ease-in-out infinite;
 }
 
@@ -877,12 +881,12 @@ th {
     }
 }
 
-.image-container:hover img.ojos{
+.image-logo-container:hover img.ojos{
     opacity: 0 !important;
     animation: none;
 }
 
-.image-container:hover img.ojos2{
+.image-logo-container:hover img.ojos2{
     opacity: 1 !important; 
 }
 .cortina{
