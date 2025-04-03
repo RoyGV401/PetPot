@@ -18,7 +18,7 @@ export function createPetSelect(pet) {
             <img id="main_logo" src="resources/logo.png" alt="logo" />
           </th>
           <th id="access_button_th">
-            <button class="main_button">Acceder</button>
+            <button class="main_button" id="btn_login">Acceder</button>
           </th>
         </tr>
       </table>
@@ -95,7 +95,6 @@ export function createPetSelect(pet) {
       </div>
       </div>
     </div>
-
   `;
   return result;
 }

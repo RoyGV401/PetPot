@@ -1,6 +1,7 @@
+import { LOGIN_FORM, REGISTER_FORM } from "./login.js";
 import { DOGS, CATS, OTHERS, PETS } from "./pet_list.js";
 import { createPetSelect } from "./pet_selected.js";
-
+import { USERS } from "./users.js";
 const user ={
   correo:"luis@gmail.com",
   password: "Luis1234."
@@ -25,7 +26,6 @@ radios.forEach((x) => {
   x.addEventListener(
     "click",
     (e) => {
-      alert();
       let element = e.target;
       if (element.dataset.val == "false") {
         element.dataset.val = "true";
@@ -45,17 +45,45 @@ radios.forEach((x) => {
 
 function onLoad() {
   listar_mascotas();
-
   changeBodyToPet();
   checkForReturn();
-  document.getElementById("div_login").style.visibility = "hidden";
+
+  try
+  {
+    const currentUser = localStorage.currentUser;
+    if (currentUser != undefined)
+    {
+      const user = USERS.find(u => u.id == currentUser);
+      const btnAcceder = document.getElementById('btn_login');
+      btnAcceder.innerHTML = `¡Bienvenido ${user.nombre}!`
+    }
+
+  } catch{}
+  {
+    const extra = document.getElementById('extra_elements');
+    if (!extra.innerHTML.includes(LOGIN_FORM))
+    {
+      extra.innerHTML = extra.innerHTML + `
+      ${LOGIN_FORM}
+    `;
+    }
+    
+  }
+  login_form_ini(true);
+
+  try
+  {
+   
+
+  } catch (ex)
+  {
+    console.log(ex)
+  }
   document.getElementById("btn_login").onclick = function ()
   {
     abrir_login();
   };
-  document.getElementById("btn_log").onclick = function () {
-    inicia_sesion();
-  };
+
   document.getElementById('main_logo').onclick = function () {
     location.href = `index.html`;
   };
@@ -68,7 +96,7 @@ function onLoad() {
       changeTo('https://www.purina.es/encuentra-mascota/nuevo-perro-en-casa/adopcion/por-que-adoptar-un-perro');
      }
   }
-  abrir_login();
+  //abrir_login();
 }
 
 /*window.onresize = function(){
@@ -82,6 +110,45 @@ No era el problema
 
  };*/ 
 
+function login_form_ini(doHide)
+{
+  if (doHide) document.getElementById("div_login").style.visibility = "hidden";
+  const btnCancelLogin = document.getElementById('btn_cancel_login');
+  const btnRegister = document.getElementById('btn_regis');
+
+  try
+  {
+    btnRegister.onclick = function ()
+    {
+      abrir_register();
+    };
+  } catch{}
+
+  try
+  {
+    btnCancelLogin.onclick = function ()
+    {
+      exit_login();
+    };
+  } catch{}
+
+  try
+  {
+    document.getElementById("btn_log").onclick = function () {
+      inicia_sesion(true);
+    };
+  } catch{}
+
+  try
+  {
+    document.getElementById("btn_acceder_login").onclick = function () {
+      document.getElementById('extra_elements').innerHTML = LOGIN_FORM;
+      inicia_sesion(false);
+      login_form_ini(false);
+
+    };
+  } catch{}
+}
 
 function listar_mascotas(){
   let dmain;
@@ -153,10 +220,11 @@ function changeBodyToPet()
         if (choosenPet != "")
         {
           const petInfo = createPetSelect(choosenPet);
-          const body = document.getElementsByTagName('body')[0];
+          const body = document.getElementById('blur');
           window.doReturnNormally = false;
+          document.getElementById('extra_elements').innerHTML = ""
           body.innerHTML = petInfo;
-
+          onLoad();
           
         }
        
@@ -165,7 +233,7 @@ function changeBodyToPet()
   }
   catch(ex)
   {
-    alert(ex);
+    
   }
 }
 
@@ -200,12 +268,48 @@ function abrir_login(){
    
 }
 
-function inicia_sesion(){
+function abrir_register(){
+  document.getElementById("extra_elements").innerHTML = REGISTER_FORM;
+  login_form_ini(false);
+
+}
+
+function inicia_sesion(isFromClick){
   const correo = document.getElementById("input_correo").value;
   const contra = document.getElementById("input_contra").value;
+  const user = USERS.find(u => u.email==correo);
 
-  if(user.correo == correo && user.password == contra)
-    location.reload();
-  
-    
+  const txtAlert = document.getElementById('login_warning');
+
+  if (user != undefined && isFromClick)
+  {
+    if(user.email == correo && user.password == contra)
+    {
+      localStorage.currentUser=user.id;
+ 
+      location.reload();
+    }
+    else
+    {
+      txtAlert.innerHTML = "Correo o contraseña incorrectos";
+    }
+  }
+  else if (isFromClick)
+  {
+    const txtAlert = document.getElementById('login_warning');
+    txtAlert.innerHTML = "Correo o contraseña incorrectos";
+  }
+  setTimeout(()=>{
+    txtAlert.innerHTML = "";
+
+  },2000);
+}
+
+function exit_login()
+{
+  document.getElementById('login_warning').innerHTML=""
+  document.getElementById("div_login").style.visibility = "hidden";
+  document.getElementById("blur").className = "";
+  document.getElementById("input_correo").value="";
+  document.getElementById("input_contra").value="";
 }

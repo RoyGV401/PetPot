@@ -672,8 +672,92 @@ turn_orange {
 
 }
 
+.important_button {
+    align-items: center;
+    background-clip: padding-box;
+    background-color: #fa4f00;
+    border: 1px solid transparent;
+    border-radius: .50rem;
+    box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.25;
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 100px;
+    min-height: 3rem;
+    position: relative;
+    text-decoration: none;
+    transition: all 250ms;
+    user-select: none;
+    touch-action: manipulation;
+    width: auto;
+  }
+  
+  .important_button:hover{
+    background-color: #971301;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+  }
+  
+  .important_button:hover {
+    transform: translateY(-1px);
+  }
+  
+  .important_button:active {
+    background-color: #c85000;
+    box-shadow: rgba(0, 0, 0, .06) 0 2px 4px;
+    transform: translateY(0);
+  }
+
+  .cancel_button {
+    align-items: center;
+    background-clip: padding-box;
+    background-color: #a12404;
+    border: 1px solid transparent;
+    border-radius: .50rem;
+    box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.25;
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 100px;
+    min-height: 2rem;
+    position: relative;
+    text-decoration: none;
+    transition: all 250ms;
+    user-select: none;
+    touch-action: manipulation;
+    width: 10px;
+  }
+  
+  .cancel_button:hover{
+    background-color: #971301;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+  }
+  
+  .cancel_button:hover {
+    transform: translateY(-1px);
+  }
+  
+  .cancel_button:active {
+    background-color: #c85000;
+    box-shadow: rgba(0, 0, 0, .06) 0 2px 4px;
+    transform: translateY(0);
+  }
+
+
 .blur{
-    filter: blur(2px);
+    pointer-events: none;
+    filter: blur(10px) saturate(0.2);
 }
 
 .pet_image {
@@ -720,22 +804,36 @@ th {
 
 
 .div_login{
-    border: solid black 5px;
+    border-style: none;
     ---background-image: url(resources/patas-removebg-preview.png);
-    background-color: rgb(244, 175, 107);
+    background-color: rgb(218, 128, 76);
     width: max-content;
-    padding-bottom: 1%;
+    padding-bottom: 5vmin;
     padding-top: 1%;
     padding-left: 2vw;
     padding-right: 2vw;
     position: fixed;
     top: 50%;
+
+    align-content: center;
+    color: white;
     left: 50%;
     transform: translate(-50%, -50%);
     overflow: hidden;
     z-index: 9999999;
     border-radius: 15px;
     
+}
+
+#login_warning
+{
+    color: #971301;
+    font-weight: 500;
+}
+
+.div_login p
+{
+    text-align: center;
 }
 
 .linea-con-texto {
@@ -751,7 +849,7 @@ th {
     content: "";
     flex: 1;
     height: 2px; /* Grosor de la línea */
-    background-color: black;
+    background-color: rgb(255, 255, 255);
 }
 
 .texto {
@@ -779,17 +877,13 @@ th {
 
 .image-logo-container{
 
-    width: 16.5vmin;
-    
-    height: 16.5vmin;
+    width: 16.5vmax;
+    height: 16.5vmax;
     margin-bottom: 10%;
-    
-    
+    filter: invert(100%);
     border-radius: 50%;
     margin-left: auto;
     margin-right: auto;
-    background-color: #f1c7a5;
-    border: solid 5px rgb(226, 109, 42);
     position: relative;
     overflow: hidden;
     cursor: pointer;
@@ -797,6 +891,12 @@ th {
     background-position: 50%;
     background-size: 90%;
     background-repeat: no-repeat;
+    user-select: none;
+
+    /*
+    border: solid black 5px;
+    background-color: rgb(244, 175, 107);
+    */
 }
 
 
@@ -813,15 +913,32 @@ th {
         transform: rotate(-5deg) translateX(1.5vmin) translateY(0.5vmin) scale(1);
     }
 }
-
 #btn_log{
-    
-    margin-left: 40%;
+    margin-left: 35%;
+    width: 30%;
+    margin-bottom: 0;
+}
 
-    margin-top: 5%;
+#btn_acceder_login{
+    margin-left: 35%;
+    width: 30%;
+    margin-bottom: 0;
 }
 
 #btn_regis{
+    margin-left: 35%;
+    width: 30%;
+    margin-bottom: 0;
+}
+
+
+#btn_cancel_login{
+    margin-left: 35%;
+    width: 30%;
+    margin-bottom: 0;
+}
+
+#btn_confirm_register{
     margin-left: 35%;
     width: 30%;
     margin-bottom: 0;
@@ -892,9 +1009,10 @@ th {
 .cortina{
     position: absolute;
     top: -5px;
+    filter: invert(0);
     height: 0;
     width: 100%;
-    background: red;
+    background: rgb(0, 225, 255);
     border-bottom: 5px solid black;
     transition: 0.5s;
 }
@@ -907,10 +1025,10 @@ th {
 }
 
 .div_login input{
-    
+    height: 3vh;
     border: 2cap;
-    border-radius: 2vw /2.5vw;
-    border: solid rgb(226, 109, 42);
+    font-size: 100%;
+    border-radius: 2vw /2.9vw;
     background-color: rgb(253 236 220);
     color: rgb(226, 109, 42);
     padding-left: 10px;
