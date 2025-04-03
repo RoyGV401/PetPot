@@ -716,11 +716,12 @@ th {
 
 
 .div_login{
-    
-    background-color: aliceblue;
+    border: solid black 5px;
+    ---background-image: url(resources/patas-removebg-preview.png);
+    background-color: rgb(244, 175, 107);
     width: max-content;
-    padding-bottom: 5%;
-    padding-top: 10%;
+    padding-bottom: 1%;
+    padding-top: 1%;
     padding-left: 2vw;
     padding-right: 2vw;
     position: fixed;
@@ -729,11 +730,31 @@ th {
     transform: translate(-50%, -50%);
     overflow: hidden;
     z-index: 9999999;
-    border-radius: 5px / 7px ;
+    border-radius: 15px;
+    
 }
 
+.linea-con-texto {
+    margin-top: 2%;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 2%;
+}
 
+.linea-con-texto::before,
+.linea-con-texto::after {
+    content: "";
+    flex: 1;
+    height: 2px; /* Grosor de la línea */
+    background-color: black;
+}
 
+.texto {
+    padding: 0 10px; /* Espaciado lateral del texto */
+    font-weight: bold;
+    white-space: nowrap;
+}
 
 
 .image-container .image{
@@ -794,6 +815,12 @@ th {
     margin-left: 40%;
 
     margin-top: 5%;
+}
+
+#btn_regis{
+    margin-left: 35%;
+    width: 30%;
+    margin-bottom: 0;
 }
 
 .image-container image:active{
@@ -868,7 +895,7 @@ th {
     transition: 0.5s;
 }
 .div_login:has([type="password"]:focus) .cortina{
-    height: 90%;
+    height: 70%;
     
 }
 .div_login:has([type="password"]:focus) .image{
@@ -890,5 +917,5 @@ th {
     width: fit-content;
     margin-left: auto;
     margin-right: auto;
-    color: rgb(226, 109, 42);
+    
 }

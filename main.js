@@ -1,7 +1,10 @@
 import { DOGS, CATS, OTHERS, PETS } from "./pet_list.js";
 import { createPetSelect } from "./pet_selected.js";
 
-
+const user ={
+  correo:"luis@gmail.com",
+  password: "Luis1234."
+}
 
 function changeTo(path) {
   location.href = `${path}`;
@@ -38,9 +41,11 @@ radios.forEach((x) => {
 
 
 
+
+
 function onLoad() {
   listar_mascotas();
-  
+
   changeBodyToPet();
   checkForReturn();
   document.getElementById("div_login").style.visibility = "hidden";
@@ -48,7 +53,9 @@ function onLoad() {
   {
     abrir_login();
   };
-  
+  document.getElementById("btn_log").onclick = function () {
+    inicia_sesion();
+  };
   document.getElementById('main_logo').onclick = function () {
     location.href = `index.html`;
   };
@@ -191,4 +198,14 @@ function abrir_login(){
   document.getElementById("div_login").style.visibility = "visible";
   document.getElementById("blur").className = "blur";
    
+}
+
+function inicia_sesion(){
+  const correo = document.getElementById("input_correo").value;
+  const contra = document.getElementById("input_contra").value;
+
+  if(user.correo == correo && user.password == contra)
+    location.reload();
+  
+    
 }
