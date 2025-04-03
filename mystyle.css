@@ -106,7 +106,8 @@ li a {
     height: 8vmin;
     max-height: fit-content;
     min-width: 80px;
-    min-height: 50px;
+    min-height: 30px;
+    font-size: large;
 
     border-radius: 25px;
     font-size: 1.3vmax;
@@ -821,7 +822,13 @@ th {
 
 #login_warning
 {
-    color: #971301;
+    transition: 0.4s;
+    opacity: 0;
+    text-align: center;
+    padding: 4pxs;
+    background-color: #d62323;
+    border-style: none;
+    border-radius: 10px;
     font-weight: 500;
 }
 

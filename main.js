@@ -115,8 +115,10 @@ function login_form_ini(doHide)
   if (doHide) 
   {
     document.getElementById("div_login").style.opacity = 0;
-    document.getElementById("div_login").style.width = 0;
-
+    setTimeout(()=>{
+      document.getElementById("div_login").style.width = 0;
+  
+    },500)
   }
   const btnCancelLogin = document.getElementById('btn_cancel_login');
   const btnRegister = document.getElementById('btn_regis');
@@ -299,15 +301,18 @@ function inicia_sesion(isFromClick){
     else
     {
       txtAlert.innerHTML = "Correo o contraseña incorrectos";
+      txtAlert.style.opacity=1;
     }
   }
   else if (isFromClick)
   {
     const txtAlert = document.getElementById('login_warning');
     txtAlert.innerHTML = "Correo o contraseña incorrectos";
+    txtAlert.style.opacity=1;
   }
   setTimeout(()=>{
     txtAlert.innerHTML = "";
+    txtAlert.style.opacity=0;
 
   },2000);
 }
@@ -315,7 +320,6 @@ function inicia_sesion(isFromClick){
 function exit_login()
 {
   document.getElementById("div_login").style.opacity = 0;
-  document.getElementById("div_login").style.width = 0;
 
   document.getElementById('login_warning').innerHTML=""
 
@@ -323,4 +327,9 @@ function exit_login()
   document.getElementById("input_correo").value="";
   document.getElementById("input_contra").value="";
   document.getElementById("blur").className = "";
+
+  setTimeout(()=>{
+    document.getElementById("div_login").style.width = 0;
+
+  },500)
 }
