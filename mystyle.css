@@ -1052,6 +1052,10 @@ th {
     margin-right: auto;
     
 }
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
 
 @media only screen and (max-width: 768px) {
 
@@ -1063,7 +1067,8 @@ th {
     }
 
     .div_login {
-        overflow: scroll;
+        overflow-y: scroll;
+
         height:80%;
     }
 

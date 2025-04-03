@@ -51,7 +51,7 @@ export const REGISTER_FORM = `
         <input id="input_contra" type="password" placeholder="Contraseña...">
     <input id="input_confirm_contra" type="password" placeholder="Confirmar contraseña...">
     <br>
-
+    <br>
 
     <button class="important_button" id="btn_confirm_register">Registrarme</button>
     <p id="login_warning"></p>
@@ -60,7 +60,7 @@ export const REGISTER_FORM = `
     </div>
     <br>   
     <button class="important_button" id="btn_acceder_login">Acceder</button>
-    <br>    
+    <br>    <br>
     <button class="cancel_button" id="btn_cancel_login">Salir</button>
     
   </div>
