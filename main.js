@@ -112,7 +112,7 @@ No era el problema
 
 function login_form_ini(doHide)
 {
-  if (doHide) document.getElementById("div_login").style.visibility = "hidden";
+  if (doHide) document.getElementById("div_login").style.opacity = 0;
   const btnCancelLogin = document.getElementById('btn_cancel_login');
   const btnRegister = document.getElementById('btn_regis');
 
@@ -263,7 +263,7 @@ function checkForReturn()
 }
 
 function abrir_login(){
-  document.getElementById("div_login").style.visibility = "visible";
+  document.getElementById("div_login").style.opacity = 1;
   document.getElementById("blur").className = "blur";
    
 }
@@ -307,9 +307,11 @@ function inicia_sesion(isFromClick){
 
 function exit_login()
 {
+  document.getElementById("div_login").style.opacity = 0;
   document.getElementById('login_warning').innerHTML=""
-  document.getElementById("div_login").style.visibility = "hidden";
-  document.getElementById("blur").className = "";
+
+
   document.getElementById("input_correo").value="";
   document.getElementById("input_contra").value="";
+  document.getElementById("blur").className = "";
 }
