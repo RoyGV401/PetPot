@@ -1062,6 +1062,13 @@ th {
         padding: 0.5vh;
     }
 
+    .div_login {
+        overflow: scroll;
+        height:80%;
+    }
+
+
+
     #btn_log{
         width: 73%;
         height: 6vh;
