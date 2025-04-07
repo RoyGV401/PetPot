@@ -18,6 +18,7 @@ export const LOGIN_FORM = `
 
     <button class="important_button" id="btn_log">Acceder</button>
     <p id="login_warning"></p>
+    <a class="recuperar" id="btn_recuperar" >¿Olvidaste tu contraseña?</a>
     <div class="linea-con-texto">
       <span class="texto-centro">  O   </span>
     </div>
@@ -63,6 +64,34 @@ export const REGISTER_FORM = `
     <br>    <br>
     <button class="cancel_button" id="btn_cancel_login">Salir</button>
     
+  </div>
+  
+`;
+
+export const RECUPERAR_FORM = `
+  <div class="div_login" id="div_login">
+    <h1>Recupera tu contraseña</h1>
+    <div class="image-logo-container">
+      <div class="image">
+        <img src="resources/cabexa.png" class="avatar">
+        <img src="resources/ojos.png" id="ojos" class="ojos ojos1">
+        <img src="resources/ojos2.png" id="ojos2" class="ojos ojos2">
+      </div>
+      <div class="cortina">
+        
+      </div>
+    </div>
+    <input id="input_correo" type="text" placeholder="Correo@email.com">
+    <br>
+    <br>
+
+    <button class="important_button" id="btn_log">Enviar</button>
+    <p id="mensaje_recu"></p>
+
+    <button class="important_button" id="btn_regis">Acceder</button>
+    <br>    <br>
+
+    <button class="cancel_button" id="btn_cancel_login">Salir</button>
   </div>
   
 `;

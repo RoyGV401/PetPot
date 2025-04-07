@@ -1,4 +1,4 @@
-import { LOGIN_FORM, REGISTER_FORM } from "./login.js";
+import { LOGIN_FORM, REGISTER_FORM, RECUPERAR_FORM } from "./login.js";
 import { DOGS, CATS, OTHERS, PETS } from "./pet_list.js";
 import { createPetSelect } from "./pet_selected.js";
 import { USERS } from "./users.js";
@@ -120,7 +120,7 @@ function login_form_ini(doHide)
   }
   const btnCancelLogin = document.getElementById('btn_cancel_login');
   const btnRegister = document.getElementById('btn_regis');
-
+  const pRecuperar = document.getElementById("btn_recuperar");
   try
   {
     btnRegister.onclick = function ()
@@ -128,6 +128,12 @@ function login_form_ini(doHide)
       abrir_register();
     };
   } catch{}
+
+  try{
+    pRecuperar.onclick = function (){
+      abrir_recuperar();
+    };
+  }catch{}
 
   try
   {
@@ -323,4 +329,9 @@ function exit_login()
   document.getElementById("input_correo").value="";
   document.getElementById("input_contra").value="";
   document.getElementById("blur").className = "";
+}
+
+function abrir_recuperar(){
+  document.getElementById("extra_elements").innerHTML = RECUPERAR_FORM;
+  login_form_ini(false);
 }
