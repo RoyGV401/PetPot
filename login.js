@@ -87,8 +87,6 @@ export const RECUPERAR_FORM = `
 
     <button class="important_button" id="btn_log">Enviar</button>
     <p id="mensaje_recu"></p>
-
-    <button class="important_button" id="btn_regis">Acceder</button>
     <br>    <br>
 
     <button class="cancel_button" id="btn_cancel_login">Salir</button>
