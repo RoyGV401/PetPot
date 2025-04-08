@@ -81,12 +81,14 @@ export const RECUPERAR_FORM = `
         
       </div>
     </div>
-    <input id="input_correo" type="text" placeholder="Correo@email.com">
+    <form id="form-recuperar">
+    <input id="input_correo" type="email" name ="email" placeholder="Correo@email.com" required>
     <br>
     <br>
-
-    <button class="important_button" id="btn_log">Enviar</button>
+    
+    <button type="submit"  class="important_button">Enviar</button>
     <p id="mensaje_recu"></p>
+    </form>
     <br>    <br>
 
     <button class="cancel_button" id="btn_cancel_login">Salir</button>

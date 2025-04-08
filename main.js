@@ -47,7 +47,8 @@ function onLoad() {
   listar_mascotas();
   changeBodyToPet();
   checkForReturn();
-
+  
+ 
   try
   {
     const currentUser = localStorage.currentUser;
@@ -132,6 +133,10 @@ function login_form_ini(doHide)
   try{
     pRecuperar.onclick = function (){
       abrir_recuperar();
+      document.getElementById("form-recuperar").addEventListener('submit',function(e){
+        e.preventDefault();
+        enviar();
+      })
     };
   }catch{}
 
@@ -323,15 +328,39 @@ function exit_login()
   document.getElementById("div_login").style.opacity = 0;
   document.getElementById("div_login").style.width = 0;
 
-  document.getElementById('login_warning').innerHTML=""
+  try
+  {
+    document.getElementById("input_correo").value="";
+    document.getElementById("input_contra").value="";
+    document.getElementById('login_warning').innerHTML=""
+  } catch {}
 
 
-  document.getElementById("input_correo").value="";
-  document.getElementById("input_contra").value="";
   document.getElementById("blur").className = "";
 }
 
 function abrir_recuperar(){
   document.getElementById("extra_elements").innerHTML = RECUPERAR_FORM;
   login_form_ini(false);
+}
+
+function enviar(){
+  alert();
+  const email = document.getElementById("input_correo").value;
+  const formData = new FormData();
+  formData.append('email', email);
+
+  fetch('enviar_correo.php', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => response.text())
+  .then(data => {
+    
+    alert();
+  })
+  .catch(error => {
+ 
+    console.error(error);
+  });
 }
