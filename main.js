@@ -345,7 +345,7 @@ function abrir_recuperar(){
 }
 
 function enviar(){
-  alert();
+  
   const email = document.getElementById("input_correo").value;
   const formData = new FormData();
   formData.append('email', email);
@@ -357,7 +357,7 @@ function enviar(){
   .then(response => response.text())
   .then(data => {
     
-    alert();
+    //actualizar el GUI para poner el codigo
   })
   .catch(error => {
  
