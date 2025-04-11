@@ -2,6 +2,7 @@ import { LOGIN_FORM, REGISTER_FORM, RECUPERAR_FORM } from "./login.js";
 import { DOGS, CATS, OTHERS, PETS } from "./pet_list.js";
 import { createPetSelect } from "./pet_selected.js";
 import { USERS } from "./users.js";
+import {MENU_FORM} from "./menu.js";
 const user ={
   correo:"luis@gmail.com",
   password: "Luis1234."
@@ -48,6 +49,11 @@ function onLoad() {
   changeBodyToPet();
   checkForReturn();
   
+  document.getElementById("dropdown-menu").style.opacity = 0;
+  document.getElementById("dropdown-menu").style.height = 0;
+  document.getElementById("dropdown-menu").style.width = 0;
+    
+  
  
   try
   {
@@ -56,7 +62,15 @@ function onLoad() {
     {
       const user = USERS.find(u => u.id == currentUser);
       const btnAcceder = document.getElementById('btn_login');
-      btnAcceder.innerHTML = `¡Bienvenido ${user.nombre}!`
+      btnAcceder.id = "btn_menu";
+      btnAcceder.innerHTML = user.nombre;
+      
+      document.getElementById('btn_menu').onclick = function abrir_menu(){
+        alert();
+        document.getElementById("dropdown-menu").style.opacity = 1;
+        document.getElementById("dropdown-menu").style.height = "auto";
+        document.getElementById("dropdown-menu").style.width = "auto";
+      }
     }
 
   } catch{}
@@ -80,10 +94,12 @@ function onLoad() {
   {
     console.log(ex)
   }
+  try{
   document.getElementById("btn_login").onclick = function ()
   {
     abrir_login();
   };
+  }catch{}
 
   document.getElementById('main_logo').onclick = function () {
     location.href = `index.html`;
@@ -279,12 +295,14 @@ function checkForReturn()
 }
 
 function abrir_login(){
+  
   document.getElementById("div_login").style.opacity = 1;
   document.getElementById("div_login").style.width = "max-content";
 
   document.getElementById("blur").className = "blur";
-   
-}
+  }
+
+
 
 function abrir_register(){
   document.getElementById("extra_elements").innerHTML = REGISTER_FORM;
@@ -296,6 +314,7 @@ function inicia_sesion(isFromClick){
   const correo = document.getElementById("input_correo").value;
   const contra = document.getElementById("input_contra").value;
   const user = USERS.find(u => u.email==correo);
+  let btnAcceder = document.getElementById("btn_login");
 
   const txtAlert = document.getElementById('login_warning');
 
@@ -304,8 +323,8 @@ function inicia_sesion(isFromClick){
     if(user.email == correo && user.password == contra)
     {
       localStorage.currentUser=user.id;
- 
       location.reload();
+      
     }
     else
     {
