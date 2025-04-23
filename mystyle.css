@@ -1160,14 +1160,14 @@ th {
 
 
 }
-@media only screen and (max-width: 420px) {
+@media only screen and (max-width: 200vw) {
 
  
 
     .div_login {
         overflow-y: scroll;
         left: 38%;
-        top: 0%
+        top: 30%;
         border-radius: 0px;
         max-width: 420px;
         width: 100%;
