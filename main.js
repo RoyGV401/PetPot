@@ -1,8 +1,8 @@
-import { LOGIN_FORM, REGISTER_FORM } from "./login.js";
-import { DOGS, CATS, OTHERS, PETS } from "./pet_list.js";
-import { createPetSelect } from "./pet_selected.js";
-import { USERS } from "./users.js";
-import {loadHeader} from "./header.js";
+import { LOGIN_FORM, REGISTER_FORM } from "./scripts/login.js";
+import { DOGS, CATS, OTHERS, PETS } from "./scripts/pet_list.js";
+import { createPetSelect } from "./scripts/pet_selected.js";
+import { USERS } from "./scripts/users.js";
+import {loadHeader} from "./scripts/header.js";
 
 
 
@@ -123,8 +123,8 @@ function login_form_ini(doHide)
   {
     document.getElementById("div_login").style.opacity = 0;
     setTimeout(()=>{
-      document.getElementById("div_login").style.width = 0;
-      document.getElementById("div_login").style.height = 0;
+      document.getElementById("div_login").classList.add('uninteractable');
+
 
     },500)
   }
@@ -279,8 +279,7 @@ function checkForReturn()
 
 function abrir_login(){
   document.getElementById("div_login").style.opacity = 1;
-  document.getElementById("div_login").style.width = "max-content";
-  document.getElementById("div_login").style.height = "max-content";
+  document.getElementById("div_login").classList.remove('uninteractable');
 
   document.getElementById("blur").className = "blur";
    
@@ -338,7 +337,8 @@ function exit_login()
   document.getElementById("blur").className = "";
 
   setTimeout(()=>{
-    document.getElementById("div_login").style.width = 0;
+    document.getElementById("div_login").classList.add('uninteractable');
+
 
   },500)
 }

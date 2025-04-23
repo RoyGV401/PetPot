@@ -7,87 +7,117 @@
 
     <link rel="stylesheet" href="scss/custom.css" />
     <link rel="stylesheet" href="reusable_styles.css" />
-    <link rel="icon"type="image/png"sizes="32x32"href="resources/favicon.png"data-href-light="favicon-32x32.png"data-href-dark="favicon-32x32-dark.png"/>
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="resources/favicon.png"
+      data-href-light="favicon-32x32.png"
+      data-href-dark="favicon-32x32-dark.png"
+    />
     <link rel="stylesheet" href="mystyle.css" />
-    
+
     <script type="module" src="main.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    
   </head>
 
-  <extra id="extra_elements"></extra>
+  <div id="extra_elements"></div>
 
   <body>
     <div id="blur">
-      <!-- Aquí se coloca el header, el cual se encuentra guardado en el archivo header.js -->
-      <main_header id="mainHeader" class="sticky-header"></main_header>
+      <div class="container-fluid px-0">
+        <!-- Aquí se coloca el header, el cual se encuentra guardado en el archivo header.js -->
+        <main_header id="mainHeader" class="sticky-header"></main_header>
 
+        <section class="showcase-section">
+          <p>Encuentra tu mascota ideal hoy</p>
+        </section>
 
-      <section>
-        <p>Encuentra tu mascota ideal hoy</p>
-      </section>
+        <div id="buscar_div">
+          <table>
+            <tr>
+              <th id="search_bar">
+                <form action="">
+                  <input
+                    type="text"
+                    placeholder="Palabras clave (tranquilo, alegre, inteligente, etc...)"
+                  />
+                </form>
+              </th>
+              <th>
+                <img src="resources/lupa.png" />
+              </th>
+            </tr>
+          </table>
+        </div>
 
-      
+        <div class="main_div container-sm rounded-m px-5 pt-3">
+          <div class="container my-1 px-2">
+            <!-- Aqui ya entran los elementos de cada archivo individual -->
+            <br />
 
-      <div id="buscar_div">
-        <table>
-          <tr>
-            <th id="search_bar">
-              <form action="">
-                <input
-                  type="text"
-                  placeholder="Palabras clave (tranquilo, alegre, inteligente, etc...)"
-                />
-              </form>
-            </th>
-            <th>
-              <img src="resources/lupa.png" />
-            </th>
-          </tr>
-        </table>
-      </div>
-
-      
-      <div class="main_div">
-        <div class="main_div2">
-          <!-- Aqui ya entran los elementos de cada archivo individual -->
-          <br />
-          <div class="sub_div">
-            <div class="module mid">
-              <h2>¡Encuentra a tu nuevo mejor amigo!</h2>
+            <div class="sub_div">
+              <div class="module mid">
+                <h2>¡Encuentra a tu nuevo mejor amigo!</h2>
+              </div>
             </div>
-          </div>
-          <h2 class="big_title">Explora mascotas cerca de ti</h2>
-          <div id="bottom_buttons" class="auto_margin">
-            <table class="huge_table">
-              <tr>
-                <th>
-                  <button class="main_button" id="checkCats">
-                    <img src="resources/cat_logo_white.png" />
-                    <p>Gatos</p>
-                  </button>
-                </th>
-                <th>
-                  <button class="main_button" id="checkDogs">
-                    <img src="resources/dog_logo_white.png" />
-                    <p>Perros</p>
-                  </button>
-                </th>
-                <th>
-                  <button class="main_button" id="checkOthers">
-                    <img src="resources/turtle_logo_white.png" />
-                    <p>Otros</p>
-                  </button>
-                </th>
-              </tr>
-              <tr>
-                <td colspan="3">
-                  <button class="main_button" id="whyAdopt">
-                    ¿Porqué debería adoptar?
-                  </button>
-                </td>
-              </tr>
-            </table>
+
+            <h2 class="big_title">Explora mascotas cerca de ti</h2>
+            <div id="container" class="auto_margin">
+              <div class="container-lg">
+                <div class="row">
+                  <div class="col-sm-6 col-lg-4">
+                    <div class="py-3">
+                      <button class=" btn btn-primary  container text-white bottom-buttons" id="checkCats">
+                        <img src="resources/cat_logo_white.png" />
+                        <p class="h3 text-white fw-bold pt-4">Gatos</p>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-lg-4">
+                    <div class="py-3">
+                      <button class=" btn btn-primary  container text-white bottom-buttons" id="checkDogs">
+                        <img src="resources/dog_logo_white.png" />
+                        <p class="h3 text-white fw-bold pt-4">Perros</p>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-lg-4">
+                    <div class="py-3">
+                      <button class=" btn btn-primary  container text-white bottom-buttons" id="checkOthers">
+                        <img src="resources/turtle_logo_white.png" />
+                        <p class="h3 text-white fw-bold pt-4">Otros</p>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-lg-12">
+                    <div class="py-3">
+                      <button class=" btn  bg-astonian-purple  container text-white bottom-buttons" id="whyAdopt">
+                        <p class="h1 text-white fw-bold pt-4">¿Porqué debería adoptar?</p>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <table class="huge_table">
+                <tr>
+                  <th>
+                    
+                  </th>
+                  <th>
+                    
+                  </th>
+                  <th>
+                    
+                  </th>
+                </tr>
+                <tr>
+                  <td colspan="3">
+                   
+                  </td>
+                </tr>
+              </table>
+            </div>
           </div>
         </div>
       </div>
