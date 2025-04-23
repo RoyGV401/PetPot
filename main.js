@@ -2,6 +2,12 @@ import { LOGIN_FORM, REGISTER_FORM } from "./login.js";
 import { DOGS, CATS, OTHERS, PETS } from "./pet_list.js";
 import { createPetSelect } from "./pet_selected.js";
 import { USERS } from "./users.js";
+import {loadHeader} from "./header.js";
+
+
+
+
+
 const user ={
   correo:"luis@gmail.com",
   password: "Luis1234."
@@ -47,6 +53,7 @@ function onLoad() {
   listar_mascotas();
   changeBodyToPet();
   checkForReturn();
+  loadHeader();
 
   try
   {
@@ -117,7 +124,8 @@ function login_form_ini(doHide)
     document.getElementById("div_login").style.opacity = 0;
     setTimeout(()=>{
       document.getElementById("div_login").style.width = 0;
-  
+      document.getElementById("div_login").style.height = 0;
+
     },500)
   }
   const btnCancelLogin = document.getElementById('btn_cancel_login');
@@ -272,6 +280,7 @@ function checkForReturn()
 function abrir_login(){
   document.getElementById("div_login").style.opacity = 1;
   document.getElementById("div_login").style.width = "max-content";
+  document.getElementById("div_login").style.height = "max-content";
 
   document.getElementById("blur").className = "blur";
    

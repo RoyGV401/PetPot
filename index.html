@@ -2,63 +2,32 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Petpot</title>
-    <script type="module" src="main.js"></script>
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="resources/favicon.png"
-      data-href-light="favicon-32x32.png"
-      data-href-dark="favicon-32x32-dark.png"
-    />
+
+    <link rel="stylesheet" href="scss/custom.css" />
+    <link rel="stylesheet" href="reusable_styles.css" />
+    <link rel="icon"type="image/png"sizes="32x32"href="resources/favicon.png"data-href-light="favicon-32x32.png"data-href-dark="favicon-32x32-dark.png"/>
     <link rel="stylesheet" href="mystyle.css" />
+    
+    <script type="module" src="main.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    
   </head>
 
   <extra id="extra_elements"></extra>
 
   <body>
     <div id="blur">
-    
-      <header>  
-        <table>
-          <tr>
-            <th>
-              <img id="main_logo" src="resources/logo.png" alt="logo" />
-            </th>
-            <th id="access_button_th">
-              <div class="dropdown">
-                <button class="main_button" id="btn_login">Acceder</button>
-                <div id="dropdown-menu" class="dropdown-content">
-                  <a href="#">Tus mascotas</a>
-                  <br>
-                  <a href="#">Configuración</a>
-                  <br>
-                  <a href="#jijija">Salir</a>
-                </div>
-              </div>
-            </th>
-          </tr>
-        </table>
-      </header>
+      <!-- Aquí se coloca el header, el cual se encuentra guardado en el archivo header.js -->
+      <main_header id="mainHeader" class="sticky-header"></main_header>
 
-      <nav>
-        <ul>
-          <li><a>Busqueda por ubicación</a></li>
-          <li><a>Soy rescatista</a></li>
-          <li><a>Busco Adoptar</a></li>
-          <li><a>Quiero Ayudar</a></li>
-          <li><a>¿Quiénes Somos?</a></li>
-        </ul>
-        <p class="menu">Menú</p>
-      </nav>
 
       <section>
         <p>Encuentra tu mascota ideal hoy</p>
       </section>
+
+      
 
       <div id="buscar_div">
         <table>
@@ -77,8 +46,11 @@
           </tr>
         </table>
       </div>
+
+      
       <div class="main_div">
         <div class="main_div2">
+          <!-- Aqui ya entran los elementos de cada archivo individual -->
           <br />
           <div class="sub_div">
             <div class="module mid">
@@ -87,25 +59,35 @@
           </div>
           <h2 class="big_title">Explora mascotas cerca de ti</h2>
           <div id="bottom_buttons" class="auto_margin">
-              <table class="huge_table">
-                  <tr>
-                      <th>
-                          <button class="main_button" id="checkCats"><img src="resources/cat_logo_white.png"><p>Gatos</p></button>
-                      </th>
-                      <th>
-                          <button class="main_button" id="checkDogs" ><img src="resources/dog_logo_white.png"><p>Perros</p></button>
-                      </th>
-                      <th>
-                          <button class="main_button" id="checkOthers"><img src="resources/turtle_logo_white.png"><p>Otros</p></button>
-                      </th>
-                    
-                  </tr>
-                  <tr>
-                      <td colspan="3">
-                          <button class="main_button" id="whyAdopt">¿Porqué debería adoptar?</button>
-                      </td>
-                  </tr>
-              </table>
+            <table class="huge_table">
+              <tr>
+                <th>
+                  <button class="main_button" id="checkCats">
+                    <img src="resources/cat_logo_white.png" />
+                    <p>Gatos</p>
+                  </button>
+                </th>
+                <th>
+                  <button class="main_button" id="checkDogs">
+                    <img src="resources/dog_logo_white.png" />
+                    <p>Perros</p>
+                  </button>
+                </th>
+                <th>
+                  <button class="main_button" id="checkOthers">
+                    <img src="resources/turtle_logo_white.png" />
+                    <p>Otros</p>
+                  </button>
+                </th>
+              </tr>
+              <tr>
+                <td colspan="3">
+                  <button class="main_button" id="whyAdopt">
+                    ¿Porqué debería adoptar?
+                  </button>
+                </td>
+              </tr>
+            </table>
           </div>
         </div>
       </div>

@@ -1,0 +1,10 @@
+   <nav>
+        <ul>
+          <li class="li_header"><a>Busqueda por ubicación</a></li>
+          <li class="li_header"><a>Soy rescatista</a></li>
+          <li class="li_header"><a>Busco Adoptar</a></li>
+          <li class="li_header"><a>Quiero Ayudar</a></li>
+          <li class="li_header"><a>¿Quiénes Somos?</a></li>
+        </ul>
+        <p class="menu">Menú</p>
+      </nav>

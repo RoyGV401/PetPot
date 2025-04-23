@@ -1,0 +1,7 @@
+<div id="dropdown-menu" class="dropdown-content">
+              <a href="#">Tus mascotas</a>
+              <br>
+              <a href="#">Configuración</a>
+              <br>
+              <a href="#jijija">Salir</a>
+            </div>

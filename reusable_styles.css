@@ -1,0 +1,30 @@
+/* EN ESTE ARCHIVO VAN UNICAMENTE LOS ESTILOS CSS QUE SEAN REUTILIZABLES O NO ESPECIFICOS PARA UN UNICO ELEMENTO*/
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+.hov-txt-white-to-brown:hover
+{
+    color: brown;
+}
+
+.hov-txt-white-to-brown
+{
+    color: white;
+}
+
+.sticky-header
+{
+    
+        position: sticky;
+        top: 0;
+        z-index: 2;
+}   
+
+.generic-transition-1
+{
+    -webkit-transition: 0.2s;
+    transition: 0.2s;
+}
+
+.uninteractable
+{
+    pointer-events: none;
+}

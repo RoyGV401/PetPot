@@ -1,48 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Petpot</title>
-   <script src="main.js" type="module"></script>
-    <link
-    rel="icon"
-    type="image/png"
-    sizes="32x32"
-    href="resources/favicon.png"
-    data-href-light="favicon-32x32.png"
-    data-href-dark="favicon-32x32-dark.png"
-    >
-<link rel="stylesheet" href="mystyle.css">
-</head>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <title>Petpot</title>
+    
+        <link rel="stylesheet" href="scss/custom.css" />
+        <link rel="stylesheet" href="reusable_styles.css" />
+        <link rel="icon"type="image/png"sizes="32x32"href="resources/favicon.png"data-href-light="favicon-32x32.png"data-href-dark="favicon-32x32-dark.png"/>
+        <link rel="stylesheet" href="mystyle.css" />
+        
+        <script type="module" src="main.js"></script>
+        <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        
+      </head>
 
 <extra id="extra_elements"></extra>
 
 
 <body>
     <div id="blur">
-        <header>
-            <table>
-            <tr>
-                <th>
-                    <img id="main_logo" src="resources/logo.png" alt="logo" />
-                </th>
-                <th id="access_button_th">
-                    <button class="main_button" id="btn_login">Acceder</button>
-                </th>
-            </tr>
-            </table>
-        </header>
-        <nav>
-            <ul>
-                <li><a>Busqueda por ubicación</a></li>
-                <li><a>Soy rescatista</a></li>
-                <li><a>Busco Adoptar</a></li>
-                <li><a>Quiero Ayudar</a></li>
-                <li><a>¿Quiénes Somos?</a></li>
-            </ul>
-            <p class="menu">Menú</p>
-        </nav>
+         <!-- Aquí se coloca el header, el cual se encuentra guardado en el archivo header.js -->
+        <main_header id="mainHeader" class="sticky-header"></main_header>
+
 
         <section>
             <p>Gatos</p>

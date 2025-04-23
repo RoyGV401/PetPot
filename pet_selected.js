@@ -1,3 +1,5 @@
+import { HEADER } from "./header.js";
+
 export function createPetSelect(pet) {
   
   const name = pet.name;
@@ -11,29 +13,7 @@ export function createPetSelect(pet) {
   const descripcion = pet.descripcion;
 
   const result = `
-    <header>
-      <table>
-        <tr>
-          <th>
-            <img id="main_logo" src="resources/logo.png" alt="logo" />
-          </th>
-          <th id="access_button_th">
-            <button class="main_button" id="btn_login">Acceder</button>
-          </th>
-        </tr>
-      </table>
-    </header>
-
-    <nav>
-      <ul>
-        <li><a>Busqueda por ubicación</a></li>
-        <li><a>Soy rescatista</a></li>
-        <li><a>Busco Adoptar</a></li>
-        <li><a>Quiero Ayudar</a></li>
-        <li><a>¿Quiénes Somos?</a></li>
-      </ul>
-      <p class="menu">Menú</p>
-    </nav>
+    <main_header id="mainHeader" class="sticky-header">${HEADER}</main_header>
     <section>
       <p></p>
     </section>

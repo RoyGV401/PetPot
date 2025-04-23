@@ -5,7 +5,7 @@ body {
 }
 
 header {
-    background-color: rgb(253 236 220);
+    background-color: #fdecdc;
     height: 7vw;
     padding: 0%;
     border: 0;
@@ -45,11 +45,6 @@ nav {
     max-height: max-content;
 }
 
-nav li a:hover {
-    background-color: rgb(245 76 25);
-    transform: scale(20%);
-    translate: (2s);
-}
 
 ul {
     float: right;
@@ -59,11 +54,11 @@ ul {
     margin: 0;
 }
 
-li {
+.li_header {
     float: left;
 }
 
-li a {
+.li_header a {
     border-radius: 2vmax / 3vmax;
     margin-left: 5vmax;
     margin-right: 0.01vmax;
@@ -112,7 +107,7 @@ li a {
     border-radius: 25px;
     font-size: 1.3vmax;
     border-style: hidden;
-    background-color: rgb(242, 59, 13);
+    background-color: #f23b0d;
     padding: 0.4vw;
 }
 
@@ -236,6 +231,7 @@ aside p {
         font-size: 2.4vmin;
     }
 
+  
     header p {
         height: 30%;
         padding-left: 3vmax;
@@ -1090,6 +1086,15 @@ th {
     background: transparent; /* make scrollbar transparent */
 }
 
+.user-logged-options
+    {
+        
+        position: fixed;
+        left: 99%;
+        transform: translate(-99%, 0);
+        z-index: 4;
+    }
+
 @media only screen and (max-width: 768px) {
 
     .div_login input{
@@ -1098,6 +1103,9 @@ th {
         width: 70%;
         padding: 0.5vh;
     }
+
+
+    
 
     .div_login {
         overflow-y: scroll;
@@ -1142,9 +1150,14 @@ th {
         font-size: larger;
         margin-bottom: 0;
     }
-
     
+
 
 
 }
 
+
+.basic-shadow
+{
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.342);
+}
