@@ -14,9 +14,9 @@ export function createPetSelect(pet) {
 
   const result = `
     <main_header id="mainHeader" class="sticky-header">${HEADER}</main_header>
-    <section>
-      <p></p>
-    </section>
+     <section class="showcase-section">
+          <p>Encuentra tu mascota ideal hoy</p>
+        </section>
     <div id="buscar_div">
       <table>
         <tr>

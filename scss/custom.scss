@@ -2,8 +2,9 @@
 @import "../modules/bootstrap/scss/variables";
 
 $custom-colors:(
-    "orange-alpha":rgb(245 133 73),
-    "astonian-purple":rgb(112, 42, 170)
+    "orange-alpha":#f58549,
+    "astonian-purple":#702aaa,
+    "obish-gray":#272e38
 );
 
 $theme-colors: map-merge($theme-colors,$custom-colors);
