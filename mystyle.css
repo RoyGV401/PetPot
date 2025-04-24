@@ -1074,7 +1074,6 @@ th {
 
 .div_login{
     border-style: none;
-    ---background-image: url(resources/patas-removebg-preview.png);
     background-color: rgb(243, 131, 67);
     width: max-content;
     text-align: center;
@@ -1082,11 +1081,7 @@ th {
     padding-top: 1%;
     padding-left: 2vw;
     padding-right: 2vw;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 25%;
+
     transition: 0.3s;
     font-size: small;
     align-content: center;

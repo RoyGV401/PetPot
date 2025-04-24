@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <title>Petpot</title>
+      <link rel="stylesheet" href="scss/custom.css" />
+      <link rel="stylesheet" href="reusable_styles.css" />
+      <link
+         rel="icon"
+         type="image/png"
+         sizes="32x32"
+         href="resources/favicon.png"
+         data-href-light="favicon-32x32.png"
+         data-href-dark="favicon-32x32-dark.png"
+         />
+      <link rel="stylesheet" href="mystyle.css" />
+      <script type="module" src="main.js"></script>
+      <script src="modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+   </head>
+   <div id="extra_elements"></div>
+   <body>
+      <div id="blur">
+         <div class="container-fluid px-0">
+            <!-- Aquí se coloca el header, el cual se encuentra guardado en el archivo header.js -->
+            <main_header id="mainHeader" class="sticky-header"></main_header>
+            <section class="showcase-section">
+               <p>Encuentra tu mascota ideal hoy</p>
+            </section>
+
+            <div id="buscar_div">
+               <table>
+                  <tr>
+                     <th id="search_bar">
+                        <form action="">
+                           <input
+                              type="text"
+                              placeholder="Palabras clave (tranquilo, alegre, inteligente, etc...)"
+                              />
+                        </form>
+                     </th>
+                     <th>
+                        <img src="resources/lupa.png" />
+                     </th>
+                  </tr>
+               </table>
+            </div>
+
+            <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Launch demo modal
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Inicio de sesión</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        
+        <div class="modal-body">
+            <div class="div_login" id="div_login">
+                <h1>Inicio de sesión</h1>
+                <div class="image-logo-container">
+                  <div class="image">
+                    <img src="resources/cabexa.png" class="avatar">
+                    <img src="resources/ojos.png" id="ojos" class="ojos ojos1">
+                    <img src="resources/ojos2.png" id="ojos2" class="ojos ojos2">
+                  </div>
+                  <div class="cortina">
+                    
+                  </div>
+                </div>
+                <input id="input_correo" type="text" placeholder="Correo@email.com">
+                <input id="input_contra" type="password" placeholder="Contraseña">
+                <br>
+                <br>
+            
+                <button class="important_button" id="btn_log">Acceder</button>
+                <p id="login_warning"></p>
+                <a class="recuperar" id="btn_recuperar" >¿Olvidaste tu contraseña?</a>
+                <div class="linea-con-texto">
+                  <span class="texto-centro">  O   </span>
+                </div>
+                <button class="important_button" id="btn_regis">Registro</button>
+                <br>    <br>
+            
+                <button class="cancel_button" id="btn_cancel_login">Salir</button>
+              </div>
+              
+        </div>
+        
+        <div class="modal-footer">
+          <button id="btn_cancel_login" data-bs-dismiss="modal">Salir</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  
+         </div>
+      </div>
+   </body>
+</html>

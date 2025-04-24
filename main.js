@@ -157,7 +157,7 @@ function login_form_ini(doHide)
   try
   {
     document.getElementById("btn_acceder_login").onclick = function () {
-      document.getElementById('extra_elements').innerHTML = LOGIN_FORM;
+     s document.getElementById('extra_elements').innerHTML = LOGIN_FORM;
       inicia_sesion(false);
       login_form_ini(false);
 
