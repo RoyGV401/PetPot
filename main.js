@@ -165,54 +165,64 @@ function login_form_ini(doHide)
   } catch{}
 }
 
-function listar_mascotas(){
+function listar_mascotas() {
   let dmain;
   let mascotas;
-  if(document.location.href.includes("perros.html")){
+  if (document.location.href.includes("perros.html")) {
     dmain = document.getElementById("main_div_perros");
-    
-    mascotas = DOGS; 
-
-  }else if(document.location.href.includes("gatos.html")){
+    mascotas = DOGS;
+  } else if (document.location.href.includes("gatos_new.html")) {
     dmain = document.getElementById("main_div_gatos");
-
-    mascotas= CATS;
-
-  }else{
+    mascotas = CATS;
+  } else {
     dmain = document.getElementById("main_div_otros");
-    mascotas= OTHERS;
+    mascotas = OTHERS;
   }
-  if (dmain == undefined) return;
+  if (!dmain) return;
 
-  let i =1;
-  mascotas.forEach(mascota => {
-    
-    let cuadro = document.createElement("div");
-    cuadro.id = "div_perro";
-    cuadro.innerHTML = `
-    <img src = "${mascota.img}" id="${mascota.id}" class="imgPetSelect">
-    <h1>${mascota.name}</h1>
-    <hr>
-      <div class="perso"><h2>Personalidad</h2>
-      <li>${mascota.personalidad[0]}</li>
-      ${mascota.personalidad[1] ? `<li>${mascota.personalidad[1]}</li>` : ""}
-      ${mascota.personalidad[2] ? `<li>${mascota.personalidad[2]}</li>` : ""}
+  // Clear previous content
+
+  // Create a responsive row container
+  const row = document.createElement("div");
+  row.className = "row g-4"; // gap between cards
+
+  mascotas.forEach((mascota) => {
+    const col = document.createElement("div");
+    col.className = "col-sm-12 col-md-4 mt-3 col-lg-3"; // adjust based on screen size
+
+    const card = document.createElement("div");
+    card.className = "card h-100 w-100 p-4 shadow-sm";
+
+    card.innerHTML = `
+      <img src="${mascota.img}" class="card-img-top img-fluid rounded imgPetSelect" id="${mascota.id}"  alt="${mascota.name}">
+      <div class="card-body d-flex flex-column">
+        <h5 class="card-title text-center">${mascota.name}</h5>
+        <hr>
+        <div class="mb-2">
+          <h6 class="fw-bold">Personalidad:</h6>
+          <ul class="ps-3 mb-2">
+            <li>${mascota.personalidad[0]}</li>
+            ${mascota.personalidad[1] ? `<li>${mascota.personalidad[1]}</li>` : ""}
+            ${mascota.personalidad[2] ? `<li>${mascota.personalidad[2]}</li>` : ""}
+          </ul>
+        </div>
+        <p class="mb-1"><strong>Sexo:</strong> ${mascota.sexo}</p>
+        <p class="mb-1"><strong>Tamaño:</strong> ${mascota.Tamano}</p>
+        <p class="mb-1"><strong>Color:</strong> ${mascota.color}</p>
+        <p class="mb-3"><strong>Edad:</strong> ${mascota.edad}</p>
+        <div class="mt-auto">
+          <p class="fw-semibold text-muted"><strong>Cercanía:</strong> [Aquí puedes agregar distancia o zona]</p>
+        </div>
       </div>
-    <div class="flexer"> <h2>Sexo: </h2><h6>${mascota.sexo}</h6></div>
-    <div class="flexer"><h2>Tamaño: </h2><h6>${mascota.Tamano}</h6></div>
-    <div class="flexer"><h2>Color: </h2><h6>${mascota.color}</h6></div>
-    <div class="flexer"><h2>Edad: </h2><h6>${mascota.edad}</h6></div>
-    <br>
-    <div class="flexer"><h2>Cercanía: </h2></div>
-  `;
+    `;
 
-
-    dmain.appendChild(cuadro);
-
-    i++;
+    col.appendChild(card);
+    dmain.appendChild(col);
   });
 
+  dmain.appendChild(row);
 }
+
 
 function changeBodyToPet()
 {

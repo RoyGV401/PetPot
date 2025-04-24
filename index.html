@@ -1,126 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Petpot</title>
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <title>Petpot</title>
+      <link rel="stylesheet" href="scss/custom.css" />
+      <link rel="stylesheet" href="reusable_styles.css" />
+      <link
+         rel="icon"
+         type="image/png"
+         sizes="32x32"
+         href="resources/favicon.png"
+         data-href-light="favicon-32x32.png"
+         data-href-dark="favicon-32x32-dark.png"
+         />
+      <link rel="stylesheet" href="mystyle.css" />
+      <script type="module" src="main.js"></script>
+      <script src="modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+   </head>
+   <div id="extra_elements"></div>
+   <body>
+      <div id="blur">
+         <div class="container-fluid px-0">
+            <!-- Aquí se coloca el header, el cual se encuentra guardado en el archivo header.js -->
+            <main_header id="mainHeader" class="sticky-header"></main_header>
+            <section class="showcase-section">
+               <p>Encuentra tu mascota ideal hoy</p>
+            </section>
 
-    <link rel="stylesheet" href="scss/custom.css" />
-    <link rel="stylesheet" href="reusable_styles.css" />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="resources/favicon.png"
-      data-href-light="favicon-32x32.png"
-      data-href-dark="favicon-32x32-dark.png"
-    />
-    <link rel="stylesheet" href="mystyle.css" />
-
-    <script type="module" src="main.js"></script>
-    <script src="modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  </head>
-
-  <div id="extra_elements"></div>
-
-  <body>
-    <div id="blur">
-      <div class="container-fluid px-0">
-        <!-- Aquí se coloca el header, el cual se encuentra guardado en el archivo header.js -->
-        <main_header id="mainHeader" class="sticky-header"></main_header>
-
-        <section class="showcase-section">
-          <p>Encuentra tu mascota ideal hoy</p>
-        </section>
-
-        <div id="buscar_div">
-          <table>
-            <tr>
-              <th id="search_bar">
-                <form action="">
-                  <input
-                    type="text"
-                    placeholder="Palabras clave (tranquilo, alegre, inteligente, etc...)"
-                  />
-                </form>
-              </th>
-              <th>
-                <img src="resources/lupa.png" />
-              </th>
-            </tr>
-          </table>
-        </div>
-
-        <div class="main_div container-sm rounded-m px-5 pt-3">
-          <div class="container my-1 px-2">
-            <!-- Aqui ya entran los elementos de cada archivo individual -->
-            <br />
-
-            <div class="sub_div">
-              <div class="module mid">
-                <h2>¡Encuentra a tu nuevo mejor amigo!</h2>
-              </div>
+            <div id="buscar_div">
+               <table>
+                  <tr>
+                     <th id="search_bar">
+                        <form action="">
+                           <input
+                              type="text"
+                              placeholder="Palabras clave (tranquilo, alegre, inteligente, etc...)"
+                              />
+                        </form>
+                     </th>
+                     <th>
+                        <img src="resources/lupa.png" />
+                     </th>
+                  </tr>
+               </table>
             </div>
+            <div class="main_div container-sm rounded-m px-3 pt-3">
 
-            <h2 class="big_title">Explora mascotas cerca de ti</h2>
-            <div id="container" class="auto_margin">
-              <div class="container-lg">
-                <div class="row">
-                  <div class="col-sm-6 col-lg-4">
-                    <div class="py-3">
-                      <button class=" btn btn-primary  container text-white bottom-buttons" id="checkCats">
-                        <img src="resources/cat_logo_white.png" />
-                        <p class="h3 text-white fw-bold pt-4">Gatos</p>
-                      </button>
-                    </div>
+            <div class="container my-1 px-2">
+
+                <br />
+                  <div class="container-xxl sub_div_1 py-3">
+                     <div id="carouselExample" class="carousel slide">
+                        <div class="carousel-inner rounded">
+                           <div class="carousel-item active">
+                              <div class="row g-0 align-items-center">
+                                 <div class="col-md-6">
+                                    <img
+                                       src="resources/chinese_2.png"
+                                       class="img-fluid w-100 h-100 object-fit-cover"
+                                       style="max-height: 400px"
+                                       alt="La China"
+                                       />
+                                 </div>
+                                 <div
+                                    class="col-md-6 bg-obish-gray text-white p-4 d-flex flex-column justify-content-center"
+                                    style="min-height: 400px"
+                                    >
+                                    <h2 class="fw-bold h2">
+                                       ¡Hola! soy <span class="text-warning">La China</span>
+                                    </h2>
+                                    <p class="h5 py-2">
+                                       Hola, mi nombre es La China y estoy buscando un hogar
+                                       lleno de amor. Tengo 8 años, soy alegre, energética y
+                                       muy amigable, ideal para quienes buscan una compañera
+                                       fiel y cariñosa. Me encanta jugar, recibir cariño y
+                                       pasar tiempo con mi familia. Si buscas una mascota
+                                       amorosa y leal, ¡soy la indicada!
+                                    </p>
+                                    <a
+                                       href="#"
+                                       class="btn btn-primary btn-lg text-white fw-bolder align-self-start"
+                                       >Adóptame</a
+                                       >
+                                 </div>
+                              </div>
+                           </div>
+
+                           <div class="carousel-item">
+                              <div class="row g-0 align-items-center">
+                                 <div class="col-md-6">
+                                    <img
+                                       src="resources/chinese_3.jpg"
+                                       class="img-fluid w-100 h-100 object-fit-cover"
+                                       style="max-height: 400px"
+                                       alt="La China"
+                                       />
+                                 </div>
+                                 <div
+                                    class="col-md-6 bg-obish-gray text-white p-4 d-flex flex-column justify-content-center"
+                                    style="min-height: 400px"
+                                    >
+                                    <h2 class="fw-bold h2">
+                                       ¡Hola! soy <span class="text-warning">La China</span>
+                                    </h2>
+                                    <p class="h5 py-2">Lorem Ipsum es mi sooos.</p>
+                                    <a
+                                       href="#"
+                                       class="btn btn-primary btn-lg text-white fw-bolder align-self-start"
+                                       >Adóptame</a
+                                       >
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+
+                        <button
+                           class="carousel-control-prev main-carousel-control-prev"
+                           type="button"
+                           data-bs-target="#carouselExample"
+                           data-bs-slide="prev"
+                           >
+                        <span
+                        class="bi bi-arrow-left-circle-fill h1"
+                        aria-hidden="true"
+                           ></span>
+                        <span class="visually-hidden">Anterior</span>
+                        </button>
+                        <button
+                           class="carousel-control-next main-carousel-control-next"
+                           type="button"
+                           data-bs-target="#carouselExample"
+                           data-bs-slide="next"
+                           >
+                        <span
+                           class="bi bi-arrow-right-circle-fill h1"
+                           aria-hidden="true"
+                           ></span>
+                        <span class="visually-hidden">Siguiente</span>
+                        </button>
+                     </div>
                   </div>
-                  <div class="col-sm-6 col-lg-4">
-                    <div class="py-3">
-                      <button class=" btn btn-primary  container text-white bottom-buttons" id="checkDogs">
-                        <img src="resources/dog_logo_white.png" />
-                        <p class="h3 text-white fw-bold pt-4">Perros</p>
-                      </button>
-                    </div>
+                  
+                  <br />
+                  <div class="container-xxl sub_div py-3">
+                     <div class="module mid">
+                        <h2>¡Encuentra a tu nuevo mejor amigo!</h2>
+                     </div>
                   </div>
-                  <div class="col-sm-6 col-lg-4">
-                    <div class="py-3">
-                      <button class=" btn btn-primary  container text-white bottom-buttons" id="checkOthers">
-                        <img src="resources/turtle_logo_white.png" />
-                        <p class="h3 text-white fw-bold pt-4">Otros</p>
-                      </button>
-                    </div>
+                  <br>
+                  <h2 class="big_title">¡Explora mascotas cerca!</h2>
+                  <div id="container" class="auto_margin">
+                     <div class="container-lg">
+                        <div class="row">
+                           <div class="col-sm-6 col-lg-4">
+                              <div class="py-3">
+                                 <button
+                                    class="btn btn-primary container text-white bottom-buttons"
+                                    id="checkCats"
+                                    >
+                                    <img src="resources/cat_logo_white.png" />
+                                    <p class="h2 text-white fw-bold pt-4">Gatos</p>
+                                 </button>
+                              </div>
+                           </div>
+                           <div class="col-sm-6 col-lg-4">
+                              <div class="py-3">
+                                 <button
+                                    class="btn btn-primary container text-white bottom-buttons"
+                                    id="checkDogs"
+                                    >
+                                    <img src="resources/dog_logo_white.png" />
+                                    <p class="h2 text-white fw-bold pt-4">Perros</p>
+                                 </button>
+                              </div>
+                           </div>
+                           <div class="col-sm-6 col-lg-4">
+                              <div class="py-3">
+                                 <button
+                                    class="btn btn-primary container text-white bottom-buttons"
+                                    id="checkOthers"
+                                    >
+                                    <img src="resources/turtle_logo_white.png" />
+                                    <p class="h2 text-white fw-bold pt-4">Otros</p>
+                                 </button>
+                              </div>
+                           </div>
+                           <div class="col-sm-6 col-lg-12">
+                              <div class="py-3">
+                                 <button
+                                    class="btn bg-astonian-purple container text-white bottom-buttons"
+                                    id="whyAdopt"
+                                    >
+                                    <p class="h1 text-white fw-bold pt-4">
+                                       ¿Porqué debería adoptar?
+                                    </p>
+                                 </button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <table class="huge_table">
+                        <tr>
+                           <th></th>
+                           <th></th>
+                           <th></th>
+                        </tr>
+                        <tr>
+                           <td colspan="3"></td>
+                        </tr>
+                     </table>
                   </div>
-                  <div class="col-sm-6 col-lg-12">
-                    <div class="py-3">
-                      <button class=" btn  bg-astonian-purple  container text-white bottom-buttons" id="whyAdopt">
-                        <p class="h1 text-white fw-bold pt-4">¿Porqué debería adoptar?</p>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <table class="huge_table">
-                <tr>
-                  <th>
-                    
-                  </th>
-                  <th>
-                    
-                  </th>
-                  <th>
-                    
-                  </th>
-                </tr>
-                <tr>
-                  <td colspan="3">
-                   
-                  </td>
-                </tr>
-              </table>
+               </div>
             </div>
-          </div>
-        </div>
+         </div>
       </div>
-    </div>
-  </body>
+   </body>
 </html>
