@@ -171,7 +171,7 @@ function listar_mascotas() {
   if (document.location.href.includes("perros.html")) {
     dmain = document.getElementById("main_div_perros");
     mascotas = DOGS;
-  } else if (document.location.href.includes("gatos_new.html")) {
+  } else if (document.location.href.includes("gatos.html")) {
     dmain = document.getElementById("main_div_gatos");
     mascotas = CATS;
   } else {
@@ -188,10 +188,10 @@ function listar_mascotas() {
 
   mascotas.forEach((mascota) => {
     const col = document.createElement("div");
-    col.className = "col-sm-12 col-md-4 mt-3 col-lg-3"; // adjust based on screen size
+    col.className = "col-sm-12 col-md-4 mt-3 col-lg-4"; // adjust based on screen size
 
     const card = document.createElement("div");
-    card.className = "card h-100 w-100 p-4 shadow-sm";
+    card.className = "card h-100 max-height-1 w-100 p-4 shadow-sm";
 
     card.innerHTML = `
       <img src="${mascota.img}" class="card-img-top img-fluid rounded imgPetSelect" id="${mascota.id}"  alt="${mascota.name}">
@@ -201,9 +201,9 @@ function listar_mascotas() {
         <div class="mb-2">
           <h6 class="fw-bold">Personalidad:</h6>
           <ul class="ps-3 mb-2">
-            <li>${mascota.personalidad[0]}</li>
-            ${mascota.personalidad[1] ? `<li>${mascota.personalidad[1]}</li>` : ""}
-            ${mascota.personalidad[2] ? `<li>${mascota.personalidad[2]}</li>` : ""}
+            <li>- ${mascota.personalidad[0]}</li>
+            ${mascota.personalidad[1] ? `<li>- ${mascota.personalidad[1]}</li>` : ""}
+            ${mascota.personalidad[2] ? `<li>- ${mascota.personalidad[2]}</li>` : ""}
           </ul>
         </div>
         <p class="mb-1"><strong>Sexo:</strong> ${mascota.sexo}</p>

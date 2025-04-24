@@ -1,100 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <title>Petpot</title>
-    
-        <link rel="stylesheet" href="scss/custom.css" />
-        <link rel="stylesheet" href="reusable_styles.css" />
-        <link rel="icon"type="image/png"sizes="32x32"href="resources/favicon.png"data-href-light="favicon-32x32.png"data-href-dark="favicon-32x32-dark.png"/>
-        <link rel="stylesheet" href="mystyle.css" />
-        
-        <script type="module" src="main.js"></script>
-        <script src="modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        
-      </head>
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <title>Petpot</title>
+      <link rel="stylesheet" href="scss/custom.css" />
+      <link rel="stylesheet" href="reusable_styles.css" />
+      <link rel="stylesheet" href="mystyle.css" />
+      <link
+         rel="icon"
+         type="image/png"
+         sizes="32x32"
+         href="resources/favicon.png"
+         data-href-light="favicon-32x32.png"
+         data-href-dark="favicon-32x32-dark.png"
+      />
+      <script type="module" src="main.js"></script>
+      <script src="modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+   </head>
+   <extra id="extra_elements"></extra>
 
-<extra id="extra_elements"></extra>
+   <body>
+      <div id="blur">
+         <!-- Header -->
+         <main_header id="mainHeader" class="sticky-header"></main_header>
 
-<body>
-    <div id="blur">
-         <!-- Aquí se coloca el header, el cual se encuentra guardado en el archivo header.js -->
-        <main_header id="mainHeader" class="sticky-header"></main_header>
+         <!-- Section: Showcase -->
+         <section class="showcase-section text-center py-4">
+            <p class="h3">Otros</p>
+            <img src="resources/turtle_logo_white.png" id="img_logo_section" alt="">
+         </section>
 
-
-        <section class="showcase-section">
-            <p>Otros</p>
-            <img src="resources/turtle_logo_white.png" alt="">
-        </section>
-
-        <div id="buscar_div">
+         <div id="buscar_div">
             <table>
-                <tr>
-                    <th id="search_bar">
-                        <form action="">
-                            <input type="text" placeholder="Palabras clave (tranquilo, alegre, inteligente, etc...)">
-                        </form>
-                    </th>
-                    <th>
-                        <img src="resources/lupa.png">
-                    </th>
-                </tr>
+               <tr>
+                  <th id="search_bar">
+                     <form action="">
+                        <input
+                           type="text"
+                           placeholder="Palabras clave (tranquilo, alegre, inteligente, etc...)"
+                           />
+                     </form>
+                  </th>
+                  <th>
+                     <img src="resources/lupa.png" />
+                  </th>
+               </tr>
             </table>
-        </div>
+         </div>
 
-        <div  class= "main_div_perros" id="main_div_otros">
+         <div class="main_div container-sm rounded-m px-3 pt-3">
+
+            <div class="container my-1 px-2">
+               <div class="container my-4" >
+                  <div class="row" id="main_div_otros">
+                     <div class="col-sm-12 col-md-4 col-lg-4 h-100">
+                        <div class="card h-100 max-height-1 p-4 m-3 shadow-sm">
+                           <!-- Sexo -->
+                           <div class="mb-3">
+                              <p class="fw-bold h5 pt-3 px-1">Sexo:</p>
+                              <div class="form-check">
+                                 <input class="form-check-input" type="radio" name="sexo" id="macho">
+                                 <label class="form-check-label" for="macho">Macho</label>
+                              </div>
+                              <div class="form-check">
+                                 <input class="form-check-input" type="radio" name="sexo" id="hembra">
+                                 <label class="form-check-label" for="hembra">Hembra</label>
+                              </div>
+                           </div>
+         
+                           <!-- Tamaño -->
+                           <div class="mb-3">
+                              <p class="fw-bold h5 pt-3 px-1">Tamaño:</p>
+                              <div class="form-check">
+                                 <input class="form-check-input" type="radio" name="tamano" id="pequeno">
+                                 <label class="form-check-label" for="pequeno">Pequeño</label>
+                              </div>
+                              <div class="form-check">
+                                 <input class="form-check-input" type="radio" name="tamano" id="mediano">
+                                 <label class="form-check-label" for="mediano">Mediano</label>
+                              </div>
+                              <div class="form-check">
+                                 <input class="form-check-input" type="radio" name="tamano" id="grande">
+                                 <label class="form-check-label" for="grande">Grande</label>
+                              </div>
+                           </div>
+         
+                           <!-- Edad -->
+                           <div class="mb-3">
+                              <p class="fw-bold h5 pt-3 px-1">Edad:</p>
+                              <input type="range" class="form-range" min="0" max="13" />
+                           </div>
+         
+                           <!-- Personalidad -->
+                           <div class="mb-3">
+                              <p class="fw-bold h5 pt-3 px-1">Personalidad:</p>
+                              <div class="form-check">
+                                 <input class="form-check-input" type="checkbox" id="alegre" />
+                                 <label class="form-check-label" for="alegre">Alegre</label>
+                              </div>
+                              <div class="form-check">
+                                 <input class="form-check-input" type="checkbox" id="tranquilo" />
+                                 <label class="form-check-label" for="tranquilo">Tranquilo</label>
+                              </div>
+                              <div class="form-check">
+                                 <input class="form-check-input" type="checkbox" id="carinoso" />
+                                 <label class="form-check-label" for="carinoso">Cariñoso</label>
+                              </div>
+                              <div class="form-check">
+                                 <input class="form-check-input" type="checkbox" id="juqueton" />
+                                 <label class="form-check-label" for="juqueton">Juquetón</label>
+                              </div>
+                              <div class="form-check">
+                                 <input class="form-check-input" type="checkbox" id="vigilante" />
+                                 <label class="form-check-label" for="vigilante">Vigilante</label>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     
+                  </div>
+               </div>
+            </div>
             
-            <aside>
-                <div class="conte_div">
-                <p class="aside_titulo">Sexo:</p>
-                <div class="div_aside">      
-                    <input class="radio_aside" type="radio" name="sexo"><label class="radio_aside_p">Macho</label></input>
-                </div>
-                <div class="div_aside">      
-                    <input class="radio_aside" type="radio" name="sexo"><label class="radio_aside_p">Hembra</label></input>
-                </div>
-                <br>
-                </div>
-                <div class="conte_div">
-                <p class="aside_titulo">Tamaño:</p>
-                <div class="div_aside">      
-                    <input class="radio_aside" type="radio" name="tamano"><label class="radio_aside_p" >Pequeño</label></input>
-                </div>
-                <div class="div_aside">      
-                    <input class="radio_aside" type="radio" name="tamano"><label class="radio_aside_p" >Mediano</label></input>
-                </div>
-                <div class="div_aside">      
-                    <input class="radio_aside" type="radio" name="tamano"><label class="radio_aside_p" >Grande</label></input>
-                </div>
-                <br>
-                </div>
-                <div class="conte_div">
-                <p class="aside_titulo">Edad:</p>
-                <input class="range_aside" type="range" min="0" max="13">
-                <br>
-                </div>
-                <div class="conte_div">
-                <p class="aside_titulo">Personalidad:</p>
-                <div class="div_aside">
-                    <input type="checkbox" name="personalidad" class="radio_aside"><label class="radio_aside_p">Alegre</label></input>
-                </div>
-                <div class="div_aside">
-                    <input type="checkbox" name="personalidad" class="radio_aside"><label class="radio_aside_p">Tranquilo</label></input>
-                </div>
-                <div class="div_aside">
-                    <input type="checkbox" name="personalidad" class="radio_aside"><label class="radio_aside_p">Cariñoso</label></input>
-                </div>
-                <div class="div_aside">
-                    <input type="checkbox" name="personalidad" class="radio_aside"><label class="radio_aside_p">Juquetón</label></input>
-                </div>
-                <div class="div_aside">
-                    <input type="checkbox" name="personalidad" class="radio_aside"><label class="radio_aside_p">Vigilante</label></input>
-                </div>
-                <br>
-                </div>
-            </aside>
-        </div>
-    </div>
-</body>
+         </div>
+
+         <!-- Main Filters Section -->
+        
+      </div>
+   </body>
 </html>
