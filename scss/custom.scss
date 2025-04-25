@@ -4,7 +4,8 @@
 $custom-colors:(
     "orange-alpha":#f58549,
     "astonian-purple":#702aaa,
-    "obish-gray":#272e38
+    "obish-gray":#272e38,
+    "magnus-orange":#a12404
 );
 
 $theme-colors: map-merge($theme-colors,$custom-colors);

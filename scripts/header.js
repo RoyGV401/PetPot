@@ -15,10 +15,8 @@ export const HEADER = `
 
             
             <a class="navbar-brand" href="#">
-              <button
-                class="btn btn-primary btn-lg text-white fw-bold"
-                id="btn_login"
-              >
+               <button  type="button"  class="btn btn-primary btn-lg text-white fw-bold " data-bs-toggle="modal" data-bs-target="#exampleModal" id="btn_login">
+
                 Acceder
               </button>
             </a>
@@ -26,12 +24,12 @@ export const HEADER = `
           
             <div class="dropdown user-logged-options">
               <button class="btn btn-lg btn-primary text-white fw-bold dropdown-toggle m-0" id="welcome_user" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                ¡Hola! Renato
+                ¡Hola! user
               </button>
               <ul class="dropdown-menu dropdown-menu-end">
                 <li><a class="dropdown-item mt-3 h5" href="#">Tus mascotas</a></li>
                 <li><a class="dropdown-item mt-3 h5" href="#">Configuracion</a></li>
-                <li><a class="dropdown-item mt-3 h5" href="#">Salir</a></li>
+                <li><a class="dropdown-item mt-3 h5" href="#" data-bs-toggle="modal" data-bs-target="#confirmLogOut">Salir</a></li>
               </ul>
             </div>
 
@@ -81,7 +79,8 @@ export function loadHeader() {
   const welcome = document.getElementById('welcome_user');
   const secondBar = document.getElementById('second_bar');
 
-  if (user) {
+  if (user != 0 && user != undefined) {
+
     loginBtn.style.visibility = "hidden";
     loginBtn.style.width = 0;
   }

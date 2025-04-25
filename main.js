@@ -1,4 +1,4 @@
-import { LOGIN_FORM, REGISTER_FORM } from "./scripts/login.js";
+import { LOGIN_FORM } from "./scripts/login.js";
 import { DOGS, CATS, OTHERS, PETS } from "./scripts/pet_list.js";
 import { createPetSelect } from "./scripts/pet_selected.js";
 import { USERS } from "./scripts/users.js";
@@ -61,8 +61,8 @@ function onLoad() {
     if (currentUser != undefined)
     {
       const user = USERS.find(u => u.id == currentUser);
-      const btnAcceder = document.getElementById('btn_login');
-      btnAcceder.innerHTML = `¡Bienvenido ${user.nombre}!`
+      const btnAcceder = document.getElementById('welcome_user');
+      btnAcceder.innerHTML = `¡Hola ${user.nombre}!`;
     }
 
   } catch{}
@@ -76,7 +76,6 @@ function onLoad() {
     }
     
   }
-  login_form_ini(true);
 
   try
   {
@@ -86,14 +85,17 @@ function onLoad() {
   {
     console.log(ex)
   }
-  document.getElementById("btn_login").onclick = function ()
-  {
-    abrir_login();
-  };
 
   document.getElementById('main_logo').onclick = function () {
     location.href = `index.html`;
   };
+
+  try
+  {
+    document.getElementById("btn_log").onclick = function () {
+      inicia_sesion(true);
+    };
+  } catch{}
 
   const whyAdoptBtn = document.getElementById('whyAdopt')
   iniButtons();
@@ -117,53 +119,6 @@ No era el problema
 
  };*/ 
 
-function login_form_ini(doHide)
-{
-  if (doHide) 
-  {
-    document.getElementById("div_login").style.opacity = 0;
-    setTimeout(()=>{
-      document.getElementById("div_login").classList.add('uninteractable');
-
-
-    },500)
-  }
-  const btnCancelLogin = document.getElementById('btn_cancel_login');
-  const btnRegister = document.getElementById('btn_regis');
-
-  try
-  {
-    btnRegister.onclick = function ()
-    {
-      abrir_register();
-    };
-  } catch{}
-
-  try
-  {
-    btnCancelLogin.onclick = function ()
-    {
-      exit_login();
-    };
-  } catch{}
-
-  try
-  {
-    document.getElementById("btn_log").onclick = function () {
-      inicia_sesion(true);
-    };
-  } catch{}
-
-  try
-  {
-    document.getElementById("btn_acceder_login").onclick = function () {
-      document.getElementById('extra_elements').innerHTML = LOGIN_FORM;
-      inicia_sesion(false);
-      login_form_ini(false);
-
-    };
-  } catch{}
-}
 
 function listar_mascotas() {
   let dmain;
@@ -287,86 +242,18 @@ function checkForReturn()
 
 }
 
-function abrir_login(){
-  document.getElementById("div_login").style.opacity = 1;
-  document.getElementById("div_login").classList.remove('uninteractable');
-
-  document.getElementById("blur").className = "blur";
-   
-}
-
-function abrir_register(){
-  document.getElementById("extra_elements").innerHTML = REGISTER_FORM;
-  login_form_ini(false);
 
 
 
-  document.getElementById("btn_confirm_register").onclick = function ()
-  {
-    var expReg= /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
-    var regexp_pass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/;
-    let inputNombre =document.getElementById("input_nombre");
-    let inputContra = document.getElementById("input_contra");
-    let inputApeP = document.getElementById("input_apellidos");
-    let inputApeM = document.getElementById("input_apellidoM");
-    let inputTel = document.getElementById("input_numero");
-    let inputCorreo = document.getElementById("input_correo");
-    let inputCurp = document.getElementById("input_curp");
-    let inputC2 = document.getElementById("input_confirm_contra");
-
-
-
-    if(inputNombre.value!=null && inputContra!=null && inputApeP!= null && inputApeM!= null && inputTel!=null && inputCorreo!=null
-   && inputC2 != null && inputCurp !=null 
-    ){
-      var esValido = expReg.test(inputCorreo.value);
-      if(esValido==true){
-        if(inputContra.value==inputC2.value){
-          if(regexp_pass.test(inputContra.value)){
-
-            const formData = new FormData();
-            formData.append('nombre', inputNombre.value);
-            formData.append('contrasenia', inputContra.value);
-            formData.append('correo',inputCorreo.value);
-            formData.append('telefono',inputTel.value);
-            formData.append('apellidoP', inputApeP.value);
-            formData.append('apellidoM', inputApeM.value);
-            formData.append('curp', inputCurp.value);
-
-            fetch('endpointregister.php', {
-              method: 'POST',
-              body: formData
-            })
-              .then(response => response.json())
-              .then(data => {
-                if (data.success) {
-                  alert('¡Mascota registrada!');
-                  location.reload(); // Recargar para ver los cambios
-                }
-              });
-          }else{
-            alert("La contraseña debe de ser de minimo 8 caracteres, maximo 15, un digito y un caracter especial sin espacios")
-          }
-        }else{
-          alert("Las contraseñas no son iguales");
-        }
-      }else{
-        alert("Ingrese un correo electronico valido");
-      }
-    }else{
-      alert("Debe ingresar todos los datos para continuar");
-    }
-  };
-}
 
 function inicia_sesion(isFromClick){
-  const correo = document.getElementById("input_correo").value;
-  const contra = document.getElementById("input_contra").value;
+  const correo = document.getElementById("input_correo_log").value;
+  const contra = document.getElementById("input_contra_log").value;
   const user = USERS.find(u => u.email==correo);
 
   const txtAlert = document.getElementById('login_warning');
 
-  if (user != undefined && isFromClick)
+  if (user != undefined)
   {
     if(user.email == correo && user.password == contra)
     {
@@ -376,11 +263,12 @@ function inicia_sesion(isFromClick){
     }
     else
     {
+      al
       txtAlert.innerHTML = "Correo o contraseña incorrectos";
       txtAlert.style.opacity=1;
     }
   }
-  else if (isFromClick)
+  else 
   {
     const txtAlert = document.getElementById('login_warning');
     txtAlert.innerHTML = "Correo o contraseña incorrectos";
@@ -393,20 +281,3 @@ function inicia_sesion(isFromClick){
   },2000);
 }
 
-function exit_login()
-{
-  document.getElementById("div_login").style.opacity = 0;
-
-  document.getElementById('login_warning').innerHTML=""
-
-
-  document.getElementById("input_correo").value="";
-  document.getElementById("input_contra").value="";
-  document.getElementById("blur").className = "";
-
-  setTimeout(()=>{
-    document.getElementById("div_login").classList.add('uninteractable');
-
-
-  },500)
-}
