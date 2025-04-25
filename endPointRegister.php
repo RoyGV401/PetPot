@@ -1,19 +1,18 @@
 <?php
 
 require "model_layer/DBManager.php";
-$data = json_decode(file_get_contents('php://input'), true);
 
 if (
-    isset($data['nombre']) && isset($data['contrasenia']) &&
-    isset($data['correo']) && isset($data['telefono']) &&
-    isset($data['apellidoP']) && isset($data['apellidoM']) &&
-    isset($data['curp'])
+    isset($_POST['nombre']) && isset($_POST['contrasenia']) &&
+    isset($_POST['correo']) && isset($_POST['telefono']) &&
+    isset($_POST['apellidoP']) && isset($_POST['apellidoM']) &&
+    isset($_POST['curp'])
 ) {
     $db = new DBManager();
     $resultado = $db->addUser(
-        $data['nombre'], $data['contrasenia'], $data['correo'],
-        $data['telefono'], $data['apellidoP'], $data['apellidoM'],
-        $data['curp']
+        $_POST['nombre'], $_POST['contrasenia'], $_POST['correo'],
+        $_POST['telefono'], $_POST['apellidoP'], $_POST['apellidoM'],
+        $_POST['curp']
     );
     echo json_encode(['success' => true, 'resultado' => $resultado]);
 } else {

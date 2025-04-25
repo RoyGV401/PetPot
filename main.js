@@ -106,6 +106,66 @@ function onLoad() {
      }
   }
   //abrir_login();
+
+  document.getElementById("btn_regis").onclick = function ()
+  {
+    var expReg= /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
+    var regexp_pass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/;
+    let inputNombre =document.getElementById("input_nombre");
+    let inputContra = document.getElementById("input_contra");
+    let inputApeP = document.getElementById("input_apellidoP");
+    let inputApeM = document.getElementById("input_apellidoM");
+    let inputTel = document.getElementById("input_numero");
+    let inputCorreo = document.getElementById("input_correo");
+    let inputCurp = document.getElementById("input_curp");
+    let inputC2 = document.getElementById("input_confirm_contra");
+
+
+
+    if(inputNombre.value!=null && inputContra!=null && inputApeP!= null && inputApeM!= null && inputTel!=null && inputCorreo!=null
+   && inputC2 != null && inputCurp !=null 
+    ){
+      var esValido = expReg.test(inputCorreo.value);
+      if(esValido==true){
+        if(inputContra.value==inputC2.value){
+          if(regexp_pass.test(inputContra.value)){
+            const formData = new FormData();
+            formData.append('nombre', inputNombre.value);
+            formData.append('contrasenia', inputContra.value);
+            formData.append('correo',inputCorreo.value);
+            formData.append('telefono',inputTel.value);
+            formData.append('apellidoP', inputApeP.value);
+            formData.append('apellidoM', inputApeM.value);
+            formData.append('curp', inputCurp.value);
+
+            fetch('endpointregister.php', {
+              method: 'POST',
+              body: formData
+            })
+              .then(response => response.json())
+              .then(data => {
+                console.log(data);
+                if (data.success) {
+                 
+                  alert('Usuario registrado!');
+                  location.reload(); // Recargar para ver los cambios
+                }
+              });
+          }else{
+            alert("La contraseña debe de ser de minimo 8 caracteres, maximo 15, un digito y un caracter especial sin espacios")
+          }
+        }else{
+          alert("Las contraseñas no son iguales");
+        }
+      }else{
+        alert("Ingrese un correo electronico valido");
+      }
+    }else{
+      alert("Debe ingresar todos los datos para continuar");
+    }
+  };
+
+
 }
 
 /*window.onresize = function(){

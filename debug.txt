@@ -1,2 +1,0 @@
-Raw input:
-{"nombre":"Luis","contrasenia":"Luisito04&","correo":"luis@hotmail.com","telefono":"4432261123","apellidoP":"Duran","apellidoM":"Duran","curp":"inputCurp.value"}
