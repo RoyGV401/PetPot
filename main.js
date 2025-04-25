@@ -207,19 +207,23 @@ function listar_mascotas() {
 
     const card = document.createElement("div");
     card.className = "card h-100 max-height-1 w-100 p-4 shadow-sm";
+    const personalidades = mascota.personalidad;
+    let personalityString = "";
+    personalidades.forEach(k => {
+      personalityString += `
+       <p class="h6"> <i class="bi bi-award"></i> ${k}</p>
+      `
+    });
+
 
     card.innerHTML = `
       <img src="${mascota.img}" class="card-img-top img-fluid rounded imgPetSelect" id="${mascota.id}"  alt="${mascota.name}">
       <div class="card-body d-flex flex-column">
-        <h5 class="card-title text-center">${mascota.name}</h5>
+        <h5 class="card-title text-center h3 fw-bold">${mascota.name}</h5>
         <hr>
-        <div class="mb-2">
+        <div class="mb-3">
           <h6 class="fw-bold">Personalidad:</h6>
-          <ul class="ps-3 mb-2">
-            <li>- ${mascota.personalidad[0]}</li>
-            ${mascota.personalidad[1] ? `<li>- ${mascota.personalidad[1]}</li>` : ""}
-            ${mascota.personalidad[2] ? `<li>- ${mascota.personalidad[2]}</li>` : ""}
-          </ul>
+            ${personalityString}
         </div>
         <p class="mb-1"><strong>Sexo:</strong> ${mascota.sexo}</p>
         <p class="mb-1"><strong>Tamaño:</strong> ${mascota.Tamano}</p>
