@@ -66,18 +66,10 @@ function onLoad() {
   changeBodyToPet();
   checkForReturn();
   loadHeader();
-  let map;
 
-  async function initMap() {
-    const { Map } = await google.maps.importLibrary("maps");
+  
 
-    map = new Map(document.getElementById("map_canvas"), {
-      center: { lat: -34.397, lng: 150.644 },
-      zoom: 8,
-    });
-  }
-
-  initMap();
+ 
 
   try
   {
@@ -191,6 +183,47 @@ function onLoad() {
     }
   };
 
+  const pRecuperar = document.getElementById("btn_recuperar");
+  
+  try{
+    pRecuperar.onclick = function (){
+      abrir_recuperar();
+      document.getElementById("form-recuperar").addEventListener('submit',function(e){
+        e.preventDefault();
+        enviar();
+      })
+    };
+  }catch{
+  }
+
+  try
+  {
+    document.getElementById("input_correo").value="";
+    document.getElementById("input_contra").value="";
+    document.getElementById('login_warning').innerHTML=""
+  } catch {}
+
+  const inputs = document.querySelectorAll('.pincode-input');
+    inputs.forEach((input, index) => {
+      input.addEventListener('input', () => {
+        if (input.value.length === 1 && index < inputs.length - 1) {
+          inputs[index + 1].focus();
+        }
+      });
+    });
+
+    document.getElementById("btn_enviar_corroborar").onclick = function submitPincode() {
+      let pincode = '';
+      inputs.forEach(input => {
+        pincode += input.value;
+      });
+      if (pincode.length === 6) {
+        alert('Pincode ingresado: ' + pincode);
+      } else {
+        alert('Por favor complete los 6 caracteres.');
+      }
+    }
+    
 
 }
 
@@ -356,5 +389,32 @@ function inicia_sesion(isFromClick){
 
 function borrarCookie() {  
   document.cookie = `userID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+}
+
+function enviar(){
+  alert();
+  const email = document.getElementById("input_correoR").value;
+  const formData = new FormData();
+  formData.append('email', email);
+
+  fetch('enviar_correo.php', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => response.text())
+  .then(data => {
+    
+    alert();
+  })
+  .catch(error => {
+ 
+    console.error(error);
+  });
+}
+
+function abrir_recuperar(){
+  alert();
+  
+  
 }
 

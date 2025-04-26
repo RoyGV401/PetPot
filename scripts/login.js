@@ -195,7 +195,7 @@ export const LOGIN_FORM = `
                 </div>
 
                 <div class="row pt-3 pb-1">
-                    <a class="text-white h6" id="btn_recuperar" href="index.html" >¿Olvidaste tu contraseña?</a>
+                    <a class="btn text-white h6" id="btn_recuperar" href="index.html"  data-bs-toggle="modal" data-bs-target="#recuperarForm">¿Olvidaste tu contraseña?</a>
                 </div>
                 
                 <div class="row py-1 justify-content-center">
@@ -225,38 +225,78 @@ export const LOGIN_FORM = `
       </div>
     </div>
   </div>
-`;
 
-export const RECUPERAR_FORM = `
-  <div class="div_login" id="div_login">
-    <h1>Recupera tu contraseña</h1>
-    <div class="image-logo-container">
-      <div class="image">
-        <img src="resources/cabexa.png" class="avatar">
-        <img src="resources/ojos.png" id="ojos" class="ojos ojos1">
-        <img src="resources/ojos2.png" id="ojos2" class="ojos ojos2">
-      </div>
-      <div class="cortina">
-        
-      </div>
-    </div>
-    <form id="form-recuperar">
-    <input id="input_correo" type="email" name ="email" placeholder="Correo@email.com" required>
-    <br>
-    <br>
-    
-    <button type="submit"  class="important_button">Enviar</button>
-    <p id="mensaje_recu"></p>
-    </form>
-    <br>    <br>
-
-    <button class="cancel_button" id="btn_cancel_login">Salir</button>
-  </div>
   
+  <div class="modal fade" id="recuperarForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog ">
+      <div class="modal-content div_login">
+          <div class="modal-header">
+              <h1 class="text-white">Recupera tu contraseña</h1>
+          </div>
+          <div class="modal-body justify-content-center">
+              <div class="image-logo-container">
+                  <div class="image">
+                    <img src="resources/cabexa.png" class="avatar">
+                    <img src="resources/ojos.png" id="ojos" class="ojos ojos1">
+                    <img src="resources/ojos2.png" id="ojos2" class="ojos ojos2">
+                  </div>
+                  <div class="cortina"></div>
+              </div>
+              <form id="form-recuperar">
+                  <input id="input_correoR"  class="form-control" type="email" name ="email" placeholder="Correo@email.com" required>
+                  <br>
+                  <br>
+                  <button type="submit"  class="btn important_button"  href="index.html"  data-bs-toggle="modal" data-bs-target="#recuperarForm2">Enviar</button>
+                  <p id="mensaje_recu"></p>
+              </form>
+              <br>    
+              <button class="cancel_button" id="btn_cancel_login" data-bs-dismiss="modal">Salir</button>
+          </div>
+      </div>
+   </div>
+</div>
+
+
+<div class="modal fade" id="recuperarForm2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog ">
+      <div class="modal-content div_login">
+          <div class="modal-header">
+              <h1 class="text-white">Recupera tu contraseña</h1>
+          </div>
+          <div class="modal-body justify-content-center">
+              <div class="image-logo-container">
+                  <div class="image">
+                    <img src="resources/cabexa.png" class="avatar">
+                    <img src="resources/ojos.png" id="ojos" class="ojos ojos1">
+                    <img src="resources/ojos2.png" id="ojos2" class="ojos ojos2">
+                  </div>
+                  <div class="cortina"></div>
+              </div>
+                <form id="pincode-form" class="d-flex justify-content-center">
+                  <input type="text" class="form-control pincode-input" maxlength="1" pattern="[A-Za-z1-9]" required>
+                  <input type="text" class="form-control pincode-input" maxlength="1" pattern="[A-Za-z1-9]" required>
+                  <input type="text" class="form-control pincode-input" maxlength="1" pattern="[A-Za-z1-9]" required>
+                  <input type="text" class="form-control pincode-input" maxlength="1" pattern="[A-Za-z1-9]" required>
+                  <input type="text" class="form-control pincode-input" maxlength="1" pattern="[A-Za-z1-9]" required>
+                  <input type="text" class="form-control pincode-input" maxlength="1" pattern="[A-Za-z1-9]" required>
+                </form>
+                <br>
+                 <button id="btn_enviar_corroborar" class="btn btn-primary">Enviar</button>
+              <br>
+              <br>
+              <button class="cancel_button" id="btn_cancel_login" data-bs-dismiss="modal">Salir</button>
+          </div>
+      </div>
+   </div>
+</div>
 `;
 
 export function borrarCookie() {
   document.cookie = `userID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
 }
 
+
+
+
+    
 
