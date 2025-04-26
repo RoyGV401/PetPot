@@ -21,8 +21,9 @@ $stmt->execute();
 
 
 $to=$email;
-$subject="RECUPERAR CONTRASEÑA PETPOT";
-$message="Codigo para recuperar tu contraseña: $token";
+$subject="Recupera tu contraseña PetPot";
+$message="Código para recuperar tu contraseña: $token.";
+$message .= "Si usted no solicitó este cambio, ignore este mensaje."; 
 $headers='From: pet.potsm@.com'."\r\n".
 'Reply-To: pet.potsm@gmail.com';
 

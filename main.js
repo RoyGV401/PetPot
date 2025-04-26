@@ -211,12 +211,49 @@ function onLoad() {
     });
 
     document.getElementById("btn_enviar_corroborar").onclick = function submitPincode() {
+      
+      
       let pincode = '';
       inputs.forEach(input => {
         pincode += input.value;
       });
       if (pincode.length === 6) {
-        alert('Pincode ingresado: ' + pincode);
+
+        const formData = new FormData();
+        formData.append('correo',sessionStorage.getItem("correo", inputCorreo.value));
+        sessionStorage.removeItem("correo",inputCorreo.value);
+
+        fetch('endpointshowuser.php', {
+          method: 'POST',
+          body: formData
+        })
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+            user = data.resultado[0];
+            if(pincode==user.reset_token){
+              
+              const tokenExpira = new Date(user.token_expira);
+              const ahora = new Date();
+
+              if (ahora < tokenExpira) {
+                document.querySelectorAll('.modal.show').forEach(modalElement => {
+                  const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                  if (modalInstance) {
+                    modalInstance.hide();
+                  }
+                });
+                
+                const modal1Element = document.getElementById('recuperarForm3');
+                const modal1 = new bootstrap.Modal(modal1Element);
+                modal1.show();
+              }else{
+                alert("El token expiró");
+              }
+            }else{
+              alert("Token incorrecto");
+            }
+        });
       } else {
         alert('Por favor complete los 6 caracteres.');
       }
@@ -238,7 +275,6 @@ function onLoad() {
           })
             .then(response => response.json())
             .then(data => {
-              
               if(data.resultado.length>0){
                 document.getElementById("ver_correo").disabled = false;
               }else{
@@ -249,7 +285,44 @@ function onLoad() {
       }
       
     });
+
+    document.getElementById("ver_correo").onclick = function (){
+      sessionStorage.setItem("correo", inputCorreo.value);
+    }
   
+
+    document.getElementById("btn_enviar_new_pass").onclick = function (){
+      let contraNew = document.getElementById("input_contra_new").value;
+      let confirmNew = document.getElementById("input_confirm_contra_new").value;
+      if(contraNew==confirmNew){
+
+        const formData =  new FormData();
+        formData.append("nombre",user.nombre);
+        formData.append("correo",user.correo);
+        formData.append("contrasenia",contraNew);
+        formData.append("apellidoP",user.apellidoP);
+        formData.append("apellidoM",user.apellidoM);
+        formData.append("curp",user.curp);
+        formData.append("telefono",user.telefono);
+        formData.append("idUsuario",user.idUsuario);
+
+        fetch('endpointupdateuser.php', {
+          method: 'POST',
+          body: formData
+        })
+          .then(response => response.json())
+          .then(data => {
+           if(data.resultado){
+            alert("Cambios realizados con exito");
+          }else{
+            alert("No se realizaron");
+          }
+        });
+      }else{
+        alert("Las contraseñas no son iguales");
+      }
+    }
+
 
 }
 

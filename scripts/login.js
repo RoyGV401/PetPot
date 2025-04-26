@@ -289,6 +289,40 @@ export const LOGIN_FORM = `
       </div>
    </div>
 </div>
+
+
+<div class="modal fade" id="recuperarForm3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog ">
+      <div class="modal-content div_login">
+          <div class="modal-header">
+              <h1 class="text-white">JIJIJA</h1>
+          </div>
+          <div class="modal-body justify-content-center">
+              <div class="image-logo-container">
+                  <div class="image">
+                    <img src="resources/cabexa.png" class="avatar">
+                    <img src="resources/ojos.png" id="ojos" class="ojos ojos1">
+                    <img src="resources/ojos2.png" id="ojos2" class="ojos ojos2">
+                  </div>
+                  <div class="cortina"></div>
+              </div>
+              <div class="form-group col-lg-6 col-md-6 col-sm-12 py-1">
+                <p class="text-white mb-1">Contraseña:</p>
+                <input id="input_contra_new" class="form-control" type="password" placeholder="...">
+              </div>
+              <div class="form-group col-lg-6 col-md-6 col-sm-12 py-1">
+                <p class="text-white mb-1">Confirmar contraseña:</p>
+                <input id="input_confirm_contra_new" class="form-control" type="password" placeholder="...">
+              </div>
+                <br>
+                 <button id="btn_enviar_new_pass" class="btn btn-primary">Enviar</button>
+              <br>
+              <br>
+              <button class="cancel_button" id="btn_cancel_login" data-bs-dismiss="modal">Salir</button>
+          </div>
+      </div>
+   </div>
+</div>
 `;
 
 export function borrarCookie() {

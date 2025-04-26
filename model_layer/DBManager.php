@@ -174,7 +174,37 @@ class DBManager {
         return $resultado;
     }
 
-    
+    public function editUserById($nombre, $pass, $correo, $telefono, $curp, $apelldioP, $apellidoM, $id)
+    {
+        $link = $this->open();
+
+        $sql = "UPDATE usuario SET nombre=?, contrasenia=SHA1(?), correo=?, telefono=?, curp=?, apellidoP=?, apellidoM=?, token_expira=null, reset_token=null WHERE idUsuario=?";
+
+        // Prepara la consulta
+		$query = mysqli_prepare($link, $sql);
+
+        // Enlaza los parametros (reemplaza comodines)
+		// Tipos: i para enteros, s para string, d para double y b para blob
+		mysqli_stmt_bind_param(
+            $query, 
+            "sssssssi",
+            $nombre,
+            $pass,
+            $correo,
+            $telefono,
+            $curp,
+            $apellidoP,
+            $apellidoM,
+            $id
+        );
+
+        // Ejecuta la query
+		$resultado = mysqli_stmt_execute($query) or die('Error update');
+
+        $this->close($link);
+
+        return $resultado;
+    }
 
     
 
