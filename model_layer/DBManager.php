@@ -36,6 +36,24 @@ class DBManager {
         $link = $this->open();
 
         $sql = "SELECT * FROM usuario WHERE correo='$correo' AND contrasenia=SHA1('$pass')";
+        
+        $result = mysqli_query($link, $sql, MYSQLI_ASSOC) or die('Error query');
+        
+        $rows = [];
+        while($columns = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+            $rows[] = $columns;
+        }
+
+        $this->close($link);
+        
+        return $rows;
+    }
+
+    public function findUserById($id)
+    {
+        $link = $this->open();
+
+        $sql = "SELECT * FROM usuario WHERE idUsuario='$id'";
 
         $result = mysqli_query($link, $sql, MYSQLI_ASSOC) or die('Error query');
 

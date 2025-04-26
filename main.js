@@ -8,10 +8,7 @@ import {loadHeader} from "./scripts/header.js";
 
 
 
-const user ={
-  correo:"luis@gmail.com",
-  password: "Luis1234."
-}
+var user ={}
 
 function changeTo(path) {
   location.href = `${path}`;
@@ -47,6 +44,21 @@ radios.forEach((x) => {
 
 
 
+function getCookieValue(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return null;
+}
 
 
 function onLoad() {
@@ -57,35 +69,37 @@ function onLoad() {
 
   try
   {
-    const currentUser = localStorage.currentUser;
-    if (currentUser != undefined)
-    {
-      const user = USERS.find(u => u.id == currentUser);
-      const btnAcceder = document.getElementById('welcome_user');
-      btnAcceder.innerHTML = `¡Hola ${user.nombre}!`;
-    }
-
-  } catch{}
-  {
-    const extra = document.getElementById('extra_elements');
-    if (!extra.innerHTML.includes(LOGIN_FORM))
-    {
-      extra.innerHTML = extra.innerHTML + `
-      ${LOGIN_FORM}
-    `;
+    const formData = new FormData();
+    const userID = getCookieValue("userID");
+    if(userID!=null){
+      formData.append('id', userID);
+      fetch('endpointshowuser.php', {
+        method: 'POST',
+        body: formData
+      })
+        .then(response => response.json())
+        .then(data => {
+          user = data.resultado[0];
+          localStorage.currentUser=user.idUsuario;
+          if (localStorage.currentUser != undefined)
+            {
+              const btnAcceder = document.getElementById('welcome_user');
+              btnAcceder.innerHTML = `¡Hola ${user.nombre}!`;
+            }
+      });
     }
     
-  }
 
-  try
+  } catch{}
+  
+  const extra = document.getElementById('extra_elements');
+  if (!extra.innerHTML.includes(LOGIN_FORM))
   {
-   
-
-  } catch (ex)
-  {
-    console.log(ex)
+    extra.innerHTML = extra.innerHTML + `
+    ${LOGIN_FORM}
+  `;
   }
-
+    
   document.getElementById('main_logo').onclick = function () {
     location.href = `index.html`;
   };
@@ -302,42 +316,29 @@ function checkForReturn()
 
 }
 
-
-
-
-
 function inicia_sesion(isFromClick){
   const correo = document.getElementById("input_correo_log").value;
   const contra = document.getElementById("input_contra_log").value;
-  const user = USERS.find(u => u.email==correo);
+  
+  const formData = new FormData();
+  formData.append('correo', correo);
+  formData.append('pass', contra);
 
-  const txtAlert = document.getElementById('login_warning');
+  fetch('endpointlogin.php', {
+    method: 'POST',
+    body: formData
+  })
+    .then(response => response.json())
+    .then(data => {
+      data.forEach(d => {
+        document.cookie = "userID=" + d.idUsuario+ "; path=/" ;
+        localStorage.currentUser=d.idUsuario;
+        location.reload();
+      });      
+    });
+}
 
-  if (user != undefined)
-  {
-    if(user.email == correo && user.password == contra)
-    {
-      localStorage.currentUser=user.id;
- 
-      location.reload();
-    }
-    else
-    {
-      al
-      txtAlert.innerHTML = "Correo o contraseña incorrectos";
-      txtAlert.style.opacity=1;
-    }
-  }
-  else 
-  {
-    const txtAlert = document.getElementById('login_warning');
-    txtAlert.innerHTML = "Correo o contraseña incorrectos";
-    txtAlert.style.opacity=1;
-  }
-  setTimeout(()=>{
-    txtAlert.innerHTML = "";
-    txtAlert.style.opacity=0;
-
-  },2000);
+function borrarCookie() {  
+  document.cookie = `userID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
 }
 

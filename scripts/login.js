@@ -37,7 +37,7 @@ export const LOGIN_FORM = `
           </p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="localStorage.currentUser = 0; window.location.reload();">Salir</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="localStorage.currentUser = 0; document.cookie= 'userID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'; window.location.reload();">Salir</button>
           <button type="button" class="btn btn-primary text-white" data-bs-dismiss="modal">Cancelar</button>
         </div>
       </div>
@@ -254,3 +254,9 @@ export const RECUPERAR_FORM = `
   </div>
   
 `;
+
+export function borrarCookie() {
+  document.cookie = `userID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+}
+
+
