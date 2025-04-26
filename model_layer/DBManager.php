@@ -49,11 +49,11 @@ class DBManager {
         return $rows;
     }
 
-    public function findUserById($id)
+    public function findUserByCorreo($correo)
     {
         $link = $this->open();
 
-        $sql = "SELECT * FROM usuario WHERE idUsuario='$id'";
+        $sql = "SELECT * FROM usuario WHERE correo='$correo'";
 
         $result = mysqli_query($link, $sql, MYSQLI_ASSOC) or die('Error query');
 

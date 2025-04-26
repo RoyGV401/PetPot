@@ -3,11 +3,11 @@
 require "model_layer/DBManager.php";
 
 if (
-    isset($_POST['id'])
+    isset($_POST['correo'])
 ) {
     $db = new DBManager();
-    $resultado = $db->findUserById(
-        $_POST['id']
+    $resultado = $db->findUserByCorreo(
+        $_POST['correo']
     );
     echo json_encode(['success' => true, 'resultado' => $resultado]);
 } else {

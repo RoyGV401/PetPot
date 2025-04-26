@@ -17,7 +17,6 @@ function changeTo(path) {
 //IMPORANTE: Ahora todo lo que se quiera hacer al cargar se debe colocar en la funcion onLoad, dado que JS solo reconoce el último window.onload, asi que
 //colocar varios practicamente no hace nada, siendo que solo se ejecutará el último.
 window.onload = function () {
-
   onLoad();
 }
 
@@ -74,9 +73,9 @@ function onLoad() {
   try
   {
     const formData = new FormData();
-    const userID = getCookieValue("userID");
-    if(userID!=null){
-      formData.append('id', userID);
+    const userCorreo = getCookieValue("userCorreo");
+    if(userCorreo!=null){
+      formData.append('correo', userCorreo);
       fetch('endpointshowuser.php', {
         method: 'POST',
         body: formData
@@ -187,7 +186,6 @@ function onLoad() {
   
   try{
     pRecuperar.onclick = function (){
-      abrir_recuperar();
       document.getElementById("form-recuperar").addEventListener('submit',function(e){
         e.preventDefault();
         enviar();
@@ -224,6 +222,34 @@ function onLoad() {
       }
     }
     
+    const inputCorreo = document.getElementById("input_correoR");
+    document.getElementById("ver_correo").disabled = true;
+   
+
+    inputCorreo.addEventListener("input", () => {
+      var expReg= /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
+      if(expReg.test(inputCorreo.value))
+      {
+        const formData = new FormData();
+          formData.append('correo', inputCorreo.value);
+          fetch('endpointshowuser.php', {
+            method: 'POST',
+            body: formData
+          })
+            .then(response => response.json())
+            .then(data => {
+              
+              if(data.resultado.length>0){
+                document.getElementById("ver_correo").disabled = false;
+              }else{
+                document.getElementById("ver_correo").disabled = true;
+              }
+                
+          });
+      }
+      
+    });
+  
 
 }
 
@@ -366,6 +392,7 @@ function checkForReturn()
 }
 
 function inicia_sesion(isFromClick){
+  
   const correo = document.getElementById("input_correo_log").value;
   const contra = document.getElementById("input_contra_log").value;
   
@@ -379,20 +406,22 @@ function inicia_sesion(isFromClick){
   })
     .then(response => response.json())
     .then(data => {
+      
       data.forEach(d => {
-        document.cookie = "userID=" + d.idUsuario+ "; path=/" ;
-        localStorage.currentUser=d.idUsuario;
+        console.log(d.correo);
+        document.cookie = "userCorreo=" + d.correo+ "; path=/" ;
+        localStorage.currentUser=d.correo;
         location.reload();
       });      
     });
 }
 
 function borrarCookie() {  
-  document.cookie = `userID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+  document.cookie = `userCorreo=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
 }
 
 function enviar(){
-  alert();
+  
   const email = document.getElementById("input_correoR").value;
   const formData = new FormData();
   formData.append('email', email);
@@ -403,8 +432,8 @@ function enviar(){
   })
   .then(response => response.text())
   .then(data => {
+    console.log(data);
     
-    alert();
   })
   .catch(error => {
  
@@ -412,9 +441,5 @@ function enviar(){
   });
 }
 
-function abrir_recuperar(){
-  alert();
-  
-  
-}
+
 

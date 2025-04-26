@@ -37,7 +37,7 @@ export const LOGIN_FORM = `
           </p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="localStorage.currentUser = 0; document.cookie= 'userID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'; window.location.reload();">Salir</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="localStorage.currentUser = 0; document.cookie= 'userCorreo=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'; window.location.reload();">Salir</button>
           <button type="button" class="btn btn-primary text-white" data-bs-dismiss="modal">Cancelar</button>
         </div>
       </div>
@@ -246,7 +246,7 @@ export const LOGIN_FORM = `
                   <input id="input_correoR"  class="form-control" type="email" name ="email" placeholder="Correo@email.com" required>
                   <br>
                   <br>
-                  <button type="submit"  class="btn important_button"  href="index.html"  data-bs-toggle="modal" data-bs-target="#recuperarForm2">Enviar</button>
+                  <button type="submit"  class="btn important_button"  href="index.html"  data-bs-toggle="modal" data-bs-target="#recuperarForm2" id="ver_correo">Enviar</button>
                   <p id="mensaje_recu"></p>
               </form>
               <br>    
@@ -292,7 +292,7 @@ export const LOGIN_FORM = `
 `;
 
 export function borrarCookie() {
-  document.cookie = `userID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+  document.cookie = `userCorreo=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
 }
 
 
