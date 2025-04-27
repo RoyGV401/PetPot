@@ -17,8 +17,11 @@ function changeTo(path) {
 //IMPORANTE: Ahora todo lo que se quiera hacer al cargar se debe colocar en la funcion onLoad, dado que JS solo reconoce el último window.onload, asi que
 //colocar varios practicamente no hace nada, siendo que solo se ejecutará el último.
 window.onload = function () {
+  localStorage.currentUser = 0;
   onLoad();
 }
+
+
 
 window.doReturnNormally = true;
 
@@ -64,17 +67,13 @@ function onLoad() {
   listar_mascotas();
   changeBodyToPet();
   checkForReturn();
-  loadHeader();
 
-  
 
- 
-
-  try
-  {
+    
     const formData = new FormData();
     const userCorreo = getCookieValue("userCorreo");
-    if(userCorreo!=null){
+    
+  
       formData.append('correo', userCorreo);
       fetch('endpointshowuser.php', {
         method: 'POST',
@@ -83,17 +82,35 @@ function onLoad() {
         .then(response => response.json())
         .then(data => {
           user = data.resultado[0];
-          localStorage.currentUser=user.idUsuario;
-          if (localStorage.currentUser != undefined)
+          console.log(data);
+          if (data.resultado.length > 0)
             {
-              const btnAcceder = document.getElementById('welcome_user');
-              btnAcceder.innerHTML = `¡Hola ${user.nombre}!`;
+              localStorage.currentUser=user.correo;
+            }else{
+              localStorage.currentUser = 0;
             }
-      });
-    }
-    
 
-  } catch{}
+            loadHeader();
+  
+    document.getElementById('main_logo').onclick = function () {
+      location.href = `index.html`;
+    };
+  
+    try
+    {
+      document.getElementById("btn_log").onclick = function () {
+        inicia_sesion(true);
+      };
+    } catch{}
+
+      });
+    
+  
+ 
+    
+ 
+
+
   
   const extra = document.getElementById('extra_elements');
   if (!extra.innerHTML.includes(LOGIN_FORM))
@@ -103,16 +120,7 @@ function onLoad() {
   `;
   }
     
-  document.getElementById('main_logo').onclick = function () {
-    location.href = `index.html`;
-  };
 
-  try
-  {
-    document.getElementById("btn_log").onclick = function () {
-      inicia_sesion(true);
-    };
-  } catch{}
 
   const whyAdoptBtn = document.getElementById('whyAdopt')
   iniButtons();
@@ -221,7 +229,7 @@ function onLoad() {
 
         const formData = new FormData();
         formData.append('correo',sessionStorage.getItem("correo", inputCorreo.value));
-        sessionStorage.removeItem("correo",inputCorreo.value);
+       
 
         fetch('endpointshowuser.php', {
           method: 'POST',
@@ -468,7 +476,8 @@ function inicia_sesion(isFromClick){
   
   const correo = document.getElementById("input_correo_log").value;
   const contra = document.getElementById("input_contra_log").value;
-  
+  const recu = document.getElementById("btn-check-outlined");
+
   const formData = new FormData();
   formData.append('correo', correo);
   formData.append('pass', contra);
@@ -481,16 +490,15 @@ function inicia_sesion(isFromClick){
     .then(data => {
       
       data.forEach(d => {
-        console.log(d.correo);
-        document.cookie = "userCorreo=" + d.correo+ "; path=/" ;
-        localStorage.currentUser=d.correo;
+        if(recu.checked){
+          document.cookie = "userCorreo=" + d.correo + "; expires=" + new Date(Date.now() + 30*24*60*60*1000).toUTCString() + "; path=/";
+        }else{
+          document.cookie = "userCorreo=" + d.correo + "; path=/";
+        }
+       
         location.reload();
-      });      
+      });   
     });
-}
-
-function borrarCookie() {  
-  document.cookie = `userCorreo=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
 }
 
 function enviar(){

@@ -186,6 +186,12 @@ export const LOGIN_FORM = `
                           <p class="text-white mb-1">Tu contraseña:</p>
                           <input id="input_contra_log" class="form-control" type="password" placeholder="Contraseña">
                         </div>
+                        <div class="text-center mt-3">
+                          <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
+                          <label class="btn btn-outline-light btn-sm w-auto" for="btn-check-outlined">
+                            Recordarme
+                          </label>
+                        </div>
                       
  
                     <div class="col-lg-6 col-md-12 col-sm-12 py-1">

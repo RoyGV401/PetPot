@@ -71,6 +71,7 @@ export const HEADER = `
 `;
 
 export function loadHeader() {
+  
   const headerPlace = document.getElementById("mainHeader");
   const user = localStorage.currentUser;
   headerPlace.innerHTML = HEADER;
@@ -79,20 +80,37 @@ export function loadHeader() {
   const welcome = document.getElementById('welcome_user');
   const secondBar = document.getElementById('second_bar');
 
-  if (user != 0 && user != undefined) {
 
+  if (user != 0 && user != undefined) {
+    
     loginBtn.style.visibility = "hidden";
     loginBtn.style.width = 0;
+    const formData = new FormData();
+    formData.append("correo",user);
+    fetch('endpointshowuser.php', {
+      method: 'POST',
+      body: formData
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.resultado[0].idUsuario != undefined)
+          {
+            welcome.innerHTML = `¡Hola ${data.resultado[0].nombre}!`;
+          }
+    });
   }
   else
   {
+    
     welcome.style.visibility = "hidden";
     welcome.style.width = 0;
+    
   }
 
   var lastScrollTop = 0;
 
   window.addEventListener("scroll", (e) =>{
+    
   var st = window.pageYOffset || document.documentElement.scrollTop; // Credits: "https://github.com/qeremy/so/blob/master/so.dom.js#L426"
    if (st > lastScrollTop) 
     {
