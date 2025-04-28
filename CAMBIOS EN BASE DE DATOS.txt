@@ -1,3 +1,46 @@
 CAMBIOS EN BASE DE DATOS:
 
 ALTER TABLE multimedia ADD COLUMN esPerfil CHAR(1) NULL;
+
+ALTER TABLE personalidad DROP COLUMN nombre;
+
+
+--DESCARGAR EL DOCUMENTO personalidad.csv y ajustar la ruta--
+
+LOAD DATA LOCAL INFILE 'C:\\xampp2\\htdocs\\Proyecto_Petpot2\\Petpot\\personalidad.csv'
+INTO TABLE PERSONALIDAD
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS; 
+
+INSERT INTO itemPersonalidad (Personalidad_idPersonalidad, Mascota_idMascota) VALUES (32,1);
+
+INSERT INTO itemPersonalidad (Personalidad_idPersonalidad, Mascota_idMascota) VALUES (9,1);
+
+INSERT INTO itemPersonalidad (Personalidad_idPersonalidad, Mascota_idMascota) VALUES (19,1);
+
+--DESCARGAR EL DOCUMENTO color.csv y ajustar la ruta--
+
+LOAD DATA LOCAL INFILE 'C:\\xampp2\\htdocs\\Proyecto_Petpot2\\Petpot\\color.csv'
+INTO TABLE color
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS; 
+
+DROP TABLE itemColor;
+
+ALTER TABLE Mascota ADD COLUMN Color_idColor INT;
+
+ALTER TABLE Mascota 
+ADD CONSTRAINT fk_Mascota_Color
+FOREIGN KEY (Color_idColor) 
+REFERENCES Color(idColor);
+
+UPDATE mascota SET COLOR_IDCOLOR = 10 WHERE IDMASCOTA = 1;
+
+ALTER TABLE Mascota MODIFY COLUMN Color_idColor INT NOT NULL;
+
+
+

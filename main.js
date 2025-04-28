@@ -127,38 +127,69 @@ function onLoad() {
 
                       const card = document.createElement("div");
                       card.className = "card h-100 max-height-1 w-100 p-4 shadow-sm";
-                      let personalityString = ""; //borrar
+                      
+                      let formData2 = new FormData();
+                      formData2.append("idMascota",mascota.idMascota);
 
-                      /*const personalidades = mascota.personalidad;
-                      let personalityString = "";
-                      personalidades.forEach(k => {
-                        personalityString += `
-                        <p class="h6"> <i class="bi bi-award"></i> ${k}</p>
-                        `
-                      });*/
+                      fetch('endpointpersonalidad.php', {
+                        method: 'POST',
+                        body: formData2
+                      })
+                      .then(response => response.json())
+                      .then(data3 => 
+                        {
+                          console.log(data3);
+                          if(!isNaN(Date.parse(mascota.fecha_nacimiento))){
+                            alert(Date.parse(mascota.fecha_nacimiento));
+                            //PROBAR DESPUES
+                            var hoy = new Date();
+                            var edad = hoy.getFullYear() - Date.parse(mascota.fecha_nacimiento).getFullYear();
+                            var m = hoy.getMonth() - cumpleanos.getMonth();
 
-                      card.innerHTML = `
-                        <img src="${data2.resultado[0].documento}" class="card-img-top img-fluid rounded imgPetSelect" id="${mascota.idMascota}"  alt="${mascota.nombre}"></img>
-                        <div class="card-body d-flex flex-column">
-                          <h5 class="card-title text-center h3 fw-bold">${mascota.nombre}</h5>
-                          <hr>
-                          <div class="mb-3">
-                            <h6 class="fw-bold">Personalidad:</h6>
-                              ${personalityString}
-                          </div>  
-                          <p class="mb-1"><strong>Sexo:</strong> ${sexoM}</p>
-                          <p class="mb-1"><strong>Tamaño:</strong> ${tamM}</p>
-                          <!-- <p class="mb-1"><strong>Color:</strong> ${mascota.color}</p> -->
-                        
-                          <p class="mb-3"><strong>Edad:</strong> ${mascota.fecha_nacimiento}</p>
-                          <div class="mt-auto">
-                            <p class="fw-semibold text-muted"><strong>Cercanía:</strong> [Aquí puedes agregar distancia o zona]</p>
-                          </div>
-                        </div>
-                      `;
+                            if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+                                edad--;
+                            }
+                          }
+                          
+                          fetch('endpointcolor.php', {
+                            method: 'POST',
+                            body: formData2
+                          })
+                          .then(response => response.json())
+                          .then(data4 => 
+                            {
+                              const personalidades = data3.resultado;
+                              let personalityString = "";
+                              personalidades.forEach(k => {
+                              personalityString += `
+                              <p class="h6"> <i class="bi bi-award"></i> ${k.descripcion}</p>
+                              `
+                              });
+                              mascota.color = data4.resultado[0].nombre;
+                              card.innerHTML = `
+                              <img src="${data2.resultado[0].documento}" class="card-img-top img-fluid rounded imgPetSelect" id="${mascota.idMascota}"  alt="${mascota.nombre}"></img>
+                              <div class="card-body d-flex flex-column">
+                              <h5 class="card-title text-center h3 fw-bold">${mascota.nombre}</h5>
+                              <hr>
+                              <div class="mb-3">
+                              <h6 class="fw-bold">Personalidad:</h6>
+                                ${personalityString}
+                              </div>  
+                              <p class="mb-1"><strong>Sexo:</strong> ${sexoM}</p>
+                              <p class="mb-1"><strong>Tamaño:</strong> ${tamM}</p>
+                              <p class="mb-1"><strong>Color:</strong> ${mascota.color}</p>
+                          
+                              <p class="mb-3"><strong>Edad:</strong> ${mascota.fecha_nacimiento}</p>
+                              <div class="mt-auto">
+                              <p class="fw-semibold text-muted"><strong>Cercanía:</strong> [Aquí puedes agregar distancia o zona]</p>
+                              </div>
+                              </div>
+                              `;
 
-                        col.appendChild(card);
-                        dmain.appendChild(col);
+                              col.appendChild(card);
+                              dmain.appendChild(col);
+                            });
+                        });
                       });
                     dmain.appendChild(row);
                   });

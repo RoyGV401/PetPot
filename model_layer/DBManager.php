@@ -110,6 +110,48 @@ class DBManager {
         return $rows;
     }
 
+    public function showPersonalidad($id){
+        $link = $this->open();
+
+        $sql = "SELECT p.descripcion 
+        FROM mascota m
+        JOIN itemPersonalidad ip ON m.idMascota = ip.Mascota_idMascota
+        JOIN Personalidad p ON ip.Personalidad_idPersonalidad = p.idPersonalidad
+        WHERE m.idMascota = $id";
+
+        $result = mysqli_query($link, $sql, MYSQLI_ASSOC) or die('Error query');
+
+        $rows = [];
+        while($columns = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+            $rows[] = $columns;
+        }
+
+        $this->close($link);
+
+        return $rows;
+    }
+    
+    public function showColor($id){
+        $link = $this->open();
+
+        $sql = "SELECT c.nombre 
+        FROM mascota m
+        JOIN color c ON m.Color_idColor = c.idColor
+        WHERE m.idMascota = $id";
+
+        $result = mysqli_query($link, $sql, MYSQLI_ASSOC) or die('Error query');
+
+        $rows = [];
+        while($columns = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+            $rows[] = $columns;
+        }
+
+        $this->close($link);
+
+        return $rows;
+    }
+
+
     public function addPet(Mascota $p)
     {
         $link = $this->open();
