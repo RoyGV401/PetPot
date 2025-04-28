@@ -96,7 +96,7 @@ class DBManager {
     {
         $link = $this->open();
 
-        $sql = "SELECT * FROM mascotas ";
+        $sql = "SELECT * FROM mascota ";
 
         $result = mysqli_query($link, $sql, MYSQLI_ASSOC) or die('Error query');
 
@@ -206,8 +206,41 @@ class DBManager {
         return $resultado;
     }
 
-    
+    public function showUserMultimedia($id)
+    {
+        $link = $this->open();
 
+        $sql = "SELECT * FROM Multimedia WHERE Usuario_idUsuario='$id' AND esPerfil='T'";
+
+        $result = mysqli_query($link, $sql, MYSQLI_ASSOC) or die('Error query');
+
+        $rows = [];
+        while($columns = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+            $rows[] = $columns;
+        }
+
+        $this->close($link);
+
+        return $rows;
+    }
+
+    public function showPetMultimedia($id){
+
+        $link = $this->open();
+
+        $sql = "SELECT * FROM Multimedia JOIN itemMultimedia ON idMultimedia = Multimedia_idMultimedia WHERE Mascota_idMascota = '$id'"; 
+
+        $result = mysqli_query($link, $sql, MYSQLI_ASSOC) or die('Error query');
+
+        $rows = [];
+        while($columns = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+            $rows[] = $columns;
+        }
+
+        $this->close($link);
+
+        return $rows;
+    }
 }
 
 ?>

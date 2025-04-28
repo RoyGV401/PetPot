@@ -56,6 +56,11 @@ export const HEADER = `
                     >Busco adoptar</a
                   >
                 </li>
+                <li class="nav-item pb-0 pt-0">
+                  <a class="nav-link fw-normal hov-txt-white-to-brown pb-0 pt-0" href="#"
+                    >Dar en adopción</a
+                  >
+                </li>
       
                 <li class="nav-item pb-0 pt-0">
                   <a class="nav-link fw-normal hov-txt-white-to-brown pb-0 pt-0" href="#"

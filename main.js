@@ -3,6 +3,7 @@ import { DOGS, CATS, OTHERS, PETS } from "./scripts/pet_list.js";
 import { createPetSelect } from "./scripts/pet_selected.js";
 import { USERS } from "./scripts/users.js";
 import {loadHeader} from "./scripts/header.js";
+import {CUERPO} from "./scripts/busqueda.js";
 
 
 
@@ -67,6 +68,105 @@ function onLoad() {
   listar_mascotas();
   changeBodyToPet();
   checkForReturn();
+  const cuerpoPlace = document.getElementById("mainCuerpo");
+
+  const barra_busqueda = document.getElementById("busqueda");
+  barra_busqueda.addEventListener("input", () => {
+    if(barra_busqueda.value==""){
+      cuerpoPlace.hidden = true;
+    }else{
+      cuerpoPlace.hidden = false;
+      cuerpoPlace.innerHTML = CUERPO;
+      let dmain = document.getElementById("main_div_busqueda");
+      var mascotas = [];
+      let sexoM;
+      let tamM;
+      
+      fetch('endpointshowpets.php', {
+        method: 'POST',
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          if (data.success) {
+            data.resultado.forEach(d => 
+              {
+                let formData = new FormData();
+                formData.append("idMascota",d.idMascota);
+                fetch('endpointMultimedia.php', {
+                  method: 'POST',
+                  body: formData
+                })
+                .then(response => response.json())
+                .then(data2 => 
+                  {
+                    console.log(data2);
+                    
+                    var tex = d.nombre+d.descripcion;
+                    if(d.Sexo_idSexo==1){
+                      tex += "macho"; sexoM="Macho";}
+                    else{
+                      tex += "hembra"; sexoM="Hembra";}
+                    switch (d.Tamanio_idTamanio) {
+                      case '1': tex += "grande"; tamM ="Grande"; break;
+                      case '2': tex += "mediano"; tamM ="Mediano"; break;
+                      case '3': tex += "pequeño"; tamM= "Pequeño"; break;
+                      default: break;
+                    }
+                    console.log(tex);
+                    if(tex.trim().toLowerCase().includes(barra_busqueda.value)){
+                      mascotas.push(d);
+                    }
+
+                    const row = document.createElement("div");
+                    row.className = "row g-4"; // gap between cards
+
+                    mascotas.forEach((mascota) => {
+                      const col = document.createElement("div");
+                      col.className = "col-sm-12 col-md-4 mt-3 col-lg-4"; // adjust based on screen size
+
+                      const card = document.createElement("div");
+                      card.className = "card h-100 max-height-1 w-100 p-4 shadow-sm";
+                      let personalityString = ""; //borrar
+
+                      /*const personalidades = mascota.personalidad;
+                      let personalityString = "";
+                      personalidades.forEach(k => {
+                        personalityString += `
+                        <p class="h6"> <i class="bi bi-award"></i> ${k}</p>
+                        `
+                      });*/
+
+                      card.innerHTML = `
+                        <img src="${data2.resultado[0].documento}" class="card-img-top img-fluid rounded imgPetSelect" id="${mascota.idMascota}"  alt="${mascota.nombre}"></img>
+                        <div class="card-body d-flex flex-column">
+                          <h5 class="card-title text-center h3 fw-bold">${mascota.nombre}</h5>
+                          <hr>
+                          <div class="mb-3">
+                            <h6 class="fw-bold">Personalidad:</h6>
+                              ${personalityString}
+                          </div>  
+                          <p class="mb-1"><strong>Sexo:</strong> ${sexoM}</p>
+                          <p class="mb-1"><strong>Tamaño:</strong> ${tamM}</p>
+                          <!-- <p class="mb-1"><strong>Color:</strong> ${mascota.color}</p> -->
+                        
+                          <p class="mb-3"><strong>Edad:</strong> ${mascota.fecha_nacimiento}</p>
+                          <div class="mt-auto">
+                            <p class="fw-semibold text-muted"><strong>Cercanía:</strong> [Aquí puedes agregar distancia o zona]</p>
+                          </div>
+                        </div>
+                      `;
+
+                        col.appendChild(card);
+                        dmain.appendChild(col);
+                      });
+                    dmain.appendChild(row);
+                  });
+              });
+           }
+        });
+    }
+  });
 
 
     
