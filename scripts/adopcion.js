@@ -1,4 +1,7 @@
 import {loadHeader} from "./header.js";
+import { LOGIN_FORM } from "./login.js";
+import { onMainLoad } from "../main.js";
+
 
 const personalidades = [
     "Activo",
@@ -75,15 +78,23 @@ var petSelected;
 //importante
 let raza = null;
 
+//importante
+let color = null;
+
 window.onload = function(){
-    onload();
+    onMainLoad();
+    onLoadThis();
 }
 
-function onload(){
+function onLoadThis(){
     loadHeader();
     cargarCropper();
     cargarPersonalidades();
     cargarEspecies();
+
+
+
+
     document.getElementById("div_raza").hidden = true;
 
     cargarRazas();
@@ -94,9 +105,163 @@ function onload(){
         buscarRazas(petSelected,searchValue);
       });
      
-   
+    cargarColores();
 
+       // Inicializar el datepicker
+
+  $(document).ready(function(){
+    $('.datepicker').datepicker({
+        format: 'dd/mm/yyyy',
+        language: 'es',
+        autoclose: true,
+        todayHighlight: true
+    });
     
+    // Activar datepicker al hacer clic en el botón del calendario
+    $('#botonCalendario').click(function(){
+        $('#fechaSeleccionada').datepicker('show');
+    });
+});
+
+document.getElementById("btn_fecha").onclick = function(){ obtenerFecha();}
+
+
+}
+
+
+    function initMap() {
+        // Configuración inicial del mapa (centrado en una ubicación por defecto)
+        const map = new google.maps.Map(document.getElementById("map"), {
+            center: { lat: 19.4326, lng: -99.1332 }, // Ciudad de México por defecto
+            zoom: 12,
+        });
+
+        // Creamos el buscador y lo asociamos al input
+        const input = document.getElementById("pac-input");
+        const searchBox = new google.maps.places.SearchBox(input);
+        
+        // Posicionamos el input en el mapa
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+        // Escuchamos los cambios en la selección del buscador
+        map.addListener("bounds_changed", () => {
+            searchBox.setBounds(map.getBounds());
+        });
+
+        let markers = [];
+        
+        // Cuando el usuario selecciona una predicción
+        searchBox.addListener("places_changed", () => {
+            const places = searchBox.getPlaces();
+
+            if (places.length == 0) {
+                return;
+            }
+
+            // Limpiamos marcadores anteriores
+            markers.forEach((marker) => {
+                marker.setMap(null);
+            });
+            markers = [];
+
+            // Obtenemos los límites del lugar seleccionado
+            const bounds = new google.maps.LatLngBounds();
+
+            places.forEach((place) => {
+                if (!place.geometry) {
+                    console.log("El lugar no tiene geometría");
+                    return;
+                }
+
+                // Creamos un marcador para el lugar seleccionado
+                markers.push(
+                    new google.maps.Marker({
+                        map,
+                        title: place.name,
+                        position: place.geometry.location,
+                    })
+                );
+
+                // Mostramos las coordenadas
+                document.getElementById("latitud").textContent = place.geometry.location.lat();
+                document.getElementById("longitud").textContent = place.geometry.location.lng();
+
+                if (place.geometry.viewport) {
+                    bounds.union(place.geometry.viewport);
+                } else {
+                    bounds.extend(place.geometry.location);
+                }
+            });
+            map.fitBounds(bounds);
+        });
+
+        // También podemos obtener coordenadas haciendo clic en el mapa
+        map.addListener("click", (e) => {
+            // Limpiamos marcadores anteriores
+            markers.forEach((marker) => {
+                marker.setMap(null);
+            });
+            markers = [];
+            
+            // Colocamos un nuevo marcador
+            markers.push(
+                new google.maps.Marker({
+                    position: e.latLng,
+                    map: map
+                })
+            );
+            
+            // Mostramos las coordenadas
+            document.getElementById("latitud").textContent = e.latLng.lat();
+            document.getElementById("longitud").textContent = e.latLng.lng();
+        });
+    }
+
+
+// Función para obtener la fecha seleccionada
+function obtenerFecha() {
+    
+    const fecha = $('#fechaSeleccionada').val();
+    alert(fecha);y
+    return fecha;
+}
+
+function cargarColores(){
+    
+    let lista = document.getElementById("lista_color");
+    
+   // Primero construimos todo el HTML de una vez
+    let htmlItems = '';
+    colores.forEach(p => {
+    // Sanitizamos el ID reemplazando espacios y caracteres especiales
+    const safeId = 'color btn_' + p.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_]/g, '');
+    
+    htmlItems += `
+        <li><button type="button" class="dropdown-item" id="${safeId}">${p}</button></li>
+    `;
+    });
+
+    // Insertamos todo el HTML de una sola vez
+    lista.innerHTML = htmlItems;
+
+    // Ahora añadimos los event listeners
+    colores.forEach(p => {
+    const safeId = 'color btn_' + p.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_]/g, '');
+    
+    document.getElementById(safeId).addEventListener('click', function() {
+        color = p;
+        document.getElementById("btn_lista").innerText = p;
+    });
+});
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const dropdownList = document.getElementById('lista_color');
+        const items = dropdownList.querySelectorAll('.dropdown-item');
+        
+        if (items.length > 5) {
+            dropdownList.classList.add('scrollable-dropdown');
+        }
+    });
 
 }
 
@@ -368,3 +533,6 @@ function comprobarLargo(lista){
         lista.hidden = false;
     }
 }
+
+
+

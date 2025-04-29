@@ -15,11 +15,10 @@ function changeTo(path) {
   location.href = `${path}`;
 }
 
-//IMPORANTE: Ahora todo lo que se quiera hacer al cargar se debe colocar en la funcion onLoad, dado que JS solo reconoce el último window.onload, asi que
+//IMPORANTE: Ahora todo lo que se quiera hacer al cargar se debe colocar en la funcion onMainLoad, dado que JS solo reconoce el último window.onload, asi que
 //colocar varios practicamente no hace nada, siendo que solo se ejecutará el último.
 window.onload = function () {
-  localStorage.currentUser = 0;
-  onLoad();
+  onMainLoad();
 }
 
 
@@ -64,136 +63,143 @@ function getCookieValue(cname) {
 }
 
 
-function onLoad() {
+export function onMainLoad() {
+  localStorage.currentUser = 0;
+
   listar_mascotas();
   changeBodyToPet();
   checkForReturn();
   const cuerpoPlace = document.getElementById("mainCuerpo");
 
   const barra_busqueda = document.getElementById("busqueda");
-  barra_busqueda.addEventListener("input", () => {
-    if(barra_busqueda.value==""){
-      cuerpoPlace.hidden = true;
-    }else{
-      cuerpoPlace.hidden = false;
-      cuerpoPlace.innerHTML = CUERPO;
-      let dmain = document.getElementById("main_div_busqueda");
-      var mascotas = [];
-      let sexoM;
-      let tamM;
-      
-      fetch('endpointshowpets.php', {
-        method: 'POST',
-      })
-        .then(response => response.json())
-        .then(data => {
-          if (data.success) {
-            data.resultado.forEach(d => 
-              {
-                let formData = new FormData();
-                formData.append("idMascota",d.idMascota);
-                fetch('endpointMultimedia.php', {
-                  method: 'POST',
-                  body: formData
-                })
-                .then(response => response.json())
-                .then(data2 => 
-                  { 
-                    var tex = d.nombre+d.descripcion;
-                    if(d.Sexo_idSexo==1){
-                      tex += "macho"; sexoM="Macho";}
-                    else{
-                      tex += "hembra"; sexoM="Hembra";}
-                    switch (d.Tamanio_idTamanio) {
-                      case '1': tex += "grande"; tamM ="Grande"; break;
-                      case '2': tex += "mediano"; tamM ="Mediano"; break;
-                      case '3': tex += "pequeño"; tamM= "Pequeño"; break;
-                      default: break;
-                    }
-                    if(tex.trim().toLowerCase().includes(barra_busqueda.value)){
-                      mascotas.push(d);
-                    }
 
-                    const row = document.createElement("div");
-                    row.className = "row g-4"; // gap between cards
-
-                    mascotas.forEach((mascota) => {
-                      const col = document.createElement("div");
-                      col.className = "col-sm-12 col-md-4 mt-3 col-lg-4"; // adjust based on screen size
-
-                      const card = document.createElement("div");
-                      card.className = "card h-100 max-height-1 w-100 p-4 shadow-sm";
-                      
-                      let formData2 = new FormData();
-                      formData2.append("idMascota",mascota.idMascota);
-
-                      fetch('endpointpersonalidad.php', {
-                        method: 'POST',
-                        body: formData2
-                      })
-                      .then(response => response.json())
-                      .then(data3 => 
-                        {
-                          console.log(data3);
-                          if(!isNaN(Date.parse(mascota.fecha_nacimiento))){
-                            alert(Date.parse(mascota.fecha_nacimiento));
-                            //PROBAR DESPUES
-                            var hoy = new Date();
-                            var edad = hoy.getFullYear() - Date.parse(mascota.fecha_nacimiento).getFullYear();
-                            var m = hoy.getMonth() - cumpleanos.getMonth();
-
-                            if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
-                                edad--;
+  try
+  {
+    barra_busqueda.addEventListener("input", () => {
+      if(barra_busqueda.value==""){
+        cuerpoPlace.hidden = true;
+      }else{
+        cuerpoPlace.hidden = false;
+        cuerpoPlace.innerHTML = CUERPO;
+        let dmain = document.getElementById("main_div_busqueda");
+        var mascotas = [];
+        let sexoM;
+        let tamM;
+        
+        fetch('endpointshowpets.php', {
+          method: 'POST',
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              data.resultado.forEach(d => 
+                {
+                  let formData = new FormData();
+                  formData.append("idMascota",d.idMascota);
+                  fetch('endpointMultimedia.php', {
+                    method: 'POST',
+                    body: formData
+                  })
+                  .then(response => response.json())
+                  .then(data2 => 
+                    { 
+                      var tex = d.nombre+d.descripcion;
+                      if(d.Sexo_idSexo==1){
+                        tex += "macho"; sexoM="Macho";}
+                      else{
+                        tex += "hembra"; sexoM="Hembra";}
+                      switch (d.Tamanio_idTamanio) {
+                        case '1': tex += "grande"; tamM ="Grande"; break;
+                        case '2': tex += "mediano"; tamM ="Mediano"; break;
+                        case '3': tex += "pequeño"; tamM= "Pequeño"; break;
+                        default: break;
+                      }
+                      if(tex.trim().toLowerCase().includes(barra_busqueda.value)){
+                        mascotas.push(d);
+                      }
+  
+                      const row = document.createElement("div");
+                      row.className = "row g-4"; // gap between cards
+  
+                      mascotas.forEach((mascota) => {
+                        const col = document.createElement("div");
+                        col.className = "col-sm-12 col-md-4 mt-3 col-lg-4"; // adjust based on screen size
+  
+                        const card = document.createElement("div");
+                        card.className = "card h-100 max-height-1 w-100 p-4 shadow-sm";
+                        
+                        let formData2 = new FormData();
+                        formData2.append("idMascota",mascota.idMascota);
+  
+                        fetch('endpointpersonalidad.php', {
+                          method: 'POST',
+                          body: formData2
+                        })
+                        .then(response => response.json())
+                        .then(data3 => 
+                          {
+                            console.log(data3);
+                            if(!isNaN(Date.parse(mascota.fecha_nacimiento))){
+                              alert(Date.parse(mascota.fecha_nacimiento));
+                              //PROBAR DESPUES
+                              var hoy = new Date();
+                              var edad = hoy.getFullYear() - Date.parse(mascota.fecha_nacimiento).getFullYear();
+                              var m = hoy.getMonth() - cumpleanos.getMonth();
+  
+                              if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+                                  edad--;
+                              }
                             }
-                          }
-                          
-                          fetch('endpointcolor.php', {
-                            method: 'POST',
-                            body: formData2
-                          })
-                          .then(response => response.json())
-                          .then(data4 => 
-                            {
-                              const personalidades = data3.resultado;
-                              let personalityString = "";
-                              personalidades.forEach(k => {
-                              personalityString += `
-                              <p class="h6"> <i class="bi bi-award"></i> ${k.descripcion}</p>
-                              `
+                            
+                            fetch('endpointcolor.php', {
+                              method: 'POST',
+                              body: formData2
+                            })
+                            .then(response => response.json())
+                            .then(data4 => 
+                              {
+                                const personalidades = data3.resultado;
+                                let personalityString = "";
+                                personalidades.forEach(k => {
+                                personalityString += `
+                                <p class="h6"> <i class="bi bi-award"></i> ${k.descripcion}</p>
+                                `
+                                });
+                                mascota.color = data4.resultado[0].nombre;
+                                card.innerHTML = `
+                                <img src="${data2.resultado[0].documento}" class="card-img-top img-fluid rounded imgPetSelect" id="${mascota.idMascota}"  alt="${mascota.nombre}"></img>
+                                <div class="card-body d-flex flex-column">
+                                <h5 class="card-title text-center h3 fw-bold">${mascota.nombre}</h5>
+                                <hr>
+                                <div class="mb-3">
+                                <h6 class="fw-bold">Personalidad:</h6>
+                                  ${personalityString}
+                                </div>  
+                                <p class="mb-1"><strong>Sexo:</strong> ${sexoM}</p>
+                                <p class="mb-1"><strong>Tamaño:</strong> ${tamM}</p>
+                                <p class="mb-1"><strong>Color:</strong> ${mascota.color}</p>
+                            
+                                <p class="mb-3"><strong>Edad:</strong> ${mascota.fecha_nacimiento}</p>
+                                <div class="mt-auto">
+                                <p class="fw-semibold text-muted"><strong>Cercanía:</strong> [Aquí puedes agregar distancia o zona]</p>
+                                </div>
+                                </div>
+                                `;
+  
+                                col.appendChild(card);
+                                dmain.appendChild(col);
                               });
-                              mascota.color = data4.resultado[0].nombre;
-                              card.innerHTML = `
-                              <img src="${data2.resultado[0].documento}" class="card-img-top img-fluid rounded imgPetSelect" id="${mascota.idMascota}"  alt="${mascota.nombre}"></img>
-                              <div class="card-body d-flex flex-column">
-                              <h5 class="card-title text-center h3 fw-bold">${mascota.nombre}</h5>
-                              <hr>
-                              <div class="mb-3">
-                              <h6 class="fw-bold">Personalidad:</h6>
-                                ${personalityString}
-                              </div>  
-                              <p class="mb-1"><strong>Sexo:</strong> ${sexoM}</p>
-                              <p class="mb-1"><strong>Tamaño:</strong> ${tamM}</p>
-                              <p class="mb-1"><strong>Color:</strong> ${mascota.color}</p>
-                          
-                              <p class="mb-3"><strong>Edad:</strong> ${mascota.fecha_nacimiento}</p>
-                              <div class="mt-auto">
-                              <p class="fw-semibold text-muted"><strong>Cercanía:</strong> [Aquí puedes agregar distancia o zona]</p>
-                              </div>
-                              </div>
-                              `;
-
-                              col.appendChild(card);
-                              dmain.appendChild(col);
-                            });
+                          });
                         });
-                      });
-                    dmain.appendChild(row);
-                  });
-              });
-           }
-        });
-    }
-  });
+                      dmain.appendChild(row);
+                    });
+                });
+             }
+          });
+      }
+    });
+  }
+  catch{};
 
 
     
@@ -461,6 +467,7 @@ function onLoad() {
 
 }
 
+
 /*window.onresize = function(){
 
   anchoVentana = window.innerWidth;
@@ -561,7 +568,7 @@ function changeBodyToPet()
           window.doReturnNormally = false;
           document.getElementById('extra_elements').innerHTML = ""
           body.innerHTML = petInfo;
-          onLoad();
+          onMainLoad();
           
         }
        

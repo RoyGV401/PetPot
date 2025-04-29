@@ -5,15 +5,16 @@
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <title>Petpot</title>
       
-          <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Cropper.js CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="scss/custom.css" />
-      <link rel="stylesheet" href="reusable_styles.css" />
-      
-    
+      <!-- Bootstrap CSS -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.min.css">
+      <!-- Cropper.js CSS -->
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+      <link rel="stylesheet" href="scss/custom.css" />
       <link rel="stylesheet" href="mystyle.css" />
+      <link rel="stylesheet" href="reusable_styles.css" />
+      <link rel="stylesheet" href="style_adopcion.css" />
       <link
          rel="icon"
          type="image/png"
@@ -22,11 +23,10 @@
          data-href-light="favicon-32x32.png"
          data-href-dark="favicon-32x32-dark.png"
       />
-      <script type="module" src="scripts/adopcion.js"></script>
-      <script src="modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-      <link rel="stylesheet" href="style_adopcion.css" />
+      
+     
    </head>
-   <extra id="extra_elements"></extra>
+   <div id="extra_elements"></div>
 
    <body>
       <div id="blur">
@@ -39,10 +39,7 @@
             <img src="resources/cat_logo_white.png" id="img_logo_section" alt="">
          </section>
 
-         
-
          <div class="main_div container-sm rounded-m mt-3 px-3 pt-3">
-
             <div class="container my-1 px-2">
                <div class="container my-4" >
                   <div class="row" id="main_div_gatos">
@@ -51,62 +48,63 @@
                            <!--Nombre-->
                            <div class="mb-3">
                               <p class="fw-bold h5 pt-3 px-1">Nombre:</p>
-                              
-                                 <input class="form-control w-50" type="text" id="inputNombre" placeholder="Nombre">
-                              
+                              <input class="form-control "" type="text" id="inputNombre" placeholder="Nombre">
                            </div>
                            
+                           <!--Descripcion-->
+                           <div class="mb-3">
+                              <p class="fw-bold h5 pt-3 px-1">Descripción:</p>
+                              <textarea class="form-control " id="inputNombre" placeholder="Nombre" 
+                                        rows="3"></textarea>
+                          </div>
+                           <br>
                            <!-- Especie -->
                            <div class="mb-3">
-                              <label class="fw-bold h5 pt-3 px-1">Especie:</label>
-                              <div class="dropdown">
-                                 <button id="btn_lista_especie" style="color: #f8f9fa;" class="btn btn-primary dropdown-toggle px-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Especie
-                                 </button>
-                                 <ul id="lista_especie" class="dropdown-menu scrollable-dropdown">
-                                    <li><button type="button" class="dropdown-item" id="btn_perro">Perro</button></li>
-                                    <li><button type="button" class="dropdown-item" id="btn_gato">Gato</button></li>
-                                    <li><button type="button" class="dropdown-item" id="btn_otro">Otro</button></li>
-                                 </ul>
+                              <div class="d-flex align-items-center">
+                                 <label class="fw-bold h5 px-1 me-2">Especie:</label>
+                                 <div class="dropdown">
+                                    <button id="btn_lista_especie" style="color: #f8f9fa;" class="btn btn-primary dropdown-toggle px-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                          Especie
+                                    </button>
+                                    <ul id="lista_especie" class="dropdown-menu scrollable-dropdown">
+                                          <li><button type="button" class="dropdown-item" id="btn_perro">Perro</button></li>
+                                          <li><button type="button" class="dropdown-item" id="btn_gato">Gato</button></li>
+                                          <li><button type="button" class="dropdown-item" id="btn_otro">Otro</button></li>
+                                    </ul>
+                                 </div>
                               </div>
                            </div>
 
                            <!-- Raza -->
                            <div id="div_raza" class="mb-3">
                               <label class="fw-bold h5 pt-3 px-1">Raza:</label>
-                              
-                                 
-                                    <div class="container-fluid px-1">
-                                      <form id="searchForm" class="d-flex" role="search">
-                                        <input id="searchInput" class="form-control me-2 w-50" type="search" placeholder="Buscar raza" aria-label="Search">
-                                        <button class="btn btn-outline-success" type="submit">Buscar</button>
-                                      </form>
-                                    </div>
-                                  
-                                  
-                                    <div id="lista_raza" class="scrollable-button-list w-50 ms-1 mt-2">
-                                   </div>
-
-                                   
-                              
+                              <div class="container-fluid px-1">
+                                <form id="searchForm" class="d-flex" role="search">
+                                  <input id="searchInput" class="form-control me-2 w-50" type="search" placeholder="Buscar raza" aria-label="Search">
+                                  <button class="btn btn-outline-success" type="submit">Buscar</button>
+                                </form>
+                              </div>
+                              <div id="lista_raza" class="scrollable-button-list w-50 ms-1 mt-2">
+                              </div>
                            </div>
-                           <div class="mb-3 mt-3" id="btns_razas">
-                                 </div>
+                           <div class="mb-4 mt-3" id="btns_razas"></div>
+                            
                            
                            <!-- COLOR -->
                            <div class="mb-3">
-                              <label class="fw-bold h5 pt-3 px-1">Color:</label>
-                              <div class="dropdown">
-                                 <button id="btn_lista" style="color: #f8f9fa;" class="btn btn-primary dropdown-toggle px-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                     Color
-                                 </button>
-                                 <ul id="lista_color" class="dropdown-menu scrollable-dropdown">
-                                 </ul>
-                             </div>
-                           </div>
+                              <div class="d-flex align-items-center">
+                                  <label class="fw-bold h5 px-1 me-2">Color:</label>
+                                  <div class="dropdown">
+                                      <button id="btn_lista" style="color: #f8f9fa;" class="btn btn-primary dropdown-toggle px-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                          Color
+                                      </button>
+                                      <ul id="lista_color" class="dropdown-menu scrollable-dropdown">
+                                      </ul>
+                                  </div>
+                              </div>
+                          </div>
 
-                           <div class="mb-3" id="btns_colores">
-                           </div>
+                           <div class="mb-3" id="btns_colores"></div>
 
                            <!-- Sexo -->
                            <div class="mb-3">
@@ -119,7 +117,7 @@
                                  <input class="form-check-input" type="radio" name="sexo" id="hembra">
                                  <label class="form-check-label" for="hembra">Hembra</label>
                               </div>
-                           </div>
+                           </div>  
          
                            <!-- Tamaño -->
                            <div class="mb-3">
@@ -151,20 +149,24 @@
                              </div>
                            </div>
 
-                           <div class="mb-3" id="btns_personalidades">
-                           </div>
+                           <div class="mb-3" id="btns_personalidades"></div>
 
                            <!-- Edad -->
                            <div class="mb-3">
-                              <p class="fw-bold h5 pt-3 px-1">Edad:</p>
-                              <input type="range" class="form-range" min="0" max="13" />
+                              <label for="fechaSeleccionada" class="form-label fw-bold h5">Selecciona una fecha:</label>
+                              <div class="input-group">
+                                 <input type="text" class="form-control datepicker" id="fechaSeleccionada" placeholder="dd/mm/aaaa">
+                                 <button class="btn btn-outline-secondary" type="button" id="botonCalendario">
+                                    <i class="bi bi-calendar"></i>
+                                 </button>
+                              </div>
                            </div>
-         
-                           
                         </div>
                      </div>
+                     
                      <div class="col-sm-15 col-md-6 col-lg-6 h-100">
                         <div class="card h-100 max-height-1 p-4 m-3 shadow-sm">
+                           <!-- Foto del animal -->
                            <div class="mb-3">
                               <label for="formFile" class="form-label">Foto del animal</label>
                               <input class="form-control" type="file" id="formFile" accept="image/*">
@@ -184,23 +186,128 @@
                                       <button id="cropButton" class="btn btn-primary">Recortar</button>
                                   </div>
                               </div>
-                          </div>
-                               <!-- Bootstrap JS + Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Cropper.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
-    <script src="modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+                           </div>
+                           
+                           <!-- Mapa de Google -->
+                           <div class="map-container">
+                              <label class="fw-bold h5">Ubicación:</label>
+                              <div class="search-box">
+                                 <input id="pac-input" class="form-control" type="text" placeholder="Buscar localidad...">
+                              </div>
+                              <div id="map"></div>
+                              <div class="coordinates">
+                                 <p><strong>Coordenadas:</strong></p>
+                                 <p>Latitud: <span id="latitud">-</span></p>
+                                 <p>Longitud: <span id="longitud">-</span></p>
+                              </div>
+                           </div>
                         </div>
                      </div>
-                     
                   </div>
                </div>
             </div>
-            
          </div>
-
-    
-        
       </div>
+
+      <!-- Scripts -->
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/locales/bootstrap-datepicker.es.min.js" charset="UTF-8"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+      <script src="modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+      <script type="module" src="scripts/adopcion.js"></script>
+      
+      <!-- Google Maps API -->
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDT3TNU_yVdoPvLV3ZOb_T_RfpQ4tyJWfY&libraries=places&callback=initMap" async defer></script>
+      
+      <script>
+         
+
+         // Google Maps
+         window.initMap = function() {
+             // Configuración inicial del mapa (centrado en una ubicación por defecto)
+             const map = new google.maps.Map(document.getElementById("map"), {
+                 center: { lat: 19.4326, lng: -99.1332 }, // Ciudad de México por defecto
+                 zoom: 12,
+             });
+
+             // Creamos el buscador y lo asociamos al input
+             const input = document.getElementById("pac-input");
+             const searchBox = new google.maps.places.SearchBox(input);
+             
+             // Escuchamos los cambios en la selección del buscador
+             map.addListener("bounds_changed", () => {
+                 searchBox.setBounds(map.getBounds());
+             });
+
+             let markers = [];
+             
+             // Cuando el usuario selecciona una predicción
+             searchBox.addListener("places_changed", () => {
+                 const places = searchBox.getPlaces();
+
+                 if (places.length == 0) {
+                     return;
+                 }
+
+                 // Limpiamos marcadores anteriores
+                 markers.forEach((marker) => {
+                     marker.setMap(null);
+                 });
+                 markers = [];
+
+                 // Obtenemos los límites del lugar seleccionado
+                 const bounds = new google.maps.LatLngBounds();
+
+                 places.forEach((place) => {
+                     if (!place.geometry) {
+                         console.log("El lugar no tiene geometría");
+                         return;
+                     }
+
+                     // Creamos un marcador para el lugar seleccionado
+                     markers.push(
+                         new google.maps.Marker({
+                             map,
+                             title: place.name,
+                             position: place.geometry.location,
+                         })
+                     );
+
+                     // Mostramos las coordenadas
+                     document.getElementById("latitud").textContent = place.geometry.location.lat();
+                     document.getElementById("longitud").textContent = place.geometry.location.lng();
+
+                     if (place.geometry.viewport) {
+                         bounds.union(place.geometry.viewport);
+                     } else {
+                         bounds.extend(place.geometry.location);
+                     }
+                 });
+                 map.fitBounds(bounds);
+             });
+
+             // También podemos obtener coordenadas haciendo clic en el mapa
+             map.addListener("click", (e) => {
+                 // Limpiamos marcadores anteriores
+                 markers.forEach((marker) => {
+                     marker.setMap(null);
+                 });
+                 markers = [];
+                 
+                 // Colocamos un nuevo marcador
+                 markers.push(
+                     new google.maps.Marker({
+                         position: e.latLng,
+                         map: map
+                     })
+                 );
+                 
+                 // Mostramos las coordenadas
+                 document.getElementById("latitud").textContent = e.latLng.lat();
+                 document.getElementById("longitud").textContent = e.latLng.lng();
+             });
+         }
+      </script>
    </body>
 </html>
