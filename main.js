@@ -87,7 +87,6 @@ function onLoad() {
       })
         .then(response => response.json())
         .then(data => {
-          console.log(data);
           if (data.success) {
             data.resultado.forEach(d => 
               {
@@ -99,9 +98,7 @@ function onLoad() {
                 })
                 .then(response => response.json())
                 .then(data2 => 
-                  {
-                    console.log(data2);
-                    
+                  { 
                     var tex = d.nombre+d.descripcion;
                     if(d.Sexo_idSexo==1){
                       tex += "macho"; sexoM="Macho";}
@@ -113,7 +110,6 @@ function onLoad() {
                       case '3': tex += "pequeño"; tamM= "Pequeño"; break;
                       default: break;
                     }
-                    console.log(tex);
                     if(tex.trim().toLowerCase().includes(barra_busqueda.value)){
                       mascotas.push(d);
                     }

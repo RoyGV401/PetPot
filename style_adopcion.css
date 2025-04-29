@@ -1,0 +1,53 @@
+#imagePreview {
+    max-width: 100%;
+}
+.cropper-container {
+    margin: 0 auto;
+}
+.cropper-modal {
+    background: rgba(0, 0, 0, 0.5);
+}
+.cropper-view-box {
+    outline: 2px solid #39f;
+    outline-color: rgba(51, 153, 255, 0.75);
+}
+.cropper-dashed {
+    border: 0 dashed #eee;
+}
+.cropper-face {
+    background-color: transparent;
+}
+.cropper-point {
+    background-color: #39f;
+    width: 10px;
+    height: 10px;
+    opacity: 1;
+}
+.cropper-line {
+    background-color: #39f;
+    opacity: 1;
+}
+
+.scrollable-dropdown {
+    max-height: 200px; /* Altura máxima antes de mostrar scroll */
+    overflow-y: auto;  /* Habilitar scroll vertical */
+}
+
+/* Opcional: estilo para el scroll */
+.scrollable-dropdown::-webkit-scrollbar {
+    width: 8px;
+}
+.scrollable-dropdown::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+.scrollable-dropdown::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+.scrollable-dropdown::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.btn-info:hover{
+    background-color: rgb(255, 255, 255);
+}
