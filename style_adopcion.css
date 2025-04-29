@@ -51,3 +51,36 @@
 .btn-info:hover{
     background-color: rgb(255, 255, 255);
 }
+
+.scrollable-button-list {
+    max-height: 300px; /* Altura máxima antes de mostrar scroll */
+    overflow-y: auto; /* Habilitar scroll vertical */
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    padding: 10px;
+}
+
+/* Personalización de la barra de desplazamiento */
+.scrollable-button-list::-webkit-scrollbar {
+    width: 10px; /* Ancho de la barra de desplazamiento */
+}
+
+.scrollable-button-list::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Color del fondo de la barra */
+    border-radius: 5px;
+}
+
+.scrollable-button-list::-webkit-scrollbar-thumb {
+    background: #888; /* Color gris de la barra */
+    border-radius: 5px;
+}
+
+.scrollable-button-list::-webkit-scrollbar-thumb:hover {
+    background: #666; /* Color gris más oscuro al pasar el mouse */
+}
+
+.btn-list-item {
+    margin-bottom: 5px;
+    width: 100%;
+    text-align: left;
+}

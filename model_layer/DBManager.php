@@ -283,6 +283,42 @@ class DBManager {
 
         return $rows;
     }
+
+    public function showEspecieBreed($id)
+    {
+        $link = $this->open();
+
+        $sql = "SELECT * FROM raza WHERE Especie_idEspecie='$id'";
+
+        $result = mysqli_query($link, $sql, MYSQLI_ASSOC) or die('Error query');
+
+        $rows = [];
+        while($columns = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+            $rows[] = $columns;
+        }
+
+        $this->close($link);
+
+        return $rows;
+    }
+
+    public function showPetBreed($id){
+
+        $link = $this->open();
+
+        $sql = "SELECT raza.nombre FROM raza JOIN mascota on Raza_idRaza = idRaza WHERE Mascota_idMascota = '$id'"; 
+
+        $result = mysqli_query($link, $sql, MYSQLI_ASSOC) or die('Error query');
+
+        $rows = [];
+        while($columns = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+            $rows[] = $columns;
+        }
+
+        $this->close($link);
+
+        return $rows;
+    }
 }
 
 ?>

@@ -42,5 +42,6 @@ UPDATE mascota SET COLOR_IDCOLOR = 10 WHERE IDMASCOTA = 1;
 
 ALTER TABLE Mascota MODIFY COLUMN Color_idColor INT NOT NULL;
 
+insert into raza (nombre, descripcion, Especie_idEspecie) Values ('Mestizo', 'Descendiente de razas diferentes', '1');
 
 
