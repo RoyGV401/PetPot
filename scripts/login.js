@@ -180,7 +180,7 @@ export const LOGIN_FORM = `
 
                         <div class="form-group col-lg-12 col-md-12 col-sm-12 py-1">
                           <p class="text-white mb-1">Tu correo electrónico:</p>
-                          <input id="input_correo_log" class="form-control" type="text" placeholder="Correo@email.com">
+                          <input id="input_correo_log" autocomplete="off" class="form-control" type="text" placeholder="Correo@email.com">
                         </div>
                         <div class="form-group col-lg-12 col-md-12 col-sm-12 py-1">
                           <p class="text-white mb-1">Tu contraseña:</p>
@@ -237,7 +237,7 @@ export const LOGIN_FORM = `
    <div class="modal-dialog ">
       <div class="modal-content div_login">
           <div class="modal-header">
-              <h1 class="text-white">Recupera tu contraseña</h1>
+              <h1 class="text-white text-center">Recupera tu contraseña</h1>
           </div>
           <div class="modal-body justify-content-center">
               <div class="image-logo-container">
@@ -252,11 +252,11 @@ export const LOGIN_FORM = `
                   <input id="input_correoR"  class="form-control" type="email" name ="email" placeholder="Correo@email.com" required>
                   <br>
                   <br>
-                  <button type="submit"  class="btn important_button"  href="index.html"  data-bs-toggle="modal" data-bs-target="#recuperarForm2" id="ver_correo">Enviar</button>
+                  <button type="submit"  class="btn important_button w-100"  href="index.html"  data-bs-toggle="modal" data-bs-target="#recuperarForm2" id="ver_correo">Enviar</button>
                   <p id="mensaje_recu"></p>
               </form>
               <br>    
-              <button class="cancel_button" id="btn_cancel_login" data-bs-dismiss="modal">Salir</button>
+              <button class="btn btn-primary cancel_button w-100" id="btn_cancel_login" data-bs-dismiss="modal">Salir</button>
           </div>
       </div>
    </div>
@@ -301,9 +301,9 @@ export const LOGIN_FORM = `
    <div class="modal-dialog ">
       <div class="modal-content div_login">
           <div class="modal-header">
-              <h1 class="text-white">JIJIJA</h1>
+              <h1 class="text-white">Recuperar</h1>
           </div>
-          <div class="modal-body justify-content-center">
+          <div class="modal-body justify-content-center ">
               <div class="image-logo-container">
                   <div class="image">
                     <img src="resources/cabexa.png" class="avatar">
@@ -314,7 +314,7 @@ export const LOGIN_FORM = `
               </div>
               <div class="form-group col-lg-6 col-md-6 col-sm-12 py-1">
                 <p class="text-white mb-1">Contraseña:</p>
-                <input id="input_contra_new" class="form-control" type="password" placeholder="...">
+                <input id="input_contra_new" autocomplete="off" class="form-control" type="password" placeholder="...">
               </div>
               <div class="form-group col-lg-6 col-md-6 col-sm-12 py-1">
                 <p class="text-white mb-1">Confirmar contraseña:</p>
