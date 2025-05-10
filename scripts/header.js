@@ -47,21 +47,10 @@ export const HEADER = `
                   >
                 </li>
                 <li class="nav-item pb-0 pt-0">
-                  <a class="nav-link fw-normal hov-txt-white-to-brown pb-0 pt-0" href="#"
-                    >Soy rescatista</a
-                  >
-                </li>
-                <li class="nav-item pb-0 pt-0">
-                  <a class="nav-link fw-normal hov-txt-white-to-brown pb-0 pt-0" href="#"
-                    >Busco adoptar</a
-                  >
-                </li>
-                <li class="nav-item pb-0 pt-0">
                   <a class="nav-link fw-normal hov-txt-white-to-brown pb-0 pt-0" href="adopcion.html"
                     >Dar en adopción</a
                   >
                 </li>
-      
                 <li class="nav-item pb-0 pt-0">
                   <a class="nav-link fw-normal hov-txt-white-to-brown pb-0 pt-0" href="#"
                     >¿Quiénes Somos?</a
@@ -129,3 +118,18 @@ export function loadHeader() {
    lastScrollTop = st <= 0 ? 0 : st; 
   });
 }
+
+export const ALERTA = `
+
+  <div class="modal fade" id="alertModal6" tabindex="-1" style="z-index:99999999999999999" >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <h5 class="modal-title text-center" id="mensaje_alerta">Agregado!</h5>
+                </div>
+                
+                
+              </div>
+            </div>
+          </div>
+`;

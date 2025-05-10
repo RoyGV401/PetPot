@@ -1041,6 +1041,7 @@ th {
     transition: 0.3s;
     align-items: center;
     align-content: center;
+    z-index: 98;
 }
 
 .div_login:has([type="password"]:focus) .cortina{

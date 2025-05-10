@@ -2,7 +2,7 @@ import { LOGIN_FORM } from "./scripts/login.js";
 import { DOGS, CATS, OTHERS, PETS } from "./scripts/pet_list.js";
 import { createPetSelect } from "./scripts/pet_selected.js";
 import { USERS } from "./scripts/users.js";
-import {loadHeader} from "./scripts/header.js";
+import {loadHeader, ALERTA} from "./scripts/header.js";
 import {CUERPO} from "./scripts/busqueda.js";
 
 
@@ -65,7 +65,7 @@ export function getCookieValue(cname) {
 
 export async function onMainLoad() {
   localStorage.currentUser = 0;
-
+    document.getElementById("extra_elements").innerHTML+= ALERTA;
   listar_mascotas();
   changeBodyToPet();
   checkForReturn();
@@ -88,16 +88,19 @@ export async function onMainLoad() {
         let sexoM;
         let tamM;
         
-        
+         const row = document.createElement("div");
+            row.className = "row g-4"; // gap between cards
+             dmain.appendChild(row); //checar
         mascotas.forEach(async m => {
           var personalityString="";
-          var tex;
+          var tex="";
            tex+= m.nombre+m.descripcion;
            let color = await cargarColor(m.idMascota);
          
            tex += color.nombre
            
            let raza = await cargarRaza(m.idMascota,true)
+       
            tex+=raza.nombre;
            let personalidades = await cargarPersonalidad(m.idMascota)
        
@@ -108,6 +111,15 @@ export async function onMainLoad() {
               `
               
            });
+      
+           switch(raza.Especie_idEspecie){
+            case "1": tex+= "perros"; break;
+            case "2": tex+= "gatos"; break;
+            case "3":  break;
+
+          }
+          
+
            switch (m.Tamanio_idTamanio) {
             case '1': tex += "grande"; tamM ="Grande"; break;
             case '2': tex += "mediano"; tamM ="Mediano"; break;
@@ -117,9 +129,7 @@ export async function onMainLoad() {
           
            if(tex.trim().toLowerCase().includes(barra_busqueda.value.trim().toLowerCase())){
 
-            const row = document.createElement("div");
-            row.className = "row g-4"; // gap between cards
-
+           
               
             const col = document.createElement("div");
             col.className = "col-sm-12 col-md-4 mt-3 col-lg-4"; // adjust based on screen size
@@ -158,7 +168,7 @@ export async function onMainLoad() {
               col.appendChild(card);
              
               dmain.appendChild(col);
-               dmain.appendChild(row); //checar
+              
            }
            
            
@@ -272,21 +282,81 @@ export async function onMainLoad() {
                 console.log(data);
                 if (data.success) {
                  
-                  alert('Usuario registrado!');
-                  location.reload(); // Recargar para ver los cambios
-                }
-              });
+                   document.getElementById("mensaje_alerta").innerText = "¡Usuario registrado!";
+                  const modal1Element = document.getElementById('alertModal6');
+                  const modal1 = new bootstrap.Modal(modal1Element);
+                  modal1.show();
+                  let temporizador;
+                  let tiempoRestante = 2;
+                  temporizador = setInterval(() => {
+                      tiempoRestante--; 
+                      if (tiempoRestante <= 0) {
+                          clearInterval(temporizador);
+                          modal1.hide();
+                      }
+                  }, 1000);
+                        location.reload(); // Recargar para ver los cambios
+                      }
+                    });
           }else{
-            alert("La contraseña debe de ser de minimo 8 caracteres, maximo 15, un digito y un caracter especial sin espacios")
+             document.getElementById("mensaje_alerta").innerText = "La contraseña debe de ser de minimo 8 caracteres, maximo 15, un digito y un caracter especial sin espacios";
+            const modal1Element = document.getElementById('alertModal6');
+            const modal1 = new bootstrap.Modal(modal1Element);
+            modal1.show();
+            let temporizador;
+            let tiempoRestante = 2;
+            temporizador = setInterval(() => {
+                tiempoRestante--; 
+                if (tiempoRestante <= 0) {
+                    clearInterval(temporizador);
+                    modal1.hide();
+                }
+            }, 1000);
           }
         }else{
-          alert("Las contraseñas no son iguales");
+          document.getElementById("mensaje_alerta").innerText = "Las contraseñas no son iguales.";
+            const modal1Element = document.getElementById('alertModal6');
+            const modal1 = new bootstrap.Modal(modal1Element);
+            modal1.show();
+            let temporizador;
+            let tiempoRestante = 2;
+            temporizador = setInterval(() => {
+                tiempoRestante--; 
+                if (tiempoRestante <= 0) {
+                    clearInterval(temporizador);
+                    modal1.hide();
+                }
+            }, 1000);
         }
       }else{
-        alert("Ingrese un correo electronico valido");
+        document.getElementById("mensaje_alerta").innerText = "Ingrese un correo electrónico válido."
+            const modal1Element = document.getElementById('alertModal6');
+            const modal1 = new bootstrap.Modal(modal1Element);
+            modal1.show();
+            let temporizador;
+            let tiempoRestante = 2;
+            temporizador = setInterval(() => {
+                tiempoRestante--; 
+                if (tiempoRestante <= 0) {
+                    clearInterval(temporizador);
+                    modal1.hide();
+                }
+            }, 1000);
       }
     }else{
-      alert("Debe ingresar todos los datos para continuar");
+      document.getElementById("mensaje_alerta").innerText = "Ingrese todos los datos para continuar.";
+            const modal1Element = document.getElementById('alertModal6');
+            const modal1 = new bootstrap.Modal(modal1Element);
+            modal1.show();
+            let temporizador;
+            let tiempoRestante = 2;
+            temporizador = setInterval(() => {
+                tiempoRestante--; 
+                if (tiempoRestante <= 0) {
+                    clearInterval(temporizador);
+                    modal1.hide();
+                }
+            }, 1000);
     }
   };
 
@@ -356,14 +426,50 @@ export async function onMainLoad() {
                 const modal1 = new bootstrap.Modal(modal1Element);
                 modal1.show();
               }else{
-                alert("El token expiró");
+                document.getElementById("mensaje_alerta").innerText = "El token expiró.";
+            const modal1Element = document.getElementById('alertModal6');
+            const modal1 = new bootstrap.Modal(modal1Element);
+            modal1.show();
+            let temporizador;
+            let tiempoRestante = 2;
+            temporizador = setInterval(() => {
+                tiempoRestante--; 
+                if (tiempoRestante <= 0) {
+                    clearInterval(temporizador);
+                    modal1.hide();
+                }
+            }, 1000);
               }
             }else{
-              alert("Token incorrecto");
+              document.getElementById("mensaje_alerta").innerText = "Token incorrecto.";
+            const modal1Element = document.getElementById('alertModal6');
+            const modal1 = new bootstrap.Modal(modal1Element);
+            modal1.show();
+            let temporizador;
+            let tiempoRestante = 2;
+            temporizador = setInterval(() => {
+                tiempoRestante--; 
+                if (tiempoRestante <= 0) {
+                    clearInterval(temporizador);
+                    modal1.hide();
+                }
+            }, 1000);
             }
         });
       } else {
-        alert('Por favor complete los 6 caracteres.');
+        document.getElementById("mensaje_alerta").innerText = "Por favor complete los 6 caracteres.";
+            const modal1Element = document.getElementById('alertModal6');
+            const modal1 = new bootstrap.Modal(modal1Element);
+            modal1.show();
+            let temporizador;
+            let tiempoRestante = 2;
+            temporizador = setInterval(() => {
+                tiempoRestante--; 
+                if (tiempoRestante <= 0) {
+                    clearInterval(temporizador);
+                    modal1.hide();
+                }
+            }, 1000);
       }
     }
     
@@ -421,13 +527,49 @@ export async function onMainLoad() {
           .then(response => response.json())
           .then(data => {
            if(data.resultado){
-            alert("Cambios realizados con exito");
+            document.getElementById("mensaje_alerta").innerText = "Cambios realizados con éxito.";
+            const modal1Element = document.getElementById('alertModal6');
+            const modal1 = new bootstrap.Modal(modal1Element);
+            modal1.show();
+            let temporizador;
+            let tiempoRestante = 2;
+            temporizador = setInterval(() => {
+                tiempoRestante--; 
+                if (tiempoRestante <= 0) {
+                    clearInterval(temporizador);
+                    modal1.hide();
+                }
+            }, 1000);
           }else{
-            alert("No se realizaron");
+            document.getElementById("mensaje_alerta").innerText = "Cambios no efectuados.";
+            const modal1Element = document.getElementById('alertModal6');
+            const modal1 = new bootstrap.Modal(modal1Element);
+            modal1.show();
+            let temporizador;
+            let tiempoRestante = 2;
+            temporizador = setInterval(() => {
+                tiempoRestante--; 
+                if (tiempoRestante <= 0) {
+                    clearInterval(temporizador);
+                    modal1.hide();
+                }
+            }, 1000);
           }
         });
       }else{
-        alert("Las contraseñas no son iguales");
+        document.getElementById("mensaje_alerta").innerText = "Las contraseñas no son iguales."
+            const modal1Element = document.getElementById('alertModal6');
+            const modal1 = new bootstrap.Modal(modal1Element);
+            modal1.show();
+            let temporizador;
+            let tiempoRestante = 2;
+            temporizador = setInterval(() => {
+                tiempoRestante--; 
+                if (tiempoRestante <= 0) {
+                    clearInterval(temporizador);
+                    modal1.hide();
+                }
+            }, 1000);
       }
     }
 

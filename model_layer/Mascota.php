@@ -12,6 +12,7 @@ class Mascota{
     public $esPeligrosa;
     public $Color_idColor;
     public $Usuario_idUsuario;
+    public $Ubicacion_idUbicaciones;
 }
 
 ?>

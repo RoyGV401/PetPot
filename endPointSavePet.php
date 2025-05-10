@@ -25,6 +25,7 @@ if (
     $p-> esPeligrosa= isset($_POST['esPeligrosa']) ? $_POST['esPeligrosa'] : "F";
     $p-> Color_idColor = $_POST['Color_idColor'];
     $p-> Usuario_idUsuario = $_POST['Usuario_idUsuario'];
+    $p-> Ubicacion_idUbicaciones = isset($_POST['Ubicacion_idUbicaciones']) ? $_POST['Ubicacion_idUbicaciones'] : null;
 
 
     if($p->idMascota != 0) {

@@ -154,6 +154,42 @@ class DBManager {
         return $resultado;
     }
 
+    public function createubicacion($latitud, $longitud){
+       
+      
+        $link = $this->open();
+
+        $sql = "INSERT INTO ubicacion  VALUES (NULL,?,?)";
+
+        $query = mysqli_prepare($link, $sql);
+
+        // Enlaza los parametros (reemplaza comodines)
+		// Tipos: i para enteros, s para string, d para double y b para blob
+		mysqli_stmt_bind_param(
+            $query, 
+            "dd",
+            $latitud, $longitud
+        );
+
+        // Ejecuta la query
+		$resultado = mysqli_stmt_execute($query) or die('Error insert');
+      
+
+        $sql = "SELECT * FROM ubicacion ORDER BY idUbicaciones DESC LIMIT 1";
+
+        $result = mysqli_query($link, $sql, MYSQLI_ASSOC) or die('Error query');
+
+
+        $rows = [];
+        while($columns = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+            $rows[] = $columns;
+        }
+
+        $this->close($link);
+
+        return $rows;
+    }
+
     public function showPersonalidad($id){
         $link = $this->open();
 
@@ -200,7 +236,7 @@ class DBManager {
     {
         $link = $this->open();
 
-        $sql = "INSERT INTO mascota VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
+        $sql = "INSERT INTO mascota VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?)";
 
         // Prepara la consulta
 		$query = mysqli_prepare($link, $sql);
@@ -209,7 +245,7 @@ class DBManager {
 		// Tipos: i para enteros, s para string, d para double y b para blob
 		mysqli_stmt_bind_param(
             $query, 
-            "sssiiiisii",
+            "sssiiiisiii",
             $p->nombre,
             $p->descripcion,
             $p->fecha_nacimiento,
@@ -219,7 +255,8 @@ class DBManager {
             $p->Raza_idRaza,
             $p->esPeligrosa,
             $p->Color_idColor,
-            $p->Usuario_idUsuario
+            $p->Usuario_idUsuario,
+            $p->Ubicacion_idUbicaciones
         );  
 
         // Ejecuta la query
@@ -379,7 +416,7 @@ class DBManager {
 
         $link = $this->open();
 
-        $sql = "SELECT raza.nombre FROM raza JOIN mascota on Raza_idRaza = idRaza WHERE idMascota = '$id'"; 
+        $sql = "SELECT raza.nombre , raza.Especie_idEspecie FROM raza JOIN mascota on Raza_idRaza = idRaza WHERE idMascota = '$id'"; 
 
         $result = mysqli_query($link, $sql, MYSQLI_ASSOC) or die('Error query');
 

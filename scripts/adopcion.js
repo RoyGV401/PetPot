@@ -1,4 +1,4 @@
-import {loadHeader} from "./header.js";
+import {loadHeader, ALERTA} from "./header.js";
 import { LOGIN_FORM } from "./login.js";
 import { onMainLoad } from "../main.js";
 
@@ -93,7 +93,7 @@ window.onload = function(){
     
     onMainLoad();
     onLoadThis();
-    
+    document.getElementById("extra_elements").innerHTML+= ALERTA;
 }
 
 function onLoadThis(){
@@ -136,7 +136,20 @@ function onLoadThis(){
 
     document.getElementById("btn_enviar").onclick = async function(){
         if(localStorage.currentUser==0){
-            alert("INICIA SESION");
+            
+            document.getElementById("mensaje_alerta").innerText = "Debes iniciar sesión";
+            const modal1Element = document.getElementById('alertModal6');
+            const modal1 = new bootstrap.Modal(modal1Element);
+            modal1.show();
+            let temporizador;
+            let tiempoRestante = 2;
+            temporizador = setInterval(() => {
+                tiempoRestante--; 
+                if (tiempoRestante <= 0) {
+                    clearInterval(temporizador);
+                    modal1.hide();
+                }
+            }, 1000);
             return;
         }else{
             usuario = await buscaUsuario();
@@ -181,7 +194,14 @@ function onLoadThis(){
             formData.append("Color_idColor",colores.indexOf(color)+1);
             formData.append("Usuario_idUsuario",usuario);
           
-                
+            let resultado = await guardarUbicacion();
+                if(resultado.sucess==false){
+                    console.log(resultado);
+                    return
+                }else{
+                    formData.append("Ubicacion_idUbicaciones",resultado.resultado[0].idUbicaciones);
+                    alert();
+                }
 
 
             fetch('endpointSavePet.php', {
@@ -207,14 +227,41 @@ function onLoadThis(){
                     body: formData
                     })
                     .then(response => response.json())
-                    .then(data2 => {
+                    .then(async data2 => {
                         console.log(data2);
-                        guardarFoto(data[0].idMascota);
-                    });
+                        await guardarFoto(data[0].idMascota);
+                        
+                            
+                        document.getElementById("mensaje_alerta").innerText = "¡Mascota registrada!";
+                        const modal1Element = document.getElementById('alertModal6');
+                        const modal1 = new bootstrap.Modal(modal1Element);
+                        modal1.show();
+                        let temporizador;
+                        let tiempoRestante = 2;
+                        temporizador = setInterval(() => {
+                            tiempoRestante--; 
+                            if (tiempoRestante <= 0) {
+                                clearInterval(temporizador);
+                                modal1.hide();
+                            }
+                        }, 1000);
+                                });
                 });
             });
         }else{
-            alert("DEBE LLENAR TODOS LOS CAMPOS")
+            document.getElementById("mensaje_alerta").innerText = "Debes ingresar todos sus datos";
+            const modal1Element = document.getElementById('alertModal6');
+            const modal1 = new bootstrap.Modal(modal1Element);
+            modal1.show();
+            let temporizador;
+            let tiempoRestante = 2;
+            temporizador = setInterval(() => {
+                tiempoRestante--; 
+                if (tiempoRestante <= 0) {
+                    clearInterval(temporizador);
+                    modal1.hide();
+                }
+            }, 1000);
             console.log("N:"+nombre+"D:"+descripcion+"E:"+esp+"R:"+raza+"S:"+sexo+"T:"+tamanio+"P:"+persos.length+"F:"+fecha+" ")
             
         }
@@ -577,7 +624,19 @@ function initMap() {
             opciones
         );
     } else {
-        alert("Tu navegador no soporta geolocalización.");
+        document.getElementById("mensaje_alerta").innerText = "Tu navegador no soporta geolocalización.";
+            const modal1Element = document.getElementById('alertModal6');
+            const modal1 = new bootstrap.Modal(modal1Element);
+            modal1.show();
+            let temporizador;
+            let tiempoRestante = 2;
+            temporizador = setInterval(() => {
+                tiempoRestante--; 
+                if (tiempoRestante <= 0) {
+                    clearInterval(temporizador);
+                    modal1.hide();
+                }
+            }, 1000);
     }
 }
 
@@ -776,4 +835,18 @@ async function buscaUsuario(){
        
       return data.resultado[0].idUsuario;
         
+}
+
+async function  guardarUbicacion() {
+    let formData = new FormData();
+    formData.append("latitud",lat);
+    formData.append("longitud",lng);
+
+    const response = await fetch('endpointsavelocation.php', {
+        method: 'POST',
+        body: formData
+        })
+    const data = await response.json();
+       
+    return data;
 }
