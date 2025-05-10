@@ -1,5 +1,5 @@
 <?php
-
+require "model_layer/Mascota.php";
 require "model_layer/DBManager.php";
 
 if (
@@ -8,10 +8,9 @@ if (
     isset($_POST['fecha_nacimiento']) &&
     isset($_POST['Sexo_idSexo']) &&
     isset($_POST['Tamanio_idTamanio']) &&
-    isset($_POST['Historial_medico_idHistorial_medico']) &&
-    isset($_POST['Raza_idRaza']) &&
-    isset($_POST['esPeligrosa']) &&
-    isset($_POST['idMascota'])
+    isset($_POST['Raza_idRaza'])&&
+    isset($_POST['Color_idColor'])&&
+    isset($_POST['Usuario_idUsuario'])
 ) {
     $db = new DBManager();
     $p = new Mascota();
@@ -23,13 +22,20 @@ if (
     $p-> Tamanio_idTamanio= $_POST['Tamanio_idTamanio']; 
     $p-> Historial_medico_idHistorial_medico= isset($_POST['Historial_medico_idHistorial_medico']) ? $_POST['Historial_medico_idHistorial_medico'] : null; 
     $p-> Raza_idRaza= isset($_POST['Raza_idRaza']) ? $_POST['Raza_idRaza'] : null; 
-    $p-> esPeligrosa= $_POST['esPeligrosa']; 
+    $p-> esPeligrosa= isset($_POST['esPeligrosa']) ? $_POST['esPeligrosa'] : "F";
+    $p-> Color_idColor = $_POST['Color_idColor'];
+    $p-> Usuario_idUsuario = $_POST['Usuario_idUsuario'];
+
 
     if($p->idMascota != 0) {
         echo $db->editPet($p);
     } else {
-        echo $db->addPet($p);
+        $resultado = $db->addPet($p);
+        echo json_encode(['success' => true, 'resultado' => $resultado]);
     }
+}else {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'Faltan campos obligatorios']);
 }
 
 ?>

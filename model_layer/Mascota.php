@@ -10,7 +10,8 @@ class Mascota{
     public $Historial_medico_idHistorial_medico;
     public $Raza_idRaza;
     public $esPeligrosa;
-
+    public $Color_idColor;
+    public $Usuario_idUsuario;
 }
 
 ?>

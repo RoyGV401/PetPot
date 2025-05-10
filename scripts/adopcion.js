@@ -3,6 +3,7 @@ import { LOGIN_FORM } from "./login.js";
 import { onMainLoad } from "../main.js";
 
 
+
 const personalidades = [
     "Activo",
     "Adaptable",
@@ -81,9 +82,18 @@ let raza = null;
 //importante
 let color = null;
 
+let foto = null;
+
+var lat = null;
+var lng = null;
+
+var usuario;
+
 window.onload = function(){
+    
     onMainLoad();
     onLoadThis();
+    
 }
 
 function onLoadThis(){
@@ -91,10 +101,9 @@ function onLoadThis(){
     cargarCropper();
     cargarPersonalidades();
     cargarEspecies();
+    initMap();
 
-
-
-
+     document.getElementById("esPeligro").hidden = true;
     document.getElementById("div_raza").hidden = true;
 
     cargarRazas();
@@ -109,120 +118,130 @@ function onLoadThis(){
 
        // Inicializar el datepicker
 
-  $(document).ready(function(){
-    $('.datepicker').datepicker({
-        format: 'dd/mm/yyyy',
-        language: 'es',
-        autoclose: true,
-        todayHighlight: true
-    });
-    
-    // Activar datepicker al hacer clic en el botón del calendario
-    $('#botonCalendario').click(function(){
-        $('#fechaSeleccionada').datepicker('show');
-    });
-});
-
-document.getElementById("btn_fecha").onclick = function(){ obtenerFecha();}
-
-
-}
-
-
-    function initMap() {
-        // Configuración inicial del mapa (centrado en una ubicación por defecto)
-        const map = new google.maps.Map(document.getElementById("map"), {
-            center: { lat: 19.4326, lng: -99.1332 }, // Ciudad de México por defecto
-            zoom: 12,
+    $(document).ready(function(){
+        $('.datepicker').datepicker({
+            format: 'dd/mm/yyyy',
+            language: 'es',
+            autoclose: true,
+            todayHighlight: true
         });
-
-        // Creamos el buscador y lo asociamos al input
-        const input = document.getElementById("pac-input");
-        const searchBox = new google.maps.places.SearchBox(input);
         
-        // Posicionamos el input en el mapa
-        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
-        // Escuchamos los cambios en la selección del buscador
-        map.addListener("bounds_changed", () => {
-            searchBox.setBounds(map.getBounds());
+        // Activar datepicker al hacer clic en el botón del calendario
+        $('#botonCalendario').click(function(){
+            $('#fechaSeleccionada').datepicker('show');
         });
+    });
 
-        let markers = [];
+
+
+    document.getElementById("btn_enviar").onclick = async function(){
+        if(localStorage.currentUser==0){
+            alert("INICIA SESION");
+            return;
+        }else{
+            usuario = await buscaUsuario();
+
+        }
+
+        const nombre = document.getElementById("inputNombre").value;
+        const descripcion = document.getElementById("inputDescripcion").value;
+        let esp;
+        let sexo;
+        switch(petSelected){
+            case "perro": esp=1; break;
+            case "gato": esp=2; break;
+            case "otro": esp=3; break;
+            default: esp=4; break;
+        }
+        switch(document.getElementById("macho").checked){
+            case true: sexo="1"; break;
+            default: sexo=null; break;
+        }
+        if(sexo==null)
+        switch(document.getElementById("hembra").checked){
+            case true: sexo="2"; break;
+            default: sexo=null; break;
+        }
         
-        // Cuando el usuario selecciona una predicción
-        searchBox.addListener("places_changed", () => {
-            const places = searchBox.getPlaces();
+        var tamanio = obtenerTamanio()+1;
+        let fecha = document.getElementById("fechaSeleccionada").value;
+     
+        
+        if(nombre!=""&&descripcion!=""&&esp!=4&&raza!=null&&sexo!=null&&tamanio>=1&&persos[0]!=null&&fecha!=""&&foto!=null&&color!=null)
+        {
+            let formData = new FormData();
+            formData.append("nombre",nombre);
+            formData.append("descripcion",descripcion);
+            formData.append("fecha_nacimiento",fecha);
+            formData.append("Sexo_idSexo",sexo);
+            formData.append("Tamanio_idTamanio",tamanio);
+            formData.append("Raza_idRaza",raza);
+            if(document.getElementById("esPeligro").checked)
+                formData.append("esPeligrosa", true);
+            formData.append("Color_idColor",colores.indexOf(color)+1);
+            formData.append("Usuario_idUsuario",usuario);
+          
+                
 
-            if (places.length == 0) {
-                return;
-            }
 
-            // Limpiamos marcadores anteriores
-            markers.forEach((marker) => {
-                marker.setMap(null);
-            });
-            markers = [];
+            fetch('endpointSavePet.php', {
+            method: 'POST',
+            body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                let formData = new FormData();
+                persos.forEach((p,index) => {
+                    formData.append(`Personalidad_idPersonalidad[]`+index+1,p.id)
+                });
 
-            // Obtenemos los límites del lugar seleccionado
-            const bounds = new google.maps.LatLngBounds();
-
-            places.forEach((place) => {
-                if (!place.geometry) {
-                    console.log("El lugar no tiene geometría");
-                    return;
-                }
-
-                // Creamos un marcador para el lugar seleccionado
-                markers.push(
-                    new google.maps.Marker({
-                        map,
-                        title: place.name,
-                        position: place.geometry.location,
-                    })
-                );
-
-                // Mostramos las coordenadas
-                document.getElementById("latitud").textContent = place.geometry.location.lat();
-                document.getElementById("longitud").textContent = place.geometry.location.lng();
-
-                if (place.geometry.viewport) {
-                    bounds.union(place.geometry.viewport);
-                } else {
-                    bounds.extend(place.geometry.location);
-                }
-            });
-            map.fitBounds(bounds);
-        });
-
-        // También podemos obtener coordenadas haciendo clic en el mapa
-        map.addListener("click", (e) => {
-            // Limpiamos marcadores anteriores
-            markers.forEach((marker) => {
-                marker.setMap(null);
-            });
-            markers = [];
-            
-            // Colocamos un nuevo marcador
-            markers.push(
-                new google.maps.Marker({
-                    position: e.latLng,
-                    map: map
+                fetch('endpointshowultimomascota.php', {
+                method: 'GET',
                 })
-            );
+                .then(response => response.json())
+                .then(data => {
+                    formData.append("idMascota", data[0].idMascota);
+                    console.log(formData.get("idMascota"));
+                    fetch('endpointSaveitempersonalidad.php', {
+                    method: 'POST',
+                    body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data2 => {
+                        console.log(data2);
+                        guardarFoto(data[0].idMascota);
+                    });
+                });
+            });
+        }else{
+            alert("DEBE LLENAR TODOS LOS CAMPOS")
+            console.log("N:"+nombre+"D:"+descripcion+"E:"+esp+"R:"+raza+"S:"+sexo+"T:"+tamanio+"P:"+persos.length+"F:"+fecha+" ")
             
-            // Mostramos las coordenadas
-            document.getElementById("latitud").textContent = e.latLng.lat();
-            document.getElementById("longitud").textContent = e.latLng.lng();
-        });
+        }
     }
+}
+//Leer el documento y ver que cosas son importantes para un DBA en un solo doc pDF EN TEAMS A LAS TARDAR entre el 19 y el 23
+
+function obtenerTamanio() {
+    // Obtener todos los radio buttons con el nombre "tamano"
+    const radios = document.querySelectorAll('input[name="tamano"]');
+    
+    // Buscar cuál está seleccionado
+    for (let i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            return i; // Devuelve el índice del radio seleccionado
+        }
+    }
+    
+    return -1; // Devuelve -1 si ninguno está seleccionado
+}
 
 
 // Función para obtener la fecha seleccionada
 function obtenerFecha() {
     
     const fecha = $('#fechaSeleccionada').val();
-    alert(fecha);y
+  //  alert(fecha);y
     return fecha;
 }
 
@@ -295,9 +314,9 @@ function cargarRazas(){
         document.getElementById("btn_"+especie).addEventListener("click",function evento(){ 
             document.getElementById("div_raza").hidden = false;
             switch (especie) {
-                case 'perro': petSelected = "perro"; btn_esp.innerText = "Perro"; buscarRazas(especie); break;
-                case 'gato': petSelected = "gato"; btn_esp.innerText = "Gato"; buscarRazas(especie); break;
-                case 'otro': petSelected = "otro";btn_esp.innerText = "Otro"; buscarRazas(especie); break;
+                case 'perro': petSelected = "perro"; document.getElementById("esPeligro").hidden = true; document.getElementById("esPeligrosa").checked = null; btn_esp.innerText = "Perro"; buscarRazas(especie); break;
+                case 'gato': petSelected = "gato"; document.getElementById("esPeligro").hidden = true; document.getElementById("esPeligrosa").checked = null; btn_esp.innerText = "Gato"; buscarRazas(especie); break;
+                case 'otro': petSelected = "otro"; document.getElementById("esPeligro").hidden = false; btn_esp.innerText = "Otro"; buscarRazas(especie); break;
                 default:   break;
             }
         });
@@ -391,6 +410,14 @@ function cargarCropper(){
                     const dataTransfer = new DataTransfer();
                     dataTransfer.items.add(file);
                     fileInput.files = dataTransfer.files;
+
+                    const reader = new FileReader();
+                    reader.readAsDataURL(blob);
+                    reader.onload = () => {
+                        foto = reader.result;
+                    //console.log(reader.result); // "data:text/plain;base64,SG9sYSwgbXVuZG8h"
+                    };
+
                     
                     // Mostrar resultado final
                     imagePreview.src = canvas.toDataURL();
@@ -497,7 +524,7 @@ function cargarPersonalidades(){
         newBtn.className = 'btn btn-info me-2 mb-2';
         newBtn.textContent = p;
         newBtn.id = 'elimi btn_'+p; 
-        persos.push(p);
+        persos.push({"id":personalidades.indexOf(p)+1,"nombre":p});
         // Añadimos el botón al contenedor
         btns.appendChild(newBtn);
 
@@ -536,3 +563,217 @@ function comprobarLargo(lista){
 
 
 
+function initMap() {
+    const opciones = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+    };
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            exito,
+            error,
+            opciones
+        );
+    } else {
+        alert("Tu navegador no soporta geolocalización.");
+    }
+}
+
+function exito(posicion) {
+    const coordenadas = posicion.coords;
+    console.log('Tu ubicación actual es:');
+    console.log(`Latitud: ${coordenadas.latitude}`);
+    console.log(`Longitud: ${coordenadas.longitude}`);
+    console.log(`Precisión: ${coordenadas.accuracy} metros`);
+    
+    const map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: coordenadas.latitude, lng: coordenadas.longitude },
+        zoom: 12,
+
+
+  mapTypeControl: false,
+  scaleControl: false,
+  streetViewControl: false,
+
+    });
+
+    const input = document.getElementById("pac-input");
+    const searchBox = new google.maps.places.SearchBox(input);
+    
+    map.addListener("bounds_changed", () => {
+        searchBox.setBounds(map.getBounds());
+    });
+
+    let markers = [];
+    const myLatLng = { lat: coordenadas.latitude, lng: coordenadas.longitude };
+    lat= coordenadas.latitude
+    lng= coordenadas.longitude 
+    markers.push(
+        new google.maps.Marker({
+            map,
+            title: "Mi ubicación",
+            position: myLatLng,
+        })
+    );
+    
+    searchBox.addListener("places_changed", () => {
+        const places = searchBox.getPlaces();
+
+        if (places.length == 0) return;
+
+        markers.forEach((marker) => marker.setMap(null));
+        markers = [];
+
+        const bounds = new google.maps.LatLngBounds();
+
+        places.forEach((place) => {
+            if (!place.geometry) {
+                console.log("El lugar no tiene geometría");
+                return;
+            }
+
+            markers.push(
+                new google.maps.Marker({
+                    map,
+                    title: place.name,
+                    position: place.geometry.location,
+                })
+            );
+              lat = place.geometry.location.lat();
+            
+                lng = place.geometry.location.lng();
+            if (place.geometry.viewport) {
+                bounds.union(place.geometry.viewport);
+            } else {
+                bounds.extend(place.geometry.location);
+            }
+        });
+        map.fitBounds(bounds);
+    });
+
+    map.addListener("click", (e) => {
+        markers.forEach((marker) => marker.setMap(null));
+        markers = [];
+        
+        markers.push(
+            new google.maps.Marker({
+                position: e.latLng,
+                map: map
+            })
+        );
+        lat = e.latLng.lat();
+        lng = e.latLng.lng();
+    });
+}
+
+function error(err) {
+    console.warn(`ERROR(${err.code}): ${err.message}`);
+    
+    const map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: 19.4326, lng: -99.1332 },
+        zoom: 12,
+    });
+  
+    const input = document.getElementById("pac-input");
+    const searchBox = new google.maps.places.SearchBox(input);
+    
+    map.addListener("bounds_changed", () => {
+        searchBox.setBounds(map.getBounds());
+    });
+
+    let markers = [];
+    const myLatLng = { lat: 19.4326, lng: -99.1332};
+    markers.push(
+        new google.maps.Marker({
+            map,
+            title: place.name,
+            position: place.geometry.location,
+        })
+    );
+
+    searchBox.addListener("places_changed", () => {
+        const places = searchBox.getPlaces();
+
+        if (places.length == 0) return;
+
+        markers.forEach((marker) => marker.setMap(null));
+        markers = [];
+
+        const bounds = new google.maps.LatLngBounds();
+
+        places.forEach((place) => {
+            if (!place.geometry) {
+                console.log("El lugar no tiene geometría");
+                return;
+            }
+
+            markers.push(
+                new google.maps.Marker({
+                    map,
+                    title: place.name,
+                    position: place.geometry.location,
+                })
+            );
+            
+            lat = place.geometry.location.lat();
+            
+            lng = place.geometry.location.lng();
+
+            if (place.geometry.viewport) {
+                bounds.union(place.geometry.viewport);
+            } else {
+                bounds.extend(place.geometry.location);
+            }
+        });
+        map.fitBounds(bounds);
+    });
+
+    map.addListener("click", (e) => {
+        markers.forEach((marker) => marker.setMap(null));
+        markers = [];
+        
+        markers.push(
+            new google.maps.Marker({
+                position: e.latLng,
+                map: map
+            })
+        );
+        
+            lat = e.latLng.lat();
+            lng = e.latLng.lng();
+    });
+}
+
+// Hacer la función initMap disponible globalmente
+window.initMap = initMap;
+
+
+async function guardarFoto(id){
+    let formData = new FormData();
+    formData.append("Mascota_idMascota",id);
+    formData.append("documento",foto);
+
+      const response = await fetch('endpointSavemultimedia.php', {
+            method: 'POST',
+            body: formData
+            })
+            const data = await response.json();
+            console.log(data);
+            return data;
+}
+
+async function buscaUsuario(){
+    let formData = new FormData();
+    formData.append('correo', localStorage.currentUser);
+    const response = await  fetch('endpointshowuser.php', {
+        method: 'POST',
+        body: formData
+      })
+   
+      const data = await response.json();
+       
+      return data.resultado[0].idUsuario;
+        
+}

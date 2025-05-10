@@ -1,6 +1,6 @@
 <?php
 
-require "Mascota.php";
+
 
 class DBManager {
     private $db;
@@ -109,6 +109,50 @@ class DBManager {
 
         return $rows;
     }
+     
+    public function showLastpet(){
+        $link = $this->open();
+
+        $sql = "SELECT * FROM mascota ORDER BY idMascota DESC LIMIT 1";
+
+        $result = mysqli_query($link, $sql, MYSQLI_ASSOC) or die('Error query');
+
+        $rows = [];
+        while($columns = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+            $rows[] = $columns;
+        }
+
+        $this->close($link);
+
+        return $rows;
+    }
+
+    public function createItemPersonalidad($idMascota, $personalidades){
+       
+        foreach ($personalidades as $p) {
+            $link = $this->open();
+
+        $sql = "INSERT INTO itemPersonalidad (Mascota_idMascota, Personalidad_idPersonalidad) VALUES (?,?)";
+
+        $query = mysqli_prepare($link, $sql);
+
+        // Enlaza los parametros (reemplaza comodines)
+		// Tipos: i para enteros, s para string, d para double y b para blob
+		mysqli_stmt_bind_param(
+            $query, 
+            "ii",
+            $idMascota, $p
+        );
+
+        // Ejecuta la query
+		$resultado = mysqli_stmt_execute($query) or die('Error insert');
+
+        $this->close($link);
+
+        }
+        
+        return $resultado;
+    }
 
     public function showPersonalidad($id){
         $link = $this->open();
@@ -156,7 +200,7 @@ class DBManager {
     {
         $link = $this->open();
 
-        $sql = "INSERT INTO mascota VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO mascota VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
 
         // Prepara la consulta
 		$query = mysqli_prepare($link, $sql);
@@ -165,7 +209,7 @@ class DBManager {
 		// Tipos: i para enteros, s para string, d para double y b para blob
 		mysqli_stmt_bind_param(
             $query, 
-            "sssiiiis",
+            "sssiiiisii",
             $p->nombre,
             $p->descripcion,
             $p->fecha_nacimiento,
@@ -173,8 +217,10 @@ class DBManager {
             $p->Tamanio_idTamanio,
             $p->Historial_medico_idHistorial_medico,
             $p->Raza_idRaza,
-            $p->esPeligrosa 
-        );
+            $p->esPeligrosa,
+            $p->Color_idColor,
+            $p->Usuario_idUsuario
+        );  
 
         // Ejecuta la query
 		$resultado = mysqli_stmt_execute($query) or die('Error insert');
@@ -266,13 +312,40 @@ class DBManager {
         return $rows;
     }
 
+    public function createMultimedia($id, $doc){
+        $link = $this->open();
+
+        $sql = "INSERT INTO multimedia VALUES(null,?,?)";
+
+        // Prepara la consulta
+		$query = mysqli_prepare($link, $sql);
+
+        // Enlaza los parametros (reemplaza comodines)
+		// Tipos: i para enteros, s para string, d para double y b para blob
+		mysqli_stmt_bind_param(
+            $query, 
+            "si",
+             $doc,
+            $id
+           
+            
+        );
+
+        // Ejecuta la query
+		$resultado = mysqli_stmt_execute($query) or die('Error update');
+
+        $this->close($link);
+
+        return $resultado;
+    }
+
     public function showPetMultimedia($id){
 
         $link = $this->open();
 
-        $sql = "SELECT * FROM Multimedia JOIN itemMultimedia ON idMultimedia = Multimedia_idMultimedia WHERE Mascota_idMascota = '$id'"; 
+        $sql = "SELECT * FROM Multimedia WHERE Mascota_idMascota = '$id'"; 
 
-        $result = mysqli_query($link, $sql, MYSQLI_ASSOC) or die('Error query');
+        $result = mysqli_query($link, $sql, MYSQLI_ASSOC) or die('Error query multimedia');
 
         $rows = [];
         while($columns = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
@@ -306,7 +379,7 @@ class DBManager {
 
         $link = $this->open();
 
-        $sql = "SELECT raza.nombre FROM raza JOIN mascota on Raza_idRaza = idRaza WHERE Mascota_idMascota = '$id'"; 
+        $sql = "SELECT raza.nombre FROM raza JOIN mascota on Raza_idRaza = idRaza WHERE idMascota = '$id'"; 
 
         $result = mysqli_query($link, $sql, MYSQLI_ASSOC) or die('Error query');
 

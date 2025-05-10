@@ -48,13 +48,13 @@
                            <!--Nombre-->
                            <div class="mb-3">
                               <p class="fw-bold h5 pt-3 px-1">Nombre:</p>
-                              <input class="form-control "" type="text" id="inputNombre" placeholder="Nombre">
+                              <input class="form-control" type="text" id="inputNombre" placeholder="Nombre">
                            </div>
                            
                            <!--Descripcion-->
                            <div class="mb-3">
                               <p class="fw-bold h5 pt-3 px-1">Descripción:</p>
-                              <textarea class="form-control " id="inputNombre" placeholder="Nombre" 
+                              <textarea class="form-control " id="inputDescripcion" placeholder="Nombre" 
                                         rows="3"></textarea>
                           </div>
                            <br>
@@ -72,7 +72,15 @@
                                           <li><button type="button" class="dropdown-item" id="btn_otro">Otro</button></li>
                                     </ul>
                                  </div>
+                                 
+                                
+                                
                               </div>
+                               <div id="esPeligro">
+                                    <br>
+                                     <input class="form-check-input" type="radio" name="esPeligro" id="esPeligrosa">
+                                     <label class="form-check-label" for="esPeligro">¿Es peligrosa?</label>
+                                 </div>
                            </div>
 
                            <!-- Raza -->
@@ -122,18 +130,16 @@
                            <!-- Tamaño -->
                            <div class="mb-3">
                               <p class="fw-bold h5 pt-3 px-1">Tamaño:</p>
-                              <div class="form-check">
+                              <form class="form-check" id="form_tamanio">
                                  <input class="form-check-input" type="radio" name="tamano" id="pequeno">
                                  <label class="form-check-label" for="pequeno">Pequeño</label>
-                              </div>
-                              <div class="form-check">
+                                 <br>
                                  <input class="form-check-input" type="radio" name="tamano" id="mediano">
                                  <label class="form-check-label" for="mediano">Mediano</label>
-                              </div>
-                              <div class="form-check">
+                                 <br>
                                  <input class="form-check-input" type="radio" name="tamano" id="grande">
                                  <label class="form-check-label" for="grande">Grande</label>
-                              </div>
+                              </form>
                            </div>
                            
                            <!-- Personalidad -->
@@ -180,13 +186,15 @@
                               
                               <div class="mt-3 text-center" id="cropperControls" style="display: none;">
                                   <div class="bg-light p-3 rounded">
-                                      <p class="mb-2"><strong>Crop image</strong></p>
+                                      <p class="mb-2"><strong>Recortar imagen</strong></p>
                                       <p class="small text-muted mb-3">Mueva el cuadro para seleccionar el área deseada</p>
                                       <button id="cancelCrop" class="btn btn-outline-secondary me-2">Cancelar</button>
-                                      <button id="cropButton" class="btn btn-primary">Recortar</button>
+                                      <button id="cropButton" class="btn btn-primary" style="color: #f8f9fa;">Recortar</button>
                                   </div>
                               </div>
                            </div>
+
+                           
                            
                            <!-- Mapa de Google -->
                            <div class="map-container">
@@ -195,12 +203,10 @@
                                  <input id="pac-input" class="form-control" type="text" placeholder="Buscar localidad...">
                               </div>
                               <div id="map"></div>
-                              <div class="coordinates">
-                                 <p><strong>Coordenadas:</strong></p>
-                                 <p>Latitud: <span id="latitud">-</span></p>
-                                 <p>Longitud: <span id="longitud">-</span></p>
-                              </div>
                            </div>
+                           <br>
+                           <button type="button" class="btn btn-primary" style="color: #f8f9fa;" id="btn_enviar">Enviar</button>
+
                         </div>
                      </div>
                   </div>
@@ -216,98 +222,11 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
       <script src="modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
       <script type="module" src="scripts/adopcion.js"></script>
-      
+     
       <!-- Google Maps API -->
       <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDT3TNU_yVdoPvLV3ZOb_T_RfpQ4tyJWfY&libraries=places&callback=initMap" async defer></script>
       
-      <script>
-         
+      
 
-         // Google Maps
-         window.initMap = function() {
-             // Configuración inicial del mapa (centrado en una ubicación por defecto)
-             const map = new google.maps.Map(document.getElementById("map"), {
-                 center: { lat: 19.4326, lng: -99.1332 }, // Ciudad de México por defecto
-                 zoom: 12,
-             });
-
-             // Creamos el buscador y lo asociamos al input
-             const input = document.getElementById("pac-input");
-             const searchBox = new google.maps.places.SearchBox(input);
-             
-             // Escuchamos los cambios en la selección del buscador
-             map.addListener("bounds_changed", () => {
-                 searchBox.setBounds(map.getBounds());
-             });
-
-             let markers = [];
-             
-             // Cuando el usuario selecciona una predicción
-             searchBox.addListener("places_changed", () => {
-                 const places = searchBox.getPlaces();
-
-                 if (places.length == 0) {
-                     return;
-                 }
-
-                 // Limpiamos marcadores anteriores
-                 markers.forEach((marker) => {
-                     marker.setMap(null);
-                 });
-                 markers = [];
-
-                 // Obtenemos los límites del lugar seleccionado
-                 const bounds = new google.maps.LatLngBounds();
-
-                 places.forEach((place) => {
-                     if (!place.geometry) {
-                         console.log("El lugar no tiene geometría");
-                         return;
-                     }
-
-                     // Creamos un marcador para el lugar seleccionado
-                     markers.push(
-                         new google.maps.Marker({
-                             map,
-                             title: place.name,
-                             position: place.geometry.location,
-                         })
-                     );
-
-                     // Mostramos las coordenadas
-                     document.getElementById("latitud").textContent = place.geometry.location.lat();
-                     document.getElementById("longitud").textContent = place.geometry.location.lng();
-
-                     if (place.geometry.viewport) {
-                         bounds.union(place.geometry.viewport);
-                     } else {
-                         bounds.extend(place.geometry.location);
-                     }
-                 });
-                 map.fitBounds(bounds);
-             });
-
-             // También podemos obtener coordenadas haciendo clic en el mapa
-             map.addListener("click", (e) => {
-                 // Limpiamos marcadores anteriores
-                 markers.forEach((marker) => {
-                     marker.setMap(null);
-                 });
-                 markers = [];
-                 
-                 // Colocamos un nuevo marcador
-                 markers.push(
-                     new google.maps.Marker({
-                         position: e.latLng,
-                         map: map
-                     })
-                 );
-                 
-                 // Mostramos las coordenadas
-                 document.getElementById("latitud").textContent = e.latLng.lat();
-                 document.getElementById("longitud").textContent = e.latLng.lng();
-             });
-         }
-      </script>
    </body>
 </html>

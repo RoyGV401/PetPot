@@ -6,7 +6,7 @@ import {loadHeader} from "./scripts/header.js";
 import {CUERPO} from "./scripts/busqueda.js";
 
 
-
+var mascotas;
 
 
 var user ={}
@@ -46,7 +46,7 @@ radios.forEach((x) => {
 
 
 
-function getCookieValue(cname) {
+export function getCookieValue(cname) {
   let name = cname + "=";
   let decodedCookie = decodeURIComponent(document.cookie);
   let ca = decodedCookie.split(';');
@@ -63,12 +63,15 @@ function getCookieValue(cname) {
 }
 
 
-export function onMainLoad() {
+export async function onMainLoad() {
   localStorage.currentUser = 0;
 
   listar_mascotas();
   changeBodyToPet();
   checkForReturn();
+  await cargarMascotas();
+
+
   const cuerpoPlace = document.getElementById("mainCuerpo");
 
   const barra_busqueda = document.getElementById("busqueda");
@@ -82,120 +85,84 @@ export function onMainLoad() {
         cuerpoPlace.hidden = false;
         cuerpoPlace.innerHTML = CUERPO;
         let dmain = document.getElementById("main_div_busqueda");
-        var mascotas = [];
         let sexoM;
         let tamM;
         
-        fetch('endpointshowpets.php', {
-          method: 'POST',
-        })
-          .then(response => response.json())
-          .then(data => {
-            if (data.success) {
-              data.resultado.forEach(d => 
-                {
-                  let formData = new FormData();
-                  formData.append("idMascota",d.idMascota);
-                  fetch('endpointMultimedia.php', {
-                    method: 'POST',
-                    body: formData
-                  })
-                  .then(response => response.json())
-                  .then(data2 => 
-                    { 
-                      var tex = d.nombre+d.descripcion;
-                      if(d.Sexo_idSexo==1){
-                        tex += "macho"; sexoM="Macho";}
-                      else{
-                        tex += "hembra"; sexoM="Hembra";}
-                      switch (d.Tamanio_idTamanio) {
-                        case '1': tex += "grande"; tamM ="Grande"; break;
-                        case '2': tex += "mediano"; tamM ="Mediano"; break;
-                        case '3': tex += "pequeño"; tamM= "Pequeño"; break;
-                        default: break;
-                      }
-                      if(tex.trim().toLowerCase().includes(barra_busqueda.value)){
-                        mascotas.push(d);
-                      }
-  
-                      const row = document.createElement("div");
-                      row.className = "row g-4"; // gap between cards
-  
-                      mascotas.forEach((mascota) => {
-                        const col = document.createElement("div");
-                        col.className = "col-sm-12 col-md-4 mt-3 col-lg-4"; // adjust based on screen size
-  
-                        const card = document.createElement("div");
-                        card.className = "card h-100 max-height-1 w-100 p-4 shadow-sm";
-                        
-                        let formData2 = new FormData();
-                        formData2.append("idMascota",mascota.idMascota);
-  
-                        fetch('endpointpersonalidad.php', {
-                          method: 'POST',
-                          body: formData2
-                        })
-                        .then(response => response.json())
-                        .then(data3 => 
-                          {
-                            console.log(data3);
-                            if(!isNaN(Date.parse(mascota.fecha_nacimiento))){
-                              alert(Date.parse(mascota.fecha_nacimiento));
-                              //PROBAR DESPUES
-                              var hoy = new Date();
-                              var edad = hoy.getFullYear() - Date.parse(mascota.fecha_nacimiento).getFullYear();
-                              var m = hoy.getMonth() - cumpleanos.getMonth();
-  
-                              if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
-                                  edad--;
-                              }
-                            }
-                            
-                            fetch('endpointcolor.php', {
-                              method: 'POST',
-                              body: formData2
-                            })
-                            .then(response => response.json())
-                            .then(data4 => 
-                              {
-                                const personalidades = data3.resultado;
-                                let personalityString = "";
-                                personalidades.forEach(k => {
-                                personalityString += `
-                                <p class="h6"> <i class="bi bi-award"></i> ${k.descripcion}</p>
-                                `
-                                });
-                                mascota.color = data4.resultado[0].nombre;
-                                card.innerHTML = `
-                                <img src="${data2.resultado[0].documento}" class="card-img-top img-fluid rounded imgPetSelect" id="${mascota.idMascota}"  alt="${mascota.nombre}"></img>
-                                <div class="card-body d-flex flex-column">
-                                <h5 class="card-title text-center h3 fw-bold">${mascota.nombre}</h5>
-                                <hr>
-                                <div class="mb-3">
-                                <h6 class="fw-bold">Personalidad:</h6>
-                                  ${personalityString}
-                                </div>  
-                                <p class="mb-1"><strong>Sexo:</strong> ${sexoM}</p>
-                                <p class="mb-1"><strong>Tamaño:</strong> ${tamM}</p>
-                                <p class="mb-1"><strong>Color:</strong> ${mascota.color}</p>
-                            
-                                <p class="mb-3"><strong>Edad:</strong> ${mascota.fecha_nacimiento}</p>
-                                <div class="mt-auto">
-                                <p class="fw-semibold text-muted"><strong>Cercanía:</strong> [Aquí puedes agregar distancia o zona]</p>
-                                </div>
-                                </div>
-                                `;
-  
-                                col.appendChild(card);
-                                dmain.appendChild(col);
-                              });
-                          });
-                        });
-                      dmain.appendChild(row);
-                    });
-                });
-             }
-          });
+        
+        mascotas.forEach(async m => {
+          var personalityString="";
+          var tex;
+           tex+= m.nombre+m.descripcion;
+           let color = await cargarColor(m.idMascota);
+         
+           tex += color.nombre
+           
+           let raza = await cargarRaza(m.idMascota,true)
+           tex+=raza.nombre;
+           let personalidades = await cargarPersonalidad(m.idMascota)
+       
+           personalidades.forEach(p => {
+              tex+=p.descripcion
+              personalityString += `
+              <p class="h6"> <i class="bi bi-award"></i> ${p.descripcion}</p>
+              `
+              
+           });
+           switch (m.Tamanio_idTamanio) {
+            case '1': tex += "grande"; tamM ="Grande"; break;
+            case '2': tex += "mediano"; tamM ="Mediano"; break;
+            case '3': tex += "pequeño"; tamM= "Pequeño"; break;
+            default: break;
+           }
+          
+           if(tex.trim().toLowerCase().includes(barra_busqueda.value.trim().toLowerCase())){
+
+            const row = document.createElement("div");
+            row.className = "row g-4"; // gap between cards
+
+              
+            const col = document.createElement("div");
+            col.className = "col-sm-12 col-md-4 mt-3 col-lg-4"; // adjust based on screen size
+
+            const card = document.createElement("div");
+            card.className = "card h-100 max-height-1 w-100 p-4 shadow-sm";
+
+            
+            let imagenes = await cargarMultimedia(m.idMascota,false);
+            
+             if(m.Sexo_idSexo==1){
+              tex += "macho"; sexoM="Macho";}
+            else{
+              tex += "hembra"; sexoM="Hembra";}
+            
+
+            card.innerHTML = `
+              <img src="${imagenes[0].documento}" class="card-img-top img-fluid rounded imgPetSelect" id="${m.idMascota}"  alt="${m.nombre}"></img>
+              <div class="card-body d-flex flex-column">
+              <h5 class="card-title text-center h3 fw-bold">${m.nombre}</h5>
+              <hr>
+              <div class="mb-3">
+              <h6 class="fw-bold">Personalidad:</h6>
+                ${personalityString}
+              </div>  
+              <p class="mb-1"><strong>Sexo:</strong> ${sexoM}</p>
+              <p class="mb-1"><strong>Tamaño:</strong> ${tamM}</p>
+              <p class="mb-1"><strong>Color:</strong> ${color.nombre}</p>
+          
+              <p class="mb-3"><strong>Edad:</strong> ${m.fecha_nacimiento}</p>
+              <div class="mt-auto">
+              <p class="fw-semibold text-muted"><strong>Cercanía:</strong> [Aquí puedes agregar distancia o zona]</p>
+              </div>
+              </div>
+              `;
+              col.appendChild(card);
+             
+              dmain.appendChild(col);
+               dmain.appendChild(row); //checar
+           }
+           
+           
+        });
       }
     });
   }
@@ -635,7 +602,7 @@ function inicia_sesion(isFromClick){
     });
 }
 
-function enviar(){
+export function enviar(){
   
   const email = document.getElementById("input_correoR").value;
   const formData = new FormData();
@@ -656,5 +623,69 @@ function enviar(){
   });
 }
 
+async function cargarMascotas(){
+  
+        fetch('endpointshowpets.php', {
+          method: 'POST',
+        })
+          .then(response => response.json())
+          .then(data => {
+              mascotas = data.resultado;
+          });
+}
 
+async function cargarMultimedia(id,esUsuario){
+        let formData = new FormData();
+        if(esUsuario)
+          formData.append("idUsuario",id);
+        else
+          formData.append("idMascota",id);
 
+       const response = await fetch('endpointMultimedia.php', {
+          method: 'POST',
+          body: formData
+        })
+          const data =await response.json();
+          return data.resultado;
+}
+
+async function cargarPersonalidad(id){
+        let formData = new FormData();
+        formData.append("idMascota",id);
+
+        const response = await fetch('endpointPersonalidad.php', {
+          method: 'POST',
+          body: formData
+        })
+         const data =await response.json();
+          return data.resultado;
+}
+
+async function cargarColor(id){
+        let formData = new FormData();
+        formData.append("idMascota",id);
+
+      const response = await fetch('endpointColor.php', {
+          method: 'POST',
+          body: formData
+        })
+          const data =await response.json();
+          return data.resultado[0];
+
+}
+
+async function cargarRaza(id, esMascota){
+    let formData = new FormData();
+        if(esMascota)
+          formData.append("idMascota",id);
+        else
+          formData.append("idEspecie",id);
+
+       const response = await fetch('endpointRazas.php', {
+          method: 'POST',
+          body: formData
+        })
+          const data =await response.json();
+     
+          return data.resultado[0];
+}
