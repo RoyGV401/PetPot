@@ -87,9 +87,10 @@ export function loadHeader() {
     })
       .then(response => response.json())
       .then(data => {
-        if (data.resultado[0].idUsuario != undefined)
+        if (data.resultado[0] != undefined)
           {
             welcome.innerHTML = `¡Hola ${data.resultado[0].nombre}!`;
+            localStorage.currentUser = data.resultado[0].idUsuario;
           }
     });
   }

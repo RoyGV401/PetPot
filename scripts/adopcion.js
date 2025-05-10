@@ -1,6 +1,6 @@
 import {loadHeader, ALERTA} from "./header.js";
 import { LOGIN_FORM } from "./login.js";
-import { onMainLoad } from "../main.js";
+import { cargarBotonesHeader, cargarExtras, cargarFuncionCookis, changeTo } from "../main.js";
 
 
 
@@ -90,8 +90,9 @@ var lng = null;
 var usuario;
 
 window.onload = function(){
-    
-    onMainLoad();
+    cargarExtras();
+    cargarFuncionCookis();
+    cargarBotonesHeader();
     onLoadThis();
     document.getElementById("extra_elements").innerHTML+= ALERTA;
 }
@@ -200,7 +201,6 @@ function onLoadThis(){
                     return
                 }else{
                     formData.append("Ubicacion_idUbicaciones",resultado.resultado[0].idUbicaciones);
-                    alert();
                 }
 
 
@@ -243,9 +243,11 @@ function onLoadThis(){
                             if (tiempoRestante <= 0) {
                                 clearInterval(temporizador);
                                 modal1.hide();
+                                changeTo('./tusMascotas.html');
                             }
                         }, 1000);
-                                });
+                        
+                    });
                 });
             });
         }else{

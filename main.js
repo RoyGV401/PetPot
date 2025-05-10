@@ -11,7 +11,7 @@ var mascotas;
 
 var user ={}
 
-function changeTo(path) {
+export function changeTo(path) {
   location.href = `${path}`;
 }
 
@@ -64,17 +64,283 @@ export function getCookieValue(cname) {
 
 
 export async function onMainLoad() {
-  localStorage.currentUser = 0;
+
     document.getElementById("extra_elements").innerHTML+= ALERTA;
   listar_mascotas();
   changeBodyToPet();
   checkForReturn();
+
+  // -------------CARGAR ELEMENTOS QUE USAN FETCH-----------
   await cargarMascotas();
+  cargarFuncionBarra();
+  cargarFuncionCookis();
+    
+ 
+  // ---------------CARGAR LOGIN EN EL HTML-----------------
+  cargarExtras();
+    
+//--------------CARGAR FUNCIONALIDAD DE BOTONES----------------
+
+  cargarBotonesHeader();
+
+}
+
+function listar_mascotas() {
+  let dmain;
+  let mascotas;
+  if (document.location.href.includes("perros.html")) {
+    dmain = document.getElementById("main_div_perros");
+    mascotas = DOGS;
+  } else if (document.location.href.includes("gatos.html")) {
+    dmain = document.getElementById("main_div_gatos");
+    mascotas = CATS;
+  } else {
+    dmain = document.getElementById("main_div_otros");
+    mascotas = OTHERS;
+  }
+  if (!dmain) return;
+
+  // Clear previous content
+
+  // Create a responsive row container
+  const row = document.createElement("div");
+  row.className = "row g-4"; // gap between cards
+
+  mascotas.forEach((mascota) => {
+    const col = document.createElement("div");
+    col.className = "col-sm-12 col-md-4 mt-3 col-lg-4"; // adjust based on screen size
+
+    const card = document.createElement("div");
+    card.className = "card h-100 max-height-1 w-100 p-4 shadow-sm";
+    const personalidades = mascota.personalidad;
+    let personalityString = "";
+    personalidades.forEach(k => {
+      personalityString += `
+       <p class="h6"> <i class="bi bi-award"></i> ${k}</p>
+      `
+    });
 
 
-  const cuerpoPlace = document.getElementById("mainCuerpo");
+    card.innerHTML = `
+      <img src="${mascota.img}" class="card-img-top img-fluid rounded imgPetSelect" id="${mascota.id}"  alt="${mascota.name}">
+      <div class="card-body d-flex flex-column">
+        <h5 class="card-title text-center h3 fw-bold">${mascota.name}</h5>
+        <hr>
+        <div class="mb-3">
+          <h6 class="fw-bold">Personalidad:</h6>
+            ${personalityString}
+        </div>
+        <p class="mb-1"><strong>Sexo:</strong> ${mascota.sexo}</p>
+        <p class="mb-1"><strong>Tamaño:</strong> ${mascota.Tamano}</p>
+        <p class="mb-1"><strong>Color:</strong> ${mascota.color}</p>
+        <p class="mb-3"><strong>Edad:</strong> ${mascota.edad}</p>
+        <div class="mt-auto">
+          <p class="fw-semibold text-muted"><strong>Cercanía:</strong> [Aquí puedes agregar distancia o zona]</p>
+        </div>
+      </div>
+    `;
+
+    col.appendChild(card);
+    dmain.appendChild(col);
+  });
+
+  dmain.appendChild(row);
+}
+
+
+function changeBodyToPet()
+{
+  try
+  {
+    const petImages = document.getElementsByClassName('imgPetSelect');
+    for (let p of petImages) {
+      p.onclick = function () {
+        const petId = p.id;
+        let choosenPet = "";
+        PETS.every(pet => {
+          if (petId == pet.id)
+          {
+            choosenPet = pet;
+            return false;
+          }
+          else 
+          return true;
+        });
+        if (choosenPet != "")
+        {
+          const petInfo = createPetSelect(choosenPet);
+          const body = document.getElementById('blur');
+          window.doReturnNormally = false;
+          document.getElementById('extra_elements').innerHTML = ""
+          body.innerHTML = petInfo;
+          onMainLoad();
+          
+        }
+       
+      }
+    }
+  }
+  catch(ex)
+  {
+    
+  }
+}
+
+function iniButtons()
+{
+  try
+  {
+      const btnCat = document.getElementById('checkCats').onclick = function (){ changeTo('gatos.html')};
+      const btnDog = document.getElementById('checkDogs').onclick = function (){ changeTo('perros.html')};
+      const btnOthers = document.getElementById('checkOthers').onclick = function (){ changeTo('otros.html')};
+  }
+  catch{}
+}
+
+function checkForReturn()
+{
+ 
+    history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+      if (window.doReturnNormally == false)
+        {  
+          history.go(1);
+          window.location.reload();
+        }
+      }
+
+}
+
+function inicia_sesion(isFromClick){
+  
+  const correo = document.getElementById("input_correo_log").value;
+  const contra = document.getElementById("input_contra_log").value;
+  const recu = document.getElementById("btn-check-outlined");
+
+  const formData = new FormData();
+  formData.append('correo', correo);
+  formData.append('pass', contra);
+
+  fetch('endpointlogin.php', {
+    method: 'POST',
+    body: formData
+  })
+    .then(response => response.json())
+    .then(data => {
+      
+      data.forEach(d => {
+        if(recu.checked){
+          document.cookie = "userCorreo=" + d.correo + "; expires=" + new Date(Date.now() + 30*24*60*60*1000).toUTCString() + "; path=/";
+        }else{
+          document.cookie = "userCorreo=" + d.correo + "; path=/";
+        }
+       
+        location.reload();
+      });   
+    });
+}
+
+export function enviar(){
+  
+  const email = document.getElementById("input_correoR").value;
+  const formData = new FormData();
+  formData.append('email', email);
+
+  fetch('enviar_correo.php', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => response.text())
+  .then(data => {
+    console.log(data);
+    
+  })
+  .catch(error => {
+ 
+    console.error(error);
+  });
+}
+
+export async function cargarMascotas(id=null){
+        if(id==null){
+           fetch('endpointshowpets.php', {
+          method: 'POST',
+        })
+          .then(response => response.json())
+          .then(data => {
+              mascotas = data.resultado;
+          });
+        }else{
+           const response = await fetch('endpointshowpets.php', {
+          method: 'POST',
+        })
+          const data = await response.json();
+          return data;
+        }      
+}
+
+export async function cargarMultimedia(id,esUsuario){
+        let formData = new FormData();
+        if(esUsuario)
+          formData.append("idUsuario",id);
+        else
+          formData.append("idMascota",id);
+
+       const response = await fetch('endpointMultimedia.php', {
+          method: 'POST',
+          body: formData
+        })
+          const data =await response.json();
+          return data.resultado;
+}
+
+export async function cargarPersonalidad(id){
+        let formData = new FormData();
+        formData.append("idMascota",id);
+
+        const response = await fetch('endpointPersonalidad.php', {
+          method: 'POST',
+          body: formData
+        })
+         const data =await response.json();
+          return data.resultado;
+}
+
+export async function cargarColor(id){
+        let formData = new FormData();
+        formData.append("idMascota",id);
+
+      const response = await fetch('endpointColor.php', {
+          method: 'POST',
+          body: formData
+        })
+          const data =await response.json();
+          return data.resultado[0];
+
+}
+
+async function cargarRaza(id, esMascota){
+    let formData = new FormData();
+        if(esMascota)
+          formData.append("idMascota",id);
+        else
+          formData.append("idEspecie",id);
+
+       const response = await fetch('endpointRazas.php', {
+          method: 'POST',
+          body: formData
+        })
+          const data =await response.json();
+     
+          return data.resultado[0];
+}
+
+export function cargarFuncionBarra(){
+   const cuerpoPlace = document.getElementById("mainCuerpo");
 
   const barra_busqueda = document.getElementById("busqueda");
+
+
 
   try
   {
@@ -85,14 +351,12 @@ export async function onMainLoad() {
         cuerpoPlace.hidden = false;
         cuerpoPlace.innerHTML = CUERPO;
         let dmain = document.getElementById("main_div_busqueda");
-        let sexoM;
-        let tamM;
         
          const row = document.createElement("div");
             row.className = "row g-4"; // gap between cards
              dmain.appendChild(row); //checar
         mascotas.forEach(async m => {
-          var personalityString="";
+          
           var tex="";
            tex+= m.nombre+m.descripcion;
            let color = await cargarColor(m.idMascota);
@@ -102,16 +366,13 @@ export async function onMainLoad() {
            let raza = await cargarRaza(m.idMascota,true)
        
            tex+=raza.nombre;
-           let personalidades = await cargarPersonalidad(m.idMascota)
-       
+           
+           let personalidades = await cargarPersonalidad(m.idMascota);
            personalidades.forEach(p => {
-              tex+=p.descripcion
-              personalityString += `
-              <p class="h6"> <i class="bi bi-award"></i> ${p.descripcion}</p>
-              `
-              
+              tex+=p.descripcion;
            });
       
+
            switch(raza.Especie_idEspecie){
             case "1": tex+= "perros"; break;
             case "2": tex+= "gatos"; break;
@@ -121,54 +382,18 @@ export async function onMainLoad() {
           
 
            switch (m.Tamanio_idTamanio) {
-            case '1': tex += "grande"; tamM ="Grande"; break;
-            case '2': tex += "mediano"; tamM ="Mediano"; break;
-            case '3': tex += "pequeño"; tamM= "Pequeño"; break;
+            case '1': tex += "grande"; break;
+            case '2': tex += "mediano"; break;
+            case '3': tex += "pequeño"; break;
             default: break;
            }
           
            if(tex.trim().toLowerCase().includes(barra_busqueda.value.trim().toLowerCase())){
-
-           
-              
-            const col = document.createElement("div");
-            col.className = "col-sm-12 col-md-4 mt-3 col-lg-4"; // adjust based on screen size
-
-            const card = document.createElement("div");
-            card.className = "card h-100 max-height-1 w-100 p-4 shadow-sm";
-
-            
-            let imagenes = await cargarMultimedia(m.idMascota,false);
-            
-             if(m.Sexo_idSexo==1){
-              tex += "macho"; sexoM="Macho";}
-            else{
-              tex += "hembra"; sexoM="Hembra";}
-            
-
-            card.innerHTML = `
-              <img src="${imagenes[0].documento}" class="card-img-top img-fluid rounded imgPetSelect" id="${m.idMascota}"  alt="${m.nombre}"></img>
-              <div class="card-body d-flex flex-column">
-              <h5 class="card-title text-center h3 fw-bold">${m.nombre}</h5>
-              <hr>
-              <div class="mb-3">
-              <h6 class="fw-bold">Personalidad:</h6>
-                ${personalityString}
-              </div>  
-              <p class="mb-1"><strong>Sexo:</strong> ${sexoM}</p>
-              <p class="mb-1"><strong>Tamaño:</strong> ${tamM}</p>
-              <p class="mb-1"><strong>Color:</strong> ${color.nombre}</p>
-          
-              <p class="mb-3"><strong>Edad:</strong> ${m.fecha_nacimiento}</p>
-              <div class="mt-auto">
-              <p class="fw-semibold text-muted"><strong>Cercanía:</strong> [Aquí puedes agregar distancia o zona]</p>
-              </div>
-              </div>
-              `;
-              col.appendChild(card);
-             
-              dmain.appendChild(col);
-              
+              if(m.Sexo_idSexo==1){
+                tex += "macho";}
+              else{
+                tex += "hembra";}
+              crearTargetaMascota(dmain,m,color,await crearTargetaPersonalidad(m));
            }
            
            
@@ -177,10 +402,10 @@ export async function onMainLoad() {
     });
   }
   catch{};
+}
 
-
-    
-    const formData = new FormData();
+export function cargarFuncionCookis(){
+  const formData = new FormData();
     const userCorreo = getCookieValue("userCorreo");
     
   
@@ -192,7 +417,6 @@ export async function onMainLoad() {
         .then(response => response.json())
         .then(data => {
           user = data.resultado[0];
-          console.log(data);
           if (data.resultado.length > 0)
             {
               localStorage.currentUser=user.correo;
@@ -215,24 +439,10 @@ export async function onMainLoad() {
 
       });
     
-  
- 
-    
- 
+}
 
-
-  
-  const extra = document.getElementById('extra_elements');
-  if (!extra.innerHTML.includes(LOGIN_FORM))
-  {
-    extra.innerHTML = extra.innerHTML + `
-    ${LOGIN_FORM}
-  `;
-  }
-    
-
-
-  const whyAdoptBtn = document.getElementById('whyAdopt')
+export function cargarBotonesHeader(){
+    const whyAdoptBtn = document.getElementById('whyAdopt')
   iniButtons();
   if (whyAdoptBtn != undefined)
   {
@@ -573,261 +783,75 @@ export async function onMainLoad() {
       }
     }
 
-
 }
 
-
-/*window.onresize = function(){
-
-  anchoVentana = window.innerWidth;
-  if(anchoVentana<=677){
-    listar_mascotas();
-  }
- 
-No era el problema
-
- };*/ 
-
-
-function listar_mascotas() {
-  let dmain;
-  let mascotas;
-  if (document.location.href.includes("perros.html")) {
-    dmain = document.getElementById("main_div_perros");
-    mascotas = DOGS;
-  } else if (document.location.href.includes("gatos.html")) {
-    dmain = document.getElementById("main_div_gatos");
-    mascotas = CATS;
-  } else {
-    dmain = document.getElementById("main_div_otros");
-    mascotas = OTHERS;
-  }
-  if (!dmain) return;
-
-  // Clear previous content
-
-  // Create a responsive row container
-  const row = document.createElement("div");
-  row.className = "row g-4"; // gap between cards
-
-  mascotas.forEach((mascota) => {
-    const col = document.createElement("div");
-    col.className = "col-sm-12 col-md-4 mt-3 col-lg-4"; // adjust based on screen size
-
-    const card = document.createElement("div");
-    card.className = "card h-100 max-height-1 w-100 p-4 shadow-sm";
-    const personalidades = mascota.personalidad;
-    let personalityString = "";
-    personalidades.forEach(k => {
-      personalityString += `
-       <p class="h6"> <i class="bi bi-award"></i> ${k}</p>
-      `
-    });
-
-
-    card.innerHTML = `
-      <img src="${mascota.img}" class="card-img-top img-fluid rounded imgPetSelect" id="${mascota.id}"  alt="${mascota.name}">
-      <div class="card-body d-flex flex-column">
-        <h5 class="card-title text-center h3 fw-bold">${mascota.name}</h5>
-        <hr>
-        <div class="mb-3">
-          <h6 class="fw-bold">Personalidad:</h6>
-            ${personalityString}
-        </div>
-        <p class="mb-1"><strong>Sexo:</strong> ${mascota.sexo}</p>
-        <p class="mb-1"><strong>Tamaño:</strong> ${mascota.Tamano}</p>
-        <p class="mb-1"><strong>Color:</strong> ${mascota.color}</p>
-        <p class="mb-3"><strong>Edad:</strong> ${mascota.edad}</p>
-        <div class="mt-auto">
-          <p class="fw-semibold text-muted"><strong>Cercanía:</strong> [Aquí puedes agregar distancia o zona]</p>
-        </div>
-      </div>
-    `;
-
-    col.appendChild(card);
-    dmain.appendChild(col);
-  });
-
-  dmain.appendChild(row);
-}
-
-
-function changeBodyToPet()
-{
-  try
+export function cargarExtras(){
+  const extra = document.getElementById('extra_elements');
+  if (!extra.innerHTML.includes(LOGIN_FORM))
   {
-    const petImages = document.getElementsByClassName('imgPetSelect');
-    for (let p of petImages) {
-      p.onclick = function () {
-        const petId = p.id;
-        let choosenPet = "";
-        PETS.every(pet => {
-          if (petId == pet.id)
-          {
-            choosenPet = pet;
-            return false;
-          }
-          else 
-          return true;
-        });
-        if (choosenPet != "")
-        {
-          const petInfo = createPetSelect(choosenPet);
-          const body = document.getElementById('blur');
-          window.doReturnNormally = false;
-          document.getElementById('extra_elements').innerHTML = ""
-          body.innerHTML = petInfo;
-          onMainLoad();
+    extra.innerHTML = extra.innerHTML + `
+    ${LOGIN_FORM}
+  `;
+  }
+}
+
+export async function crearTargetaMascota(dmain,m,color,personalityString){
+  
+            const col = document.createElement("div");
+            col.className = "col-sm-12 col-md-4 mt-3 col-lg-4"; // adjust based on screen size
+
+            const card = document.createElement("div");
+            card.className = "card h-100 max-height-1 w-100 p-4 shadow-sm";
+
+            let sexoM;
+            let imagenes = await cargarMultimedia(m.idMascota,false);
+            let tamM;
+            
+             if(m.Sexo_idSexo==1){
+              sexoM="Macho";}
+            else{
+              sexoM="Hembra";}
+            
+              switch (m.Tamanio_idTamanio) {
+            case '1':  tamM ="Grande"; break;
+            case '2':  tamM ="Mediano"; break;
+            case '3':  tamM= "Pequeño"; break;
+            default: break;
+           }
+
+            card.innerHTML = `
+              <img src="${imagenes[0].documento}" class="card-img-top img-fluid rounded imgPetSelect" id="${m.idMascota}"  alt="${m.nombre}"></img>
+              <div class="card-body d-flex flex-column">
+              <h5 class="card-title text-center h3 fw-bold">${m.nombre}</h5>
+              <hr>
+              <div class="mb-3">
+              <h6 class="fw-bold">Personalidad:</h6>
+                ${personalityString}
+              </div>  
+              <p class="mb-1"><strong>Sexo:</strong> ${sexoM}</p>
+              <p class="mb-1"><strong>Tamaño:</strong> ${tamM}</p>
+              <p class="mb-1"><strong>Color:</strong> ${color.nombre}</p>
           
-        }
-       
-      }
-    }
-  }
-  catch(ex)
-  {
-    
-  }
+              <p class="mb-3"><strong>Edad:</strong> ${m.fecha_nacimiento}</p>
+              <div class="mt-auto">
+              <p class="fw-semibold text-muted"><strong>Cercanía:</strong> [Aquí puedes agregar distancia o zona]</p>
+              </div>
+              </div>
+              `;
+              col.appendChild(card);
+             
+              dmain.appendChild(col);
 }
 
-function iniButtons()
-{
-  try
-  {
-      const btnCat = document.getElementById('checkCats').onclick = function (){ changeTo('gatos.html')};
-      const btnDog = document.getElementById('checkDogs').onclick = function (){ changeTo('perros.html')};
-      const btnOthers = document.getElementById('checkOthers').onclick = function (){ changeTo('otros.html')};
-  }
-  catch{}
-}
+export async function crearTargetaPersonalidad(m) {
+    let personalidades = await cargarPersonalidad(m.idMascota)
+    var personalityString="";
+      personalidades.forEach(p => {
+        personalityString += `
+        <p class="h6"> <i class="bi bi-award"></i> ${p.descripcion}</p>
+        `
+        
+      });
+      return personalityString;
 
-function checkForReturn()
-{
- 
-    history.pushState(null, null, location.href);
-    window.onpopstate = function () {
-      if (window.doReturnNormally == false)
-        {  
-          history.go(1);
-          window.location.reload();
-        }
-      }
-
-}
-
-function inicia_sesion(isFromClick){
-  
-  const correo = document.getElementById("input_correo_log").value;
-  const contra = document.getElementById("input_contra_log").value;
-  const recu = document.getElementById("btn-check-outlined");
-
-  const formData = new FormData();
-  formData.append('correo', correo);
-  formData.append('pass', contra);
-
-  fetch('endpointlogin.php', {
-    method: 'POST',
-    body: formData
-  })
-    .then(response => response.json())
-    .then(data => {
-      
-      data.forEach(d => {
-        if(recu.checked){
-          document.cookie = "userCorreo=" + d.correo + "; expires=" + new Date(Date.now() + 30*24*60*60*1000).toUTCString() + "; path=/";
-        }else{
-          document.cookie = "userCorreo=" + d.correo + "; path=/";
-        }
-       
-        location.reload();
-      });   
-    });
-}
-
-export function enviar(){
-  
-  const email = document.getElementById("input_correoR").value;
-  const formData = new FormData();
-  formData.append('email', email);
-
-  fetch('enviar_correo.php', {
-    method: 'POST',
-    body: formData
-  })
-  .then(response => response.text())
-  .then(data => {
-    console.log(data);
-    
-  })
-  .catch(error => {
- 
-    console.error(error);
-  });
-}
-
-async function cargarMascotas(){
-  
-        fetch('endpointshowpets.php', {
-          method: 'POST',
-        })
-          .then(response => response.json())
-          .then(data => {
-              mascotas = data.resultado;
-          });
-}
-
-async function cargarMultimedia(id,esUsuario){
-        let formData = new FormData();
-        if(esUsuario)
-          formData.append("idUsuario",id);
-        else
-          formData.append("idMascota",id);
-
-       const response = await fetch('endpointMultimedia.php', {
-          method: 'POST',
-          body: formData
-        })
-          const data =await response.json();
-          return data.resultado;
-}
-
-async function cargarPersonalidad(id){
-        let formData = new FormData();
-        formData.append("idMascota",id);
-
-        const response = await fetch('endpointPersonalidad.php', {
-          method: 'POST',
-          body: formData
-        })
-         const data =await response.json();
-          return data.resultado;
-}
-
-async function cargarColor(id){
-        let formData = new FormData();
-        formData.append("idMascota",id);
-
-      const response = await fetch('endpointColor.php', {
-          method: 'POST',
-          body: formData
-        })
-          const data =await response.json();
-          return data.resultado[0];
-
-}
-
-async function cargarRaza(id, esMascota){
-    let formData = new FormData();
-        if(esMascota)
-          formData.append("idMascota",id);
-        else
-          formData.append("idEspecie",id);
-
-       const response = await fetch('endpointRazas.php', {
-          method: 'POST',
-          body: formData
-        })
-          const data =await response.json();
-     
-          return data.resultado[0];
 }

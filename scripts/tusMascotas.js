@@ -1,0 +1,28 @@
+import {loadHeader, ALERTA} from "./header.js";
+import { onMainLoad, changeTo,cargarColor, cargarMascotas, cargarMultimedia, crearTargetaMascota, crearTargetaPersonalidad} from "../main.js";
+
+var mascotas;
+
+window.onload = function(){
+    
+    onMainLoad();
+    onLoadThis();
+   
+    document.getElementById("extra_elements").innerHTML+= ALERTA;
+}
+
+async function onLoadThis(){
+    loadHeader();
+    mascotas = await cargarMascotas(localStorage.currentUser);
+    
+         const row = document.createElement("div");
+            row.className = "row g-4"; // gap between cards
+             document.getElementById("main_div_busqueda").appendChild(row); //checar
+
+    mascotas.resultado.forEach(async m => {
+        crearTargetaMascota(document.getElementById("main_div_busqueda"),m,await cargarColor(m.idMascota),crearTargetaPersonalidad(m));
+    });
+    
+    
+}
+
