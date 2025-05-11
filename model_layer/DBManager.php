@@ -67,6 +67,24 @@ class DBManager {
         return $rows;
     }
 
+    public function findUserByMascota($id)
+    {
+        $link = $this->open();
+
+        $sql = "SELECT usuario.nombre, usuario.correo FROM usuario INNER JOIN mascota on usuario.idusuario=mascota.usuario_idusuario WHERE mascota.idmascota='$id'";
+
+        $result = mysqli_query($link, $sql, MYSQLI_ASSOC) or die('Error query');
+
+        $rows = [];
+        while($columns = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+            $rows[] = $columns;
+        }
+
+        $this->close($link);
+
+        return $rows;
+    }
+
     public function addUser($usr, $pass, $correo, $telefono, $apelldioP, $apellidoM, $curp)
     {
         $link = $this->open();

@@ -879,7 +879,8 @@ export async function crearTargetaPersonalidad(m) {
 
 }
 
-export function asginarAbrirVistaMascota(m){
+export async function asginarAbrirVistaMascota(m){
+  let user = await obtenerUserByPet(m.idMascota);
   document.getElementById("card"+m.idMascota).onclick=function(){
       if(localStorage.currentUser==m.Usuario_idUsuario){
        location.href = `editarMascota.html?id=${encodeURIComponent(m.idMascota)}`;
@@ -888,15 +889,27 @@ export function asginarAbrirVistaMascota(m){
         const modal1Element = document.getElementById('modal_conta');
         const modal1 = new bootstrap.Modal(modal1Element);
         modal1.show();
-         document.getElementById("nombreMas").innerText = "Nombre: "+m.nombre;
          document.getElementById("descMas").innerText = m.descripcion;
-         document.getElementById("nombreUsr");
-         document.getElementById("corrUsr");
-         
+         document.getElementById("nombreUsr").innerText = "Nombre: " + user.nombre;
+         document.getElementById("corrUsr").innerText = "Correo: " +user.correo;
+         document.getElementById("nombreMas").innerText =  m.nombre;
     
    
  
       }
         
   }
+}
+
+async function obtenerUserByPet(m) {
+  const formData = new FormData();
+  formData.append("idMascota",m)
+  
+        const response = await fetch('endpointshowuser.php', {
+          method: 'POST',
+          body: formData
+        })
+        const data = await response.json();
+        console.log(data);
+        return data.resultado[0];
 }

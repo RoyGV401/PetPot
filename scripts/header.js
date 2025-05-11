@@ -161,19 +161,28 @@ export const CONTACTA = `
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content" style="background: transparent; border: none;">
         <div class="modal-body p-0">
-          <div class="container-sm rounded-m my-3 py-3 pt-3" style=" background-color: rgb(253 236 220);">
+          <div class="container-sm rounded-m my-3 py-2 pt-3" style=" background-color: rgb(253 236 220);">
             <div class="container my-1 px-2">
               <div class="container my-4" >
-                  
-                      <div class="card h-100 max-height-1 p-4 m-3 shadow-sm">
-                        <h3 style=" font-size: 1.4rem;">Descripción:</h3>
-                        <h3 style=" font-size: 1rem;" id="descMas"></h3>
-                        <h3 style=" font-size: 1.4rem;">Información del dueño:</h3>
-                        <h3 style=" font-size: 1rem;" class="col-6" id="nombreUsr"></h3>
-                        <h3 style=" font-size: 1rem;" class="col-6" id="corrUsr"></h3>
-                      </div>
-                 
+                <div class="px-3">
+                  <h3 id="nombreMas" style=" font-size: 1.6rem;">NOMBRE</h3>
                 </div>
+                <div class="card h-25  p-4 m-3 shadow-sm">
+                  <h3 style=" font-size: 1.4rem;">Descripción:</h3>
+                  <h3 style=" font-size: 1rem;" id="descMas"></h3>
+                  <hr>
+                  <h3 style=" font-size: 1.4rem;">Información del dueño:</h3>
+                  <h3 style=" font-size: 1rem;" id="nombreUsr"></h3>
+                  <h3 style=" font-size: 1rem;" id="corrUsr"></h3>
+                </div>
+                <div class="row mt-4">
+                  <div class="col-3"></div>
+                  <div class="col-6">
+                    <button class=" btn btn-primary w-100 text-center" style="color:aliceblue;">Contactar</button>
+                  </div>
+                  <div class="col-3"></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
