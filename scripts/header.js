@@ -118,6 +118,8 @@ export function loadHeader() {
    } 
    lastScrollTop = st <= 0 ? 0 : st; 
   });
+
+  loadPetBot();
 }
 
 export const ALERTA = `
@@ -191,3 +193,15 @@ export const CONTACTA = `
   </div>
 
 `;
+
+
+
+function loadPetBot() {
+  const script = document.createElement('script');
+  script.src = 'https://cdn.jotfor.ms/agent/embedjs/0196bd772c1874a3b0851a1a1853efe55552/embed.js?skipWelcome=1&maximizable=1';
+  script.async = true;
+  document.body.appendChild(script);
+}
+
+
+    
