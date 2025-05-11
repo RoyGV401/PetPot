@@ -20,7 +20,7 @@ async function onLoadThis(){
              document.getElementById("main_div_busqueda").appendChild(row); //checar
 
     mascotas.resultado.forEach(async m => {
-        crearTargetaMascota(document.getElementById("main_div_busqueda"),m,await cargarColor(m.idMascota),crearTargetaPersonalidad(m));
+        crearTargetaMascota(document.getElementById("main_div_busqueda"),m,await cargarColor(m.idMascota),await crearTargetaPersonalidad(m));
     });
     
     

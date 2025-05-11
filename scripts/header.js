@@ -27,7 +27,7 @@ export const HEADER = `
                 ¡Hola! user
               </button>
               <ul class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item mt-3 h5" href="#">Tus mascotas</a></li>
+                <li><a class="dropdown-item mt-3 h5" href="./tusMascotas.html">Tus mascotas</a></li>
                 <li><a class="dropdown-item mt-3 h5" href="#">Configuracion</a></li>
                 <li><a class="dropdown-item mt-3 h5" href="#" data-bs-toggle="modal" data-bs-target="#confirmLogOut">Salir</a></li>
               </ul>
@@ -133,4 +133,52 @@ export const ALERTA = `
               </div>
             </div>
           </div>
+`;
+
+export const ALERTA_GATO = `
+  <div class="modal fade" id="modal_gat" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="background: transparent; border: none;">
+        <div class="modal-body p-0">
+          <div class="image-logo-container position-relative">
+            <div class="image">
+              <img src="resources/cabexa.png" class="avatar">
+              <img src="resources/ojos.png" id="ojos" class="ojos ojos1">
+              <img src="resources/ojos2.png" id="ojos2" class="ojos ojos2">
+            </div>
+           
+          </div>
+           <h3 class="text-center" style="color:aliceblue;">Cargando..</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+`;
+
+
+export const CONTACTA = `
+ <div class="modal fade"  id="modal_conta" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="background: transparent; border: none;">
+        <div class="modal-body p-0">
+          <div class="container-sm rounded-m my-3 py-3 pt-3" style=" background-color: rgb(253 236 220);">
+            <div class="container my-1 px-2">
+              <div class="container my-4" >
+                  
+                      <div class="card h-100 max-height-1 p-4 m-3 shadow-sm">
+                        <h3 style=" font-size: 1.4rem;">Descripción:</h3>
+                        <h3 style=" font-size: 1rem;" id="descMas"></h3>
+                        <h3 style=" font-size: 1.4rem;">Información del dueño:</h3>
+                        <h3 style=" font-size: 1rem;" class="col-6" id="nombreUsr"></h3>
+                        <h3 style=" font-size: 1rem;" class="col-6" id="corrUsr"></h3>
+                      </div>
+                 
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>                
+  </div>
+
 `;

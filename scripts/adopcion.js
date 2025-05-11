@@ -111,7 +111,6 @@ function onLoadThis(){
     document.getElementById('searchForm').addEventListener('submit', function(event) {
         event.preventDefault(); 
         const searchValue = document.getElementById('searchInput').value;
-        console.log('Valor buscado:', searchValue);
         buscarRazas(petSelected,searchValue);
       });
      
@@ -153,7 +152,8 @@ function onLoadThis(){
             }, 1000);
             return;
         }else{
-            usuario = await buscaUsuario();
+           // usuario = await buscaUsuario();
+           usuario = localStorage.currentUser;
 
         }
 
@@ -183,6 +183,7 @@ function onLoadThis(){
         
         if(nombre!=""&&descripcion!=""&&esp!=4&&raza!=null&&sexo!=null&&tamanio>=1&&persos[0]!=null&&fecha!=""&&foto!=null&&color!=null)
         {
+           
             let formData = new FormData();
             formData.append("nombre",nombre);
             formData.append("descripcion",descripcion);
@@ -827,6 +828,7 @@ async function guardarFoto(id){
 
 async function buscaUsuario(){
     let formData = new FormData();
+    //console.log(localStorage.currentUser);
     formData.append('correo', localStorage.currentUser);
     const response = await  fetch('endpointshowuser.php', {
         method: 'POST',

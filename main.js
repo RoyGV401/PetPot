@@ -2,7 +2,7 @@ import { LOGIN_FORM } from "./scripts/login.js";
 import { DOGS, CATS, OTHERS, PETS } from "./scripts/pet_list.js";
 import { createPetSelect } from "./scripts/pet_selected.js";
 import { USERS } from "./scripts/users.js";
-import {loadHeader, ALERTA} from "./scripts/header.js";
+import {loadHeader, ALERTA,ALERTA_GATO, CONTACTA} from "./scripts/header.js";
 import {CUERPO} from "./scripts/busqueda.js";
 
 
@@ -66,6 +66,9 @@ export function getCookieValue(cname) {
 export async function onMainLoad() {
 
     document.getElementById("extra_elements").innerHTML+= ALERTA;
+    document.getElementById("extra_elements").innerHTML += ALERTA_GATO;
+    document.getElementById("extra_elements").innerHTML += CONTACTA;
+
   listar_mascotas();
   changeBodyToPet();
   checkForReturn();
@@ -82,6 +85,8 @@ export async function onMainLoad() {
 //--------------CARGAR FUNCIONALIDAD DE BOTONES----------------
 
   cargarBotonesHeader();
+
+
 
 }
 
@@ -262,14 +267,17 @@ export function enviar(){
 }
 
 export async function cargarMascotas(id=null){
-        if(id==null){
-           fetch('endpointshowpets.php', {
+    const modal1Element = document.getElementById('modal_gat');
+    const modal1 = new bootstrap.Modal(modal1Element);
+   
+    try{
+       modal1.show();
+       if(id==null){
+           const response = await fetch('endpointshowpets.php', {
           method: 'POST',
         })
-          .then(response => response.json())
-          .then(data => {
-              mascotas = data.resultado;
-          });
+          const data = await response.json();
+          mascotas = data.resultado;
         }else{
            const response = await fetch('endpointshowpets.php', {
           method: 'POST',
@@ -277,6 +285,12 @@ export async function cargarMascotas(id=null){
           const data = await response.json();
           return data;
         }      
+    }catch(error){
+      console.log("Error cargar mascotas",error);
+    }finally{
+    setTimeout(() => modal1.hide(), 470); 
+    }
+       
 }
 
 export async function cargarMultimedia(id,esUsuario){
@@ -394,6 +408,8 @@ export function cargarFuncionBarra(){
               else{
                 tex += "hembra";}
               crearTargetaMascota(dmain,m,color,await crearTargetaPersonalidad(m));
+             
+
            }
            
            
@@ -800,8 +816,14 @@ export async function crearTargetaMascota(dmain,m,color,personalityString){
             const col = document.createElement("div");
             col.className = "col-sm-12 col-md-4 mt-3 col-lg-4"; // adjust based on screen size
 
-            const card = document.createElement("div");
-            card.className = "card h-100 max-height-1 w-100 p-4 shadow-sm";
+            col.innerHTML = `
+              <div id=card${m.idMascota} class= "card h-100 max-height-1 w-100 p-4 shadow-sm"></div>
+            `;
+            dmain.appendChild(col);
+
+            const card = document.getElementById("card"+m.idMascota);
+           
+            
 
             let sexoM;
             let imagenes = await cargarMultimedia(m.idMascota,false);
@@ -838,9 +860,10 @@ export async function crearTargetaMascota(dmain,m,color,personalityString){
               </div>
               </div>
               `;
-              col.appendChild(card);
+              
              
-              dmain.appendChild(col);
+               //--------------CARGAR FUNCIÓN REDIRECCIÓN PANTALLA ADOPTAR----------
+              asginarAbrirVistaMascota(m);  
 }
 
 export async function crearTargetaPersonalidad(m) {
@@ -854,4 +877,26 @@ export async function crearTargetaPersonalidad(m) {
       });
       return personalityString;
 
+}
+
+export function asginarAbrirVistaMascota(m){
+  document.getElementById("card"+m.idMascota).onclick=function(){
+      if(localStorage.currentUser==m.Usuario_idUsuario){
+       location.href = `editarMascota.html?id=${encodeURIComponent(m.idMascota)}`;
+      }
+      else{
+        const modal1Element = document.getElementById('modal_conta');
+        const modal1 = new bootstrap.Modal(modal1Element);
+        modal1.show();
+         document.getElementById("nombreMas").innerText = "Nombre: "+m.nombre;
+         document.getElementById("descMas").innerText = m.descripcion;
+         document.getElementById("nombreUsr");
+         document.getElementById("corrUsr");
+         
+    
+   
+ 
+      }
+        
+  }
 }

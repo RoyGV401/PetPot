@@ -237,7 +237,7 @@ class DBManager {
         $link = $this->open();
 
         $sql = "INSERT INTO mascota VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?)";
-
+        
         // Prepara la consulta
 		$query = mysqli_prepare($link, $sql);
 

@@ -917,6 +917,29 @@ th {
     */
 }
 
+.image-logo-container2{
+
+    width: 16.5vmax;
+    height: 16.5vmax;
+    margin-bottom: 10%;
+    filter: invert(100%);
+    border-radius: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    background-image: url(resources/pot.png);
+    background-position: 50%;
+    background-size: 90%;
+    background-repeat: no-repeat;
+    user-select: none;
+
+    /*
+    border: solid black 5px;
+    background-color: rgb(244, 175, 107);
+    */
+}
 
 @keyframes avatar{
     0%,
