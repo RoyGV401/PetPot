@@ -128,7 +128,7 @@ export const ALERTA = `
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-body">
-                  <h5 class="modal-title text-center" id="mensaje_alerta">Agregado!</h5>
+                  <h5 class="modal-title text-center" id="mensaje_alerta"></h5>
                 </div>
                 
                 
@@ -138,7 +138,7 @@ export const ALERTA = `
 `;
 
 export const ALERTA_GATO = `
-  <div class="modal fade" id="modal_gat" tabindex="-1" aria-hidden="true">
+  <div class="modal fade" id="modal_gat" tabindex="-1" aria-hidden="true"  style="z-index:9999999999999999999999">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content" style="background: transparent; border: none;">
         <div class="modal-body p-0">
@@ -180,7 +180,7 @@ export const CONTACTA = `
                 <div class="row mt-4">
                   <div class="col-3"></div>
                   <div class="col-6">
-                    <button class=" btn btn-primary w-100 text-center" style="color:aliceblue;">Contactar</button>
+                    <button class=" btn btn-primary w-100 text-center"  data-bs-toggle="modal" data-bs-target="#modal_mail" style="color:aliceblue;">Contactar</button>
                   </div>
                   <div class="col-3"></div>
                 </div>
@@ -194,6 +194,38 @@ export const CONTACTA = `
 
 `;
 
+export const MAIL = 
+`
+ <div class="modal fade"  id="modal_mail" tabindex="-1" aria-hidden="true" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="background: transparent; border: none;">
+        <div class="modal-body p-0">
+          <div class="container-sm rounded-m my-3 py-2 pt-3" style=" background-color: rgb(253 236 220);">
+            <div class="container my-1 px-2">
+              <div class="container my-4" >
+                <div class="px-3">
+                  <h3 style=" font-size: 1.6rem;">Cuerpo</h3>
+                </div>
+                <div class="card h-25  p-4 m-3 shadow-sm">
+                  <textarea class="form-control " id="inputMensaje" placeholder="Mensaje" 
+                                        rows="3"></textarea>
+                </div>
+                <div class="row mt-4">
+                  <div class="col-3"></div>
+                  <div class="col-6">
+                    <button id="btn_mail" class=" btn btn-primary w-100 text-center" style="color:aliceblue;">Enviar</button>
+                  </div>
+                  <div class="col-3"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>                
+  </div>
+
+`;
 
 
 function loadPetBot() {

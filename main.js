@@ -2,7 +2,7 @@ import { LOGIN_FORM } from "./scripts/login.js";
 import { DOGS, CATS, OTHERS, PETS } from "./scripts/pet_list.js";
 import { createPetSelect } from "./scripts/pet_selected.js";
 import { USERS } from "./scripts/users.js";
-import {loadHeader, ALERTA,ALERTA_GATO, CONTACTA} from "./scripts/header.js";
+import {loadHeader, ALERTA,ALERTA_GATO, CONTACTA, MAIL} from "./scripts/header.js";
 import {CUERPO} from "./scripts/busqueda.js";
 
 
@@ -67,7 +67,9 @@ export async function onMainLoad() {
 
     document.getElementById("extra_elements").innerHTML+= ALERTA;
     document.getElementById("extra_elements").innerHTML += ALERTA_GATO;
+        document.getElementById("extra_elements").innerHTML += MAIL;
     document.getElementById("extra_elements").innerHTML += CONTACTA;
+
 
   listar_mascotas();
   changeBodyToPet();
@@ -881,11 +883,14 @@ export async function crearTargetaPersonalidad(m) {
 
 export async function asginarAbrirVistaMascota(m){
   let user = await obtenerUserByPet(m.idMascota);
-  document.getElementById("card"+m.idMascota).onclick=function(){
+  document.getElementById("card"+m.idMascota).onclick=async function(){
       if(localStorage.currentUser==m.Usuario_idUsuario){
        location.href = `editarMascota.html?id=${encodeURIComponent(m.idMascota)}`;
       }
       else{
+        let usuario = await obtenerUserByID(localStorage.currentUser);
+        let usuario2 = await obtenerUserByID(m.Usuario_idUsuario);
+
         const modal1Element = document.getElementById('modal_conta');
         const modal1 = new bootstrap.Modal(modal1Element);
         modal1.show();
@@ -893,9 +898,83 @@ export async function asginarAbrirVistaMascota(m){
          document.getElementById("nombreUsr").innerText = "Nombre: " + user.nombre;
          document.getElementById("corrUsr").innerText = "Correo: " +user.correo;
          document.getElementById("nombreMas").innerText =  m.nombre;
-    
-   
- 
+         
+         document.getElementById("btn_mail").onclick = async function (){
+            if(document.getElementById("inputMensaje").value == ""){
+              document.getElementById("mensaje_alerta").innerText = "Ingresa un mensaje";
+                  const modal2Element = document.getElementById('alertModal6');
+                  const modal2 = new bootstrap.Modal(modal2Element);
+                  modal2.show();
+                  let temporizador;
+                  let tiempoRestante = 2;
+                  temporizador = setInterval(() => {
+                      tiempoRestante--; 
+                      if (tiempoRestante <= 0) {
+                          clearInterval(temporizador);
+                          modal2.hide();
+                      }
+                  }, 1000);
+            }
+            else{
+              const modal1Element = document.getElementById('modal_gat');
+              const modal1 = new bootstrap.Modal(modal1Element);
+              let formData = new FormData();
+              
+                const modal = bootstrap.Modal.getInstance(document.getElementById('modal_mail'));
+                // Cerrar el modal
+                modal.hide();
+              try{
+                modal1.show()
+                
+              formData.append('email_r', usuario2.correo);
+              formData.append('email', usuario.correo);
+              formData.append('mascota', m.nombre);
+              formData.append('usuario_r', usuario2.nombre);
+              formData.append('usuario', usuario.nombre);
+              formData.append('cuerpo',document.getElementById("inputMensaje").value);
+
+              const response = await  fetch('enviar_mensaje.php', {
+                  method: 'POST',
+                  body: formData
+                })
+            
+                const data = await response.json();
+                document.getElementById("mensaje_alerta").innerText = "¡Correo Enviado!";
+                  const modal2Element = document.getElementById('alertModal6');
+                  const modal2 = new bootstrap.Modal(modal2Element);
+                  modal2.show();
+                  let temporizador;
+                  let tiempoRestante = 2;
+                  temporizador = setInterval(() => {
+                      tiempoRestante--; 
+                      if (tiempoRestante <= 0) {
+                          clearInterval(temporizador);
+                          modal2.hide();
+                      }
+                  }, 1000);
+                  
+              }catch(e){
+                console.log(e);
+                document.getElementById("mensaje_alerta").innerText = "Error al enviar correo";
+                  const modal2Element = document.getElementById('alertModal6');
+                  const modal2 = new bootstrap.Modal(modal2Element);
+                  modal2.show();
+                  let temporizador;
+                  let tiempoRestante = 2;
+                  temporizador = setInterval(() => {
+                      tiempoRestante--; 
+                      if (tiempoRestante <= 0) {
+                          clearInterval(temporizador);
+                          modal2.hide();
+                      }
+                  }, 1000);
+                modal.show();
+              }finally{
+                setTimeout(() => modal1.hide(),470)
+              }
+              
+            }
+          }
       }
         
   }
@@ -912,4 +991,18 @@ async function obtenerUserByPet(m) {
         const data = await response.json();
         console.log(data);
         return data.resultado[0];
+} 
+
+async function obtenerUserByID(id) {
+    let formData = new FormData();
+    
+    formData.append('idUsuario',id);
+    const response = await  fetch('endpointshowuser.php', {
+        method: 'POST',
+        body: formData
+      })
+   
+      const data = await response.json();
+       
+      return data.resultado[0];
 }
