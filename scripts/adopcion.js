@@ -639,6 +639,12 @@ function exito(posicion) {
             map,
             title: "Mi ubicación",
             position: myLatLng,
+            icon: {
+            url: 'resources/marker3.png',
+            scaledSize: new google.maps.Size(48.1, 68.25),
+            anchor: new google.maps.Point(25, 50),
+            origin: new google.maps.Point(0, 0),
+          }
         })
     );
     
@@ -663,6 +669,12 @@ function exito(posicion) {
                     map,
                     title: place.name,
                     position: place.geometry.location,
+                    icon: {
+                    url: 'resources/marker3.png',
+                    scaledSize: new google.maps.Size(48.1, 68.25),
+                    anchor: new google.maps.Point(25, 50),
+                    origin: new google.maps.Point(0, 0),
+                }
                 })
             );
               lat = place.geometry.location.lat();
@@ -684,7 +696,13 @@ function exito(posicion) {
         markers.push(
             new google.maps.Marker({
                 position: e.latLng,
-                map: map
+                map: map,
+                icon: {
+            url: 'resources/marker3.png',
+            scaledSize: new google.maps.Size(48.1, 68.25),
+            anchor: new google.maps.Point(25, 50),
+            origin: new google.maps.Point(0, 0),
+          }
             })
         );
         lat = e.latLng.lat();
