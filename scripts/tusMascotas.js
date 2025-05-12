@@ -4,7 +4,7 @@ import { onMainLoad, changeTo,cargarColor, cargarMascotas, cargarMultimedia, cre
 var mascotas;
 
 window.onload = function(){
-    
+
     onMainLoad();
     onLoadThis();
    
@@ -13,7 +13,7 @@ window.onload = function(){
 
 async function onLoadThis(){
     loadHeader();
-    mascotas = await cargarMascotas(localStorage.currentUser);
+    mascotas = await cargarMascotas(localStorage.currentUser,true);
     
          const row = document.createElement("div");
             row.className = "row g-4"; // gap between cards

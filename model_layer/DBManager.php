@@ -145,6 +145,42 @@ class DBManager {
 
         return $rows;
     }
+
+    public function showPet($id)
+    {
+        $link = $this->open();
+
+        $sql = "SELECT * FROM mascota WHERE idMascota=$id";
+
+        $result = mysqli_query($link, $sql, MYSQLI_ASSOC) or die('Error query');
+
+        $rows = [];
+        while($columns = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+            $rows[] = $columns;
+        }
+
+        $this->close($link);
+
+        return $rows;
+    }
+
+    public function showPetsUser($id)
+    {
+        $link = $this->open();
+
+        $sql = "SELECT * FROM mascota WHERE Usuario_idUsuario=$id";
+        
+        $result = mysqli_query($link, $sql, MYSQLI_ASSOC) or die('Error query');
+        
+        $rows = [];
+        while($columns = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+            $rows[] = $columns;
+        }
+
+        $this->close($link);
+
+        return $rows;
+    }
      
     public function showLastpet(){
         $link = $this->open();
@@ -301,6 +337,43 @@ $this->close($link);
         $this->close($link);
 
         return $rows;
+    }
+
+    public function showUbicacion($id){
+        $link = $this->open();
+
+        $sql = "SELECT u.idubicaciones, u.latitud, u.longitud
+        FROM mascota m
+        JOIN ubicacion u ON m.Ubicacion_idubicaciones = u.idUbicaciones
+        WHERE m.idMascota = $id";
+
+        $result = mysqli_query($link, $sql, MYSQLI_ASSOC) or die('Error query');
+
+        $rows = [];
+        while($columns = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+            $rows[] = $columns;
+        }
+
+        $this->close($link);
+
+        return $rows;
+    }
+
+    public function DeleteUbicacion($id,$idubi){
+        $link = $this->open();
+
+        $sql = "UPDATE mascota SET ubicacion_idubicaciones=NULL WHERE idMascota = $id";
+       
+
+        $result = mysqli_query($link, $sql, MYSQLI_ASSOC) or die('Error query actuali');
+
+         $sql = "DELETE FROM ubicacion WHERE idUbicaciones = $idubi";
+
+         $result = mysqli_query($link, $sql, MYSQLI_ASSOC) or die('Error query BORRAR');
+
+        $this->close($link);
+
+        return $result;
     }
 
 

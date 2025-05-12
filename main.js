@@ -4,7 +4,7 @@ import { createPetSelect } from "./scripts/pet_selected.js";
 import { USERS } from "./scripts/users.js";
 import {loadHeader, ALERTA,ALERTA_GATO, CONTACTA, MAIL} from "./scripts/header.js";
 import {CUERPO} from "./scripts/busqueda.js";
-
+import { cargarUbicacion } from "./scripts/editar.js";
 
 var mascotas;
 
@@ -69,7 +69,7 @@ export async function onMainLoad() {
     document.getElementById("extra_elements").innerHTML += ALERTA_GATO;
         document.getElementById("extra_elements").innerHTML += MAIL;
     document.getElementById("extra_elements").innerHTML += CONTACTA;
-
+await initMap(0, 0);
 
   listar_mascotas();
   changeBodyToPet();
@@ -268,21 +268,34 @@ export function enviar(){
   });
 }
 
-export async function cargarMascotas(id=null){
+export async function cargarMascotas(id=null,esUsuario=null){
     const modal1Element = document.getElementById('modal_gat');
     const modal1 = new bootstrap.Modal(modal1Element);
    
     try{
        modal1.show();
-       if(id==null){
+       if(id==null&&esUsuario==null){
            const response = await fetch('endpointshowpets.php', {
           method: 'POST',
         })
           const data = await response.json();
           mascotas = data.resultado;
-        }else{
+        }else if(esUsuario==false){
+            let formData = new FormData();
+            formData.append("idMascota",id);
            const response = await fetch('endpointshowpets.php', {
           method: 'POST',
+          body: formData
+        })
+          const data = await response.json();
+          return data;
+        }else{
+          
+          let formData = new FormData();
+            formData.append("idUsuario",id);
+           const response = await fetch('endpointshowpets.php', {
+          method: 'POST',
+          body: formData
         })
           const data = await response.json();
           return data;
@@ -892,8 +905,15 @@ export async function asginarAbrirVistaMascota(m){
         let usuario = await obtenerUserByID(localStorage.currentUser);
         let usuario2 = await obtenerUserByID(m.Usuario_idUsuario);
 
-        const modal1Element = document.getElementById('modal_conta');
+       const modal1Element = document.getElementById('modal_conta');
         const modal1 = new bootstrap.Modal(modal1Element);
+
+        // Escuchar el evento 'shown.bs.modal' que se dispara cuando el modal está completamente visible
+        modal1Element.addEventListener('shown.bs.modal', async function() {
+            let ubis = await cargarUbicacion(m.idMascota);
+            await initMap(ubis.latitud, ubis.longitud);
+        });
+
         modal1.show();
          document.getElementById("descMas").innerText = m.descripcion;
          document.getElementById("nombreUsr").innerText = "Nombre: " + user.nombre;
@@ -975,18 +995,53 @@ async function obtenerUserByID(id) {
 }
 
 
-export function enviarAlerta(alerta){
-  document.getElementById("mensaje_alerta").innerText = alerta;
-  const modal2Element = document.getElementById('alertModal6');
-  const modal2 = new bootstrap.Modal(modal2Element);
-  modal2.show();
-  let temporizador;
-  let tiempoRestante = 2;
-  temporizador = setInterval(() => {
-      tiempoRestante--; 
-      if (tiempoRestante <= 0) {
-          clearInterval(temporizador);
-          modal2.hide();
-      }
-  }, 1000);
+export async function enviarAlerta(alerta) {
+    document.getElementById("mensaje_alerta").innerText = alerta;
+    const modal2Element = document.getElementById('alertModal6');
+    const modal2 = new bootstrap.Modal(modal2Element);
+    modal2.show();
+
+    return new Promise((resolve) => {  
+        let temporizador;
+        let tiempoRestante = 2;
+        temporizador = setInterval(() => {
+            tiempoRestante--;
+            if (tiempoRestante <= 0) {
+                clearInterval(temporizador);
+                modal2.hide();
+        
+                modal2Element.addEventListener('hidden.bs.modal', resolve, { once: true });
+            }
+        }, 1000);
+    });
+}
+
+async function initMap(late,log){
+  
+   const myLatLng1 = { lat: Number(late), lng: Number(log) }; 
+    
+    const map = new google.maps.Map(document.getElementById("map"), {
+        center: myLatLng1,
+        zoom: 12,
+
+
+  mapTypeControl: false,
+  scaleControl: false,
+  streetViewControl: false,
+
+    });
+    google.maps.event.trigger(map, 'resize');
+    map.setCenter(myLatLng1); // Re-centrar después del resize
+    let markers = [];
+    markers.push(
+        new google.maps.Marker({
+            map,
+            title: "Ubicación de la mascota",
+            position: myLatLng1,
+            icon: {
+              url: 'resources/dsdfw.png',
+              scaledSize: new google.maps.Size(50, 50),
+            }
+        })
+    );
 }

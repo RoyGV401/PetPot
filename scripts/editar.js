@@ -97,6 +97,7 @@ var lat = null;
 var lng = null;
 var idm;
 var usuario;
+var ubis;
 
 window.onload = async function(){
    
@@ -105,16 +106,17 @@ window.onload = async function(){
     cargarBotonesHeader();
     cargarPersonalidades();
     cargarEspecies();
-    initMap();
+    
     onLoadThis();
     document.getElementById("extra_elements").innerHTML+= ALERTA;
     document.getElementById("extra_elements").innerHTML+= ALERTA_GATO;
     const urlParams = new URLSearchParams(window.location.search);
     const idMascota = urlParams.get('id');
-    
-    var m = await cargarMascotas(idMascota);
+
+    ubis = await cargarUbicacion(idMascota);
+    var m = await cargarMascotas(idMascota,false);
     m = m.resultado[0];
-   
+   initMap(ubis.latitud, ubis.longitud);
     let formData = new FormData();
         formData.append("idMascota",idMascota);
         const response = await fetch('endpointPersonalidad.php', {
@@ -207,7 +209,6 @@ window.onload = async function(){
                 document.getElementById(newBtn.id).addEventListener('click', function (){
                     
                     persos.splice(persos.findIndex(s=> s.nombre == p2.descripcion.replaceAll("\r","")),1);
-                    console.log(persos);
                     document.getElementById(safeId).hidden = false;
                     btns.removeChild(newBtn);
                  });
@@ -315,7 +316,11 @@ function onLoadThis(){
                 formData.append("esPeligrosa", true);
             formData.append("Color_idColor",colores.indexOf(color)+1);
             formData.append("Usuario_idUsuario",usuario);
-          
+
+            if(lat!=ubis.latitud&&lng!=ubis.longitud){
+                await borrarUbicacion(idm);
+            }
+
             let resultado = await guardarUbicacion();
                 if(resultado.sucess==false){
                     console.log(resultado);
@@ -351,8 +356,8 @@ function onLoadThis(){
                         await guardarFoto(idm);
                         
                             
-                        enviarAlerta("¡Mascota registrada!");
-                        
+                        await enviarAlerta("¡Cambios guardados!");
+                        location.href = "./tusMascotas.html";
                     });
                
             });
@@ -706,30 +711,16 @@ function comprobarLargo(lista){
 
 
 
-function initMap() {
-    const opciones = {
-        enableHighAccuracy: true,
-        timeout: 5000,
-        maximumAge: 0
-    };
-
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-           exito,
-            error,
-            opciones
-        );
-    } else {
-        enviarAlerta("Tu navegador no soporta geolocalización");
-    }
+function initMap(lat, lon) {
+    exito(lat,lon)
 }
 
-function exito(posicion) {
+function exito(late, log) {
     
-    const coordenadas = posicion.coords;
+   const myLatLng1 = { lat: Number(late), lng: Number(log) }; 
     
     const map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: coordenadas.latitude, lng: coordenadas.longitude },
+        center: myLatLng1,
         zoom: 12,
 
 
@@ -747,14 +738,14 @@ function exito(posicion) {
     });
 
     let markers = [];
-    const myLatLng = { lat: coordenadas.latitude, lng: coordenadas.longitude };
-    lat= coordenadas.latitude
-    lng= coordenadas.longitude 
+    const myLatLng = { lat: lat, lng: log};
+    lat= late
+    lng= log
     markers.push(
         new google.maps.Marker({
             map,
             title: "Mi ubicación",
-            position: myLatLng,
+            position: myLatLng1,
         })
     );
     
@@ -808,86 +799,10 @@ function exito(posicion) {
     });
 }
 
-function error(err) {
-    console.warn(`ERROR(${err.code}): ${err.message}`);
-    
-    const map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: 19.4326, lng: -99.1332 },
-        zoom: 12,
-    });
-  
-    const input = document.getElementById("pac-input");
-    const searchBox = new google.maps.places.SearchBox(input);
-    
-    map.addListener("bounds_changed", () => {
-        searchBox.setBounds(map.getBounds());
-    });
 
-    let markers = [];
-    const myLatLng = { lat: 19.4326, lng: -99.1332};
-    markers.push(
-        new google.maps.Marker({
-            map,
-            title: place.name,
-            position: place.geometry.location,
-        })
-    );
-
-    searchBox.addListener("places_changed", () => {
-        const places = searchBox.getPlaces();
-
-        if (places.length == 0) return;
-
-        markers.forEach((marker) => marker.setMap(null));
-        markers = [];
-
-        const bounds = new google.maps.LatLngBounds();
-
-        places.forEach((place) => {
-            if (!place.geometry) {
-                console.log("El lugar no tiene geometría");
-                return;
-            }
-
-            markers.push(
-                new google.maps.Marker({
-                    map,
-                    title: place.name,
-                    position: place.geometry.location,
-                })
-            );
-            
-            lat = place.geometry.location.lat();
-            
-            lng = place.geometry.location.lng();
-
-            if (place.geometry.viewport) {
-                bounds.union(place.geometry.viewport);
-            } else {
-                bounds.extend(place.geometry.location);
-            }
-        });
-        map.fitBounds(bounds);
-    });
-
-    map.addListener("click", (e) => {
-        markers.forEach((marker) => marker.setMap(null));
-        markers = [];
-        
-        markers.push(
-            new google.maps.Marker({
-                position: e.latLng,
-                map: map
-            })
-        );
-        
-            lat = e.latLng.lat();
-            lng = e.latLng.lng();
-    });
-}
 
 // Hacer la función initMap disponible globalmente
-window.initMap = initMap;
+
 
 
 async function guardarFoto(id){
@@ -931,4 +846,32 @@ async function  guardarUbicacion() {
     const data = await response.json();
        
     return data;
+}
+
+async function  borrarUbicacion(idm) {
+    let formData = new FormData();
+    formData.append("idMascota",idm);
+    formData.append("idubicaciones",ubis.idubicaciones)
+
+    const response = await fetch('endpointDeleteUbicacion.php', {
+        method: 'POST',
+        body: formData
+        })
+    const data = await response.json();
+       
+    return data;
+}
+
+export async function cargarUbicacion(idm){
+    let formData1 = new FormData();
+        formData1.append("idMascota",idm);
+        const response1 = await fetch('endpointUbicacion.php', {
+          method: 'POST',
+          body: formData1
+        })
+         const data1 =await response1.json();
+        return  data1.resultado[0];
+    
+    
+    console.log(ubis);
 }

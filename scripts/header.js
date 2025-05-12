@@ -177,6 +177,12 @@ export const CONTACTA = `
                   <h3 style=" font-size: 1rem;" id="nombreUsr"></h3>
                   <h3 style=" font-size: 1rem;" id="corrUsr"></h3>
                 </div>
+                <div class="card h-25  p-4 m-3 shadow-sm">
+                  <div class="map-container">
+                  <div id="map"></div>
+                  </div>
+                </div>
+
                 <div class="row mt-4">
                   <div class="col-3"></div>
                   <div class="col-6">
@@ -235,5 +241,18 @@ function loadPetBot() {
   document.body.appendChild(script);
 }
 
+export const mapa = `
+  <div class="map-container">
+      <label class="fw-bold h5">Ubicación:</label>
+      <div class="search-box">
+          <input id="pac-input" class="form-control" type="text" placeholder="Buscar localidad...">
+      </div>
+      <div id="map"></div>
+    </div>
+    <br>
+    <button type="button" class="btn btn-primary" style="color: #f8f9fa;" id="btn_enviar">Enviar</button>
+
+</div>
+`;
 
     

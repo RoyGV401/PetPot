@@ -219,9 +219,9 @@ function onLoadThis(){
                     .then(async data2 => {
                         console.log(data2);
                         await guardarFoto(data[0].idMascota);
+                        await enviarAlerta("¡Mascota registrada!");
+                        location.href = "./tusMascotas.html";
                         
-                            
-                        enviarAlerta("¡Mascota registrada!");
                         
                     });
                 });
