@@ -7,7 +7,8 @@ import { cargarBotonesHeader,
       cargarMascotas,
        cargarMultimedia,
         cargarPersonalidad,
-         changeTo 
+         changeTo ,
+         checkForReturn
          ,enviarAlerta
          ,cargarRaza,
          onMainLoad} from "../main.js";
@@ -104,11 +105,14 @@ window.onload = async function(){
    
     cargarPersonalidades();
     cargarEspecies();
-     onMainLoad();
-
+    checkForReturn();
+    //await onMainLoad();
+    await cargarExtras();
+    await loadHeader();
+    
 
        document.getElementById('main_logo').onclick = function () {
-      location.href = `./index.html`;
+      location.href = `../index.html`;
     };
   
     try
@@ -117,6 +121,8 @@ window.onload = async function(){
         inicia_sesion(true);
       };
     } catch{}
+
+    await cargarBotonesHeader();
     
     onLoadThis();
     document.getElementById("extra_elements").innerHTML+= ALERTA;

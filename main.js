@@ -225,7 +225,7 @@ function iniButtons()
   catch{}
 }
 
-function checkForReturn()
+export function checkForReturn()
 {
  
     history.pushState(null, null, location.href);
