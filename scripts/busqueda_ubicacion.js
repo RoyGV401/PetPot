@@ -73,25 +73,60 @@ window.addEventListener('load', function () {
         const petsTo = await response.json();
         const result = petsTo.resultado;
         const toShow = result;
+        
+       
+
         for (const c of toShow) 
         {
+            console.log(JSON.stringify(c))
             const imagenes = await cargarMultimedia(c.idMascota, false);
-            searchResults.innerHTML += `
-              <div class="carousel-item active">
-                <div class="row g-0 align-items-center">
-                  <div class="col-md-6">
-                    <img
-                      class="img-fluid w-100 h-100 object-fit-cover"
-                      style="max-height: 400px"
-                      alt="Imagen de ${c.nombre}"
-                      src="${imagenes[0].documento ?? ''}" />
-                  </div>
-                  <div class="col-md-6 bg-obish-gray text-white p-4 d-flex flex-column justify-content-center" style="min-height: 400px">
-                    <h2 class="fw-bold h2">¡Hola! soy <span class="text-warning">${c.nombre}</span></h2>
-                    <p class="h5 py-2">${c.descripcion}</p>
-                    <a href="#" class="btn btn-primary btn-lg text-white fw-bolder align-self-start">Adóptame</a>
-                  </div>
-                </div>
+            const col = document.createElement("div");
+            const rawDistance = await getProximity(c);
+            const distance = rawDistance.toFixed(1);
+            if (Math.round(distance) > searchRange) return;
+            col.className = "col-sm-12 col-md-4 mt-3 col-lg-4"; // adjust based on screen size
+            col.innerHTML = `
+              <div id=card${c.idMascota} class= "card h-100 max-height-1 w-100 p-4 shadow-sm"></div>
+            `;
+            searchResults.appendChild(col);
+            
+            let sexoM;
+            let tamM;
+            
+            if(c.Sexo_idSexo==1){
+              sexoM="Macho";}
+            else{
+              sexoM="Hembra";}
+            
+            switch (c.Tamanio_idTamanio) 
+            {
+                case '1':  tamM ="Grande"; break;
+                case '2':  tamM ="Mediano"; break;
+                case '3':  tamM= "Pequeño"; break;
+                default: break;
+            }
+
+            let personalityString = await getPersonalityString(c);
+            console.log(personalityString)
+            getProximity(c)
+            const card = document.getElementById("card"+c.idMascota);
+            card.innerHTML = 
+            ` 
+              <img src="${imagenes[0].documento}" class="card-img-top img-fluid rounded imgPetSelect" id="${c.idMascota}"  alt="${c.nombre}"></img>
+              <div class="card-body d-flex flex-column">
+              <h5 class="card-title text-center h3 fw-bold">${c.nombre}</h5>
+              <hr>
+              <div class="mb-3">
+              <h6 class="fw-bold">Personalidad:</h6>
+                ${personalityString}
+              </div>  
+              <p class="mb-1"><strong>Sexo:</strong> ${sexoM}</p>
+              <p class="mb-1"><strong>Tamaño:</strong> ${tamM}</p>
+          
+              <p class="mb-3"><strong>Edad:</strong> ${c.fecha_nacimiento}</p>
+              <div class="mt-auto">
+              <p class="fw-semibold text-muted"><strong>Cercanía:</strong> ${distance} km</p>
+              </div>
               </div>
             `;
           }
@@ -116,53 +151,85 @@ async function cargarMultimedia(id,esUsuario){
       return data.resultado;
 }
 
-async function crearTarjetaMascota(dmain,m,color,personalityString){
-  
-    const col = document.createElement("div");
-    col.className = "col-sm-12 col-md-4 mt-3 col-lg-4"; // adjust based on screen size
 
-    col.innerHTML = `
-      <div id=card${m.idMascota} class= "card h-100 max-height-1 w-100 p-4 shadow-sm"></div>
-    `;
-    dmain.appendChild(col);
+ async function getPersonalityString(m) {
+    let personalidades = await cargarPersonalidad(m.idMascota)
+    var personalityString="";
+      personalidades.forEach(p => {
+        personalityString += `
+        <p class="h6"> <i class="bi bi-award"></i> ${p.descripcion}</p>
+        `
+      });
+      return personalityString;
 
-    const card = document.getElementById("card"+m.idMascota);
-   
-    
+}
 
-    let sexoM;
-    let imagenes = await cargarMultimedia(m.idMascota,false);
-    let tamM;
-    
-     if(m.Sexo_idSexo==1){
-      sexoM="Macho";}
-    else{
-      sexoM="Hembra";}
-    
-      switch (m.Tamanio_idTamanio) {
-    case '1':  tamM ="Grande"; break;
-    case '2':  tamM ="Mediano"; break;
-    case '3':  tamM= "Pequeño"; break;
-    default: break;
-   }
+async function cargarPersonalidad(id){
 
-    card.innerHTML = `
-      <img src="${imagenes[0].documento}" class="card-img-top img-fluid rounded imgPetSelect" id="${m.idMascota}"  alt="${m.nombre}"></img>
-      <div class="card-body d-flex flex-column">
-      <h5 class="card-title text-center h3 fw-bold">${m.nombre}</h5>
-      <hr>
-      <div class="mb-3">
-      <h6 class="fw-bold">Personalidad:</h6>
-        ${personalityString}
-      </div>  
-      <p class="mb-1"><strong>Sexo:</strong> ${sexoM}</p>
-      <p class="mb-1"><strong>Tamaño:</strong> ${tamM}</p>
-      <p class="mb-1"><strong>Color:</strong> ${color.nombre}</p>
-  
-      <p class="mb-3"><strong>Edad:</strong> ${m.fecha_nacimiento}</p>
-      <div class="mt-auto">
-      <p class="fw-semibold text-muted"><strong>Cercanía:</strong> [Aquí puedes agregar distancia o zona]</p>
-      </div>
-      </div>
-      `;
+    let formData = new FormData();
+    formData.append("idMascota",id);
+    const response = await fetch('endpointPersonalidad.php', {
+      method: 'POST',
+      body: formData
+    })
+     const data =await response.json();
+   console.log(data);
+      return data.resultado;
+}
+
+async function getProximity(pet) {
+    const petLocation = await cargarUbicacion(pet.idMascota);
+    const petLat = petLocation.latitud;
+    const petLon = petLocation.longitud;
+
+    if (navigator.geolocation) {
+        return new Promise((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(
+                (posicion) => {
+                    const coordenadas = posicion.coords;
+                    const userLat = coordenadas.latitude;
+                    const userLon = coordenadas.longitude;
+                    const distance = getDistanceFromLatLonInKm(userLat, userLon, petLat, petLon);
+                    resolve(distance);
+                },
+                (error) => {
+                    console.error("ERROR:", error);
+                    resolve("Desconocida"); 
+                }
+            );
+        });
+    } else {
+        return "Desconocida";
+    }
+}
+
+
+async function cargarUbicacion(idm){
+    let formData1 = new FormData();
+        formData1.append("idMascota",idm);
+        const response1 = await fetch('endpointUbicacion.php', {
+          method: 'POST',
+          body: formData1
+        })
+         const data1 =await response1.json();
+        return  data1.resultado[0];
+}
+
+async function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
+    var R = 6371; // Radius of the earth in km
+    var dLat = deg2rad(lat2-lat1);  // deg2rad below
+    var dLon = deg2rad(lon2-lon1); 
+    var a = 
+      Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+      Math.sin(dLon/2) * Math.sin(dLon/2)
+      ; 
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+    var d = R * c; // Distance in km
+    return d;
+}
+//FUENTE: https://stackoverflow.com/questions/27928/calculate-distance-between-two-latitude-longitude-points-haversine-formula
+
+function deg2rad(deg) {
+  return deg * (Math.PI/180)
 }
