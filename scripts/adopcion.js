@@ -89,31 +89,23 @@ var lng = null;
 
 var usuario;
 
-window.onload = async function(){
-    await cargarExtras();
-    setTimeout(()=> cargarBotonesHeader(),500);
-    
+window.onload = function(){
+    cargarExtras();
+    cargarFuncionCookis();
+    cargarBotonesHeader();
     onLoadThis();
     document.getElementById("extra_elements").innerHTML+= ALERTA;
 }
 
 function onLoadThis(){
     loadHeader();
-    cargarCropper();
-    cargarPersonalidades();
-    cargarEspecies();
-    initMap();
-
-       document.getElementById('main_logo').onclick = function () {
-      location.href = `index.html`;
-    };
-  
     try
     {
-      document.getElementById("btn_log").onclick = function () {
-        inicia_sesion(true);
-      };
+        cargarCropper();
+        cargarPersonalidades();
+        cargarEspecies();
     } catch{}
+    initMap();
 
      document.getElementById("esPeligro").hidden = true;
     document.getElementById("div_raza").hidden = true;
@@ -338,9 +330,9 @@ function cargarRazas(){
         document.getElementById("btn_"+especie).addEventListener("click",function evento(){ 
             document.getElementById("div_raza").hidden = false;
             switch (especie) {
-                case 'perro': petSelected = "perro"; raza=null; document.getElementById("esPeligro").hidden = true; document.getElementById("esPeligrosa").checked = null; btn_esp.innerText = "Perro"; buscarRazas(especie); break;
-                case 'gato': petSelected = "gato"; raza=279; document.getElementById("esPeligro").hidden = true; document.getElementById("esPeligrosa").checked = null; document.getElementById("div_raza").hidden = true; btn_esp.innerText = "Gato"; buscarRazas(especie); break;
-                case 'otro': petSelected = "otro"; raza=280; document.getElementById("esPeligro").hidden = false; document.getElementById("div_raza").hidden = true;  btn_esp.innerText = "Otro"; buscarRazas(especie); break;
+                case 'perro': petSelected = "perro"; document.getElementById("esPeligro").hidden = true; document.getElementById("esPeligrosa").checked = null; btn_esp.innerText = "Perro"; buscarRazas(especie); break;
+                case 'gato': petSelected = "gato"; document.getElementById("esPeligro").hidden = true; document.getElementById("esPeligrosa").checked = null; btn_esp.innerText = "Gato"; buscarRazas(especie); break;
+                case 'otro': petSelected = "otro"; document.getElementById("esPeligro").hidden = false; btn_esp.innerText = "Otro"; buscarRazas(especie); break;
                 default:   break;
             }
         });
@@ -639,12 +631,6 @@ function exito(posicion) {
             map,
             title: "Mi ubicación",
             position: myLatLng,
-            icon: {
-            url: 'resources/marker3.png',
-            scaledSize: new google.maps.Size(48.1, 68.25),
-            anchor: new google.maps.Point(25, 50),
-            origin: new google.maps.Point(0, 0),
-          }
         })
     );
     
@@ -669,12 +655,6 @@ function exito(posicion) {
                     map,
                     title: place.name,
                     position: place.geometry.location,
-                    icon: {
-                    url: 'resources/marker3.png',
-                    scaledSize: new google.maps.Size(48.1, 68.25),
-                    anchor: new google.maps.Point(25, 50),
-                    origin: new google.maps.Point(0, 0),
-                }
                 })
             );
               lat = place.geometry.location.lat();
@@ -696,13 +676,7 @@ function exito(posicion) {
         markers.push(
             new google.maps.Marker({
                 position: e.latLng,
-                map: map,
-                icon: {
-            url: 'resources/marker3.png',
-            scaledSize: new google.maps.Size(48.1, 68.25),
-            anchor: new google.maps.Point(25, 50),
-            origin: new google.maps.Point(0, 0),
-          }
+                map: map
             })
         );
         lat = e.latLng.lat();

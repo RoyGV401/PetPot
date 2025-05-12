@@ -1069,8 +1069,6 @@ export async function loadPetsToCarousel() {
 
     for (const c of toShow) {
       const imagenes = await cargarMultimedia(c.idMascota, false);
-      console.log(JSON.stringify(imagenes));
-
       carousel.innerHTML += `
         <div class="carousel-item active">
           <div class="row g-0 align-items-center">
