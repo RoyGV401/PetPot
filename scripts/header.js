@@ -64,7 +64,7 @@ export const HEADER = `
         
 `;
 
-export function loadHeader() {
+export async function loadHeader() {
   
   const headerPlace = document.getElementById("mainHeader");
   const user = localStorage.currentUser;
@@ -75,12 +75,12 @@ export function loadHeader() {
   const secondBar = document.getElementById('second_bar');
 
 
-  if (user != 0 && user != undefined) {
+  if (user != 0 && user != undefined&& user!="null") {
     
     loginBtn.style.visibility = "hidden";
     loginBtn.style.width = 0;
     const formData = new FormData();
-    formData.append("correo",user);
+    formData.append("idUsuario",user);
     fetch('endpointshowuser.php', {
       method: 'POST',
       body: formData

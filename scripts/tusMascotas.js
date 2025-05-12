@@ -9,6 +9,17 @@ window.onload = function(){
     onLoadThis();
    
     document.getElementById("extra_elements").innerHTML+= ALERTA;
+
+       document.getElementById('main_logo').onclick = function () {
+      location.href = `index.html`;
+    };
+  
+    try
+    {
+      document.getElementById("btn_log").onclick = function () {
+        inicia_sesion(true);
+      };
+    } catch{}
 }
 
 async function onLoadThis(){

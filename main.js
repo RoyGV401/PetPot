@@ -59,7 +59,7 @@ export function getCookieValue(cname) {
       return c.substring(name.length, c.length);
     }
   }
-  return null;
+  return 0;
 }
 
 
@@ -69,7 +69,7 @@ export async function onMainLoad() {
     document.getElementById("extra_elements").innerHTML += ALERTA_GATO;
         document.getElementById("extra_elements").innerHTML += MAIL;
     document.getElementById("extra_elements").innerHTML += CONTACTA;
-await initMap(0, 0);
+
 
   listar_mascotas();
   changeBodyToPet();
@@ -78,11 +78,30 @@ await initMap(0, 0);
   // -------------CARGAR ELEMENTOS QUE USAN FETCH-----------
   await cargarMascotas();
   cargarFuncionBarra();
-  cargarFuncionCookis();
+ 
+  if(localStorage.currentUser==0||localStorage.currentUser=="null"){
+    cargarFuncionCookis();
+  }
+ 
+
+  
     
  
   // ---------------CARGAR LOGIN EN EL HTML-----------------
   cargarExtras();
+
+  loadHeader();
+  
+    document.getElementById('main_logo').onclick = function () {
+      location.href = `index.html`;
+    };
+  
+    try
+    {
+      document.getElementById("btn_log").onclick = function () {
+        inicia_sesion(true);
+      };
+    } catch{}
     
 //--------------CARGAR FUNCIONALIDAD DE BOTONES----------------
 
@@ -221,7 +240,7 @@ function checkForReturn()
 }
 
 function inicia_sesion(isFromClick){
-  
+
   const correo = document.getElementById("input_correo_log").value;
   const contra = document.getElementById("input_contra_log").value;
   const recu = document.getElementById("btn-check-outlined");
@@ -239,11 +258,11 @@ function inicia_sesion(isFromClick){
       
       data.forEach(d => {
         if(recu.checked){
-          document.cookie = "userCorreo=" + d.correo + "; expires=" + new Date(Date.now() + 30*24*60*60*1000).toUTCString() + "; path=/";
+          document.cookie = "userCorreo=" + d.idUsuario + "; expires=" + new Date(Date.now() + 30*24*60*60*1000).toUTCString() + "; path=/";
         }else{
-          document.cookie = "userCorreo=" + d.correo + "; path=/";
+          localStorage.currentUser = d.idUsuario;
         }
-       
+        enviarAlerta("¡Bienvenido!")
         location.reload();
       });   
     });
@@ -438,44 +457,15 @@ export function cargarFuncionBarra(){
   catch{};
 }
 
-export function cargarFuncionCookis(){
-  const formData = new FormData();
+export async function cargarFuncionCookis(){
+ 
     const userCorreo = getCookieValue("userCorreo");
-    
-  
-      formData.append('correo', userCorreo);
-      fetch('endpointshowuser.php', {
-        method: 'POST',
-        body: formData
-      })
-        .then(response => response.json())
-        .then(data => {
-          user = data.resultado[0];
-          if (data.resultado.length > 0)
-            {
-              localStorage.currentUser=user.correo;
-            }else{
-              localStorage.currentUser = 0;
-            }
-
-            loadHeader();
-  
-    document.getElementById('main_logo').onclick = function () {
-      location.href = `index.html`;
-    };
-  
-    try
-    {
-      document.getElementById("btn_log").onclick = function () {
-        inicia_sesion(true);
-      };
-    } catch{}
-
-      });
+    localStorage.currentUser = userCorreo;
     
 }
 
-export function cargarBotonesHeader(){
+export async function cargarBotonesHeader(){
+ 
     const whyAdoptBtn = document.getElementById('whyAdopt')
   iniButtons();
   if (whyAdoptBtn != undefined)
@@ -485,9 +475,9 @@ export function cargarBotonesHeader(){
      }
   }
   //abrir_login();
-
   document.getElementById("btn_regis").onclick = function ()
   {
+    
     var expReg= /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
     var regexp_pass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/;
     let inputNombre =document.getElementById("input_nombre");
@@ -537,9 +527,10 @@ export function cargarBotonesHeader(){
                       if (tiempoRestante <= 0) {
                           clearInterval(temporizador);
                           modal1.hide();
+                          location.reload();
                       }
                   }, 1000);
-                        location.reload(); // Recargar para ver los cambios
+                         // Recargar para ver los cambios
                       }
                     });
           }else{
@@ -819,7 +810,7 @@ export function cargarBotonesHeader(){
 
 }
 
-export function cargarExtras(){
+export async function cargarExtras(){
   const extra = document.getElementById('extra_elements');
   if (!extra.innerHTML.includes(LOGIN_FORM))
   {
@@ -913,7 +904,8 @@ export async function asginarAbrirVistaMascota(m){
         // Escuchar el evento 'shown.bs.modal' que se dispara cuando el modal está completamente visible
         modal1Element.addEventListener('shown.bs.modal', async function() {
             let ubis = await cargarUbicacion(m.idMascota);
-            await initMap(ubis.latitud, ubis.longitud);
+            let es = await cargarRaza(m.idMascota,true);
+            await initMap(ubis.latitud, ubis.longitud,es.Especie_idEspecie);
         });
 
         modal1.show();
@@ -1018,13 +1010,19 @@ export async function enviarAlerta(alerta) {
   });
 }
 
-async function initMap(late,log){
+async function initMap(late,log,esp){
+  let img;
+  switch(esp){
+    case '1': img = 'resources/marker3.png'; break;
+    case '2': img = 'resources/marker_gato.png'; break;
+    case '3': img = 'resources/marker_turt.png'; break;
+  }
 
  const myLatLng1 = { lat: Number(late), lng: Number(log) }; 
   
   const map = new google.maps.Map(document.getElementById("map"), {
       center: myLatLng1,
-      zoom: 12,
+      zoom: 15,
 
 
 mapTypeControl: false,
@@ -1032,6 +1030,7 @@ scaleControl: false,
 streetViewControl: false,
 
   });
+  
   google.maps.event.trigger(map, 'resize');
   map.setCenter(myLatLng1); // Re-centrar después del resize
   let markers = [];
@@ -1041,8 +1040,10 @@ streetViewControl: false,
           title: "Ubicación de la mascota",
           position: myLatLng1,
           icon: {
-            url: 'resources/dsdfw.png',
-            scaledSize: new google.maps.Size(50, 50),
+            url: img,
+            scaledSize: new google.maps.Size(48.1, 68.25),
+            anchor: new google.maps.Point(25, 50),
+            origin: new google.maps.Point(0, 0),
           }
       })
   );
