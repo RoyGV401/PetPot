@@ -88,7 +88,9 @@ await initMap(0, 0);
 
   cargarBotonesHeader();
 
+//--------------CARGAR MASCOTAS AL AZAR EN EL CARRUSEL---------------
 
+  loadPetsToCarousel();
 
 }
 
@@ -276,7 +278,7 @@ export async function cargarMascotas(id=null,esUsuario=null){
        modal1.show();
        if(id==null&&esUsuario==null){
            const response = await fetch('endpointshowpets.php', {
-          method: 'POST',
+            method: 'POST',
         })
           const data = await response.json();
           mascotas = data.resultado;
@@ -995,53 +997,62 @@ async function obtenerUserByID(id) {
 }
 
 
-export async function enviarAlerta(alerta) {
-    document.getElementById("mensaje_alerta").innerText = alerta;
-    const modal2Element = document.getElementById('alertModal6');
-    const modal2 = new bootstrap.Modal(modal2Element);
-    modal2.show();
-
-    return new Promise((resolve) => {  
-        let temporizador;
-        let tiempoRestante = 2;
-        temporizador = setInterval(() => {
-            tiempoRestante--;
-            if (tiempoRestante <= 0) {
-                clearInterval(temporizador);
-                modal2.hide();
-        
-                modal2Element.addEventListener('hidden.bs.modal', resolve, { once: true });
-            }
-        }, 1000);
-    });
+export async function enviarAlerta(alerta){
+  document.getElementById("mensaje_alerta").innerText = alerta;
+  const modal2Element = document.getElementById('alertModal6');
+  const modal2 = new bootstrap.Modal(modal2Element);
+  modal2.show();
+  let temporizador;
+  let tiempoRestante = 2;
+  temporizador = setInterval(() => {
+      tiempoRestante--; 
+      if (tiempoRestante <= 0) {
+          clearInterval(temporizador);
+          modal2.hide();
+      }
+  }, 1000);
 }
 
-async function initMap(late,log){
-  
-   const myLatLng1 = { lat: Number(late), lng: Number(log) }; 
-    
-    const map = new google.maps.Map(document.getElementById("map"), {
-        center: myLatLng1,
-        zoom: 12,
-
-
-  mapTypeControl: false,
-  scaleControl: false,
-  streetViewControl: false,
-
+export async function loadPetsToCarousel() {
+  if (document.location.href.includes("index.html")) {
+    const response = await fetch('endpointshowpets.php', {
+      method: 'POST',
     });
-    google.maps.event.trigger(map, 'resize');
-    map.setCenter(myLatLng1); // Re-centrar después del resize
-    let markers = [];
-    markers.push(
-        new google.maps.Marker({
-            map,
-            title: "Ubicación de la mascota",
-            position: myLatLng1,
-            icon: {
-              url: 'resources/dsdfw.png',
-              scaledSize: new google.maps.Size(50, 50),
-            }
-        })
-    );
+    const petsTo = await response.json();
+    const result = petsTo.resultado;
+    const toShow = [];
+    const limit = result.length > 1 || 1;
+
+    for (let j = 0; j < limit; j++) {
+      const rand = Math.ceil(Math.random() * result.length);
+      const cuPet = result[rand - 1];
+      toShow.push(cuPet);
+    }
+
+    const carousel = document.getElementById('petCarousel');
+
+    for (const c of toShow) {
+      const imagenes = await cargarMultimedia(c.idMascota, false);
+      console.log(JSON.stringify(imagenes));
+
+      carousel.innerHTML += `
+        <div class="carousel-item active">
+          <div class="row g-0 align-items-center">
+            <div class="col-md-6">
+              <img
+                class="img-fluid w-100 h-100 object-fit-cover"
+                style="max-height: 400px"
+                alt="Imagen de ${c.nombre}"
+                src="${imagenes[0].documento ?? ''}" />
+            </div>
+            <div class="col-md-6 bg-obish-gray text-white p-4 d-flex flex-column justify-content-center" style="min-height: 400px">
+              <h2 class="fw-bold h2">¡Hola! soy <span class="text-warning">${c.nombre}</span></h2>
+              <p class="h5 py-2">${c.descripcion}</p>
+              <a href="#" class="btn btn-primary btn-lg text-white fw-bolder align-self-start">Adóptame</a>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+  }
 }
