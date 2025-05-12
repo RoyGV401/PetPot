@@ -826,11 +826,11 @@ export async function crearTargetaMascota(dmain,m,color,personalityString){
             col.className = "col-sm-12 col-md-4 mt-3 col-lg-4"; // adjust based on screen size
 
             col.innerHTML = `
-              <div id=card${m.idMascota} class= "card h-100 max-height-1 w-100 p-4 shadow-sm"></div>
+              <div id=cardo${m.idMascota} class= "card h-100 max-height-1 w-100 p-4 shadow-sm"></div>
             `;
             dmain.appendChild(col);
 
-            const card = document.getElementById("card"+m.idMascota);
+            const card = document.getElementById("cardo"+m.idMascota);
            
             
 
@@ -852,21 +852,26 @@ export async function crearTargetaMascota(dmain,m,color,personalityString){
 
             card.innerHTML = `
               <img src="${imagenes[0].documento}" class="card-img-top img-fluid rounded imgPetSelect" id="${m.idMascota}"  alt="${m.nombre}"></img>
-              <div class="card-body d-flex flex-column">
+              <div class="card-body d-flex flex-column" id="card${m.idMascota}">
               <h5 class="card-title text-center h3 fw-bold">${m.nombre}</h5>
               <hr>
-              <div class="mb-3">
-              <h6 class="fw-bold">Personalidad:</h6>
-                ${personalityString}
-              </div>  
+                <div class="mb-3">
+                <h6 class="fw-bold">Personalidad:</h6>
+                  ${personalityString}
+                </div>  
               <p class="mb-1"><strong>Sexo:</strong> ${sexoM}</p>
               <p class="mb-1"><strong>Tamaño:</strong> ${tamM}</p>
               <p class="mb-1"><strong>Color:</strong> ${color.nombre}</p>
           
               <p class="mb-3"><strong>Edad:</strong> ${m.fecha_nacimiento}</p>
-              <div class="mt-auto">
-              <p class="fw-semibold text-muted"><strong>Cercanía:</strong> [Aquí puedes agregar distancia o zona]</p>
+                <div class="mt-auto">
+                <p class="fw-semibold text-muted"><strong>Cercanía:</strong> [Aquí puedes agregar distancia o zona]</p>
+                </div>
               </div>
+              <div class="row">
+              <div class="col-3"></div>
+              <div id="contents" class="col-6"></div>
+              <div class="col-3"></div>
               </div>
               `;
               

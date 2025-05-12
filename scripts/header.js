@@ -255,4 +255,33 @@ export const mapa = `
 </div>
 `;
 
-    
+export const ELIMINA = `
+
+ <div class="modal fade"  id="modal_elimina" tabindex="-1" aria-hidden="true" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="background: transparent; border: none;">
+        <div class="modal-body p-0">
+          <div class="container-sm rounded-m my-3 py-2 pt-3" style=" background-color: rgb(253 236 220);">
+            <div class="container my-1 px-2">
+              <div class="container my-4" >
+                <div class="px-3">
+                  <h3 class="text-center" style=" font-size: 1.6rem;">¿Seguró que deseas marcar la mascota como adoptada?</h3>
+                </div>
+               
+               
+                <div class="row mt-4">
+                  <div class="col-3"></div>
+                  <div class="col-6">
+                    <button id="btn_confirmacion" class=" btn btn-primary w-100 text-center" style="color:aliceblue;">CONFIRMAR</button>
+                  </div>
+                  <div class="col-3"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>                
+  </div>  
+
+`;    
