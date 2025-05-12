@@ -311,14 +311,15 @@ export async function cargarMultimedia(id,esUsuario){
 }
 
 export async function cargarPersonalidad(id){
+
         let formData = new FormData();
         formData.append("idMascota",id);
-
         const response = await fetch('endpointPersonalidad.php', {
           method: 'POST',
           body: formData
         })
          const data =await response.json();
+       console.log(data);
           return data.resultado;
 }
 
@@ -335,7 +336,7 @@ export async function cargarColor(id){
 
 }
 
-async function cargarRaza(id, esMascota){
+export async function cargarRaza(id, esMascota){
     let formData = new FormData();
         if(esMascota)
           formData.append("idMascota",id);
@@ -884,7 +885,7 @@ export async function crearTargetaPersonalidad(m) {
 export async function asginarAbrirVistaMascota(m){
   let user = await obtenerUserByPet(m.idMascota);
   document.getElementById("card"+m.idMascota).onclick=async function(){
-      if(localStorage.currentUser==m.Usuario_idUsuario){
+   if(localStorage.currentUser==m.Usuario_idUsuario){
        location.href = `editarMascota.html?id=${encodeURIComponent(m.idMascota)}`;
       }
       else{
@@ -900,20 +901,10 @@ export async function asginarAbrirVistaMascota(m){
          document.getElementById("nombreMas").innerText =  m.nombre;
          
          document.getElementById("btn_mail").onclick = async function (){
-            if(document.getElementById("inputMensaje").value == ""){
-              document.getElementById("mensaje_alerta").innerText = "Ingresa un mensaje";
-                  const modal2Element = document.getElementById('alertModal6');
-                  const modal2 = new bootstrap.Modal(modal2Element);
-                  modal2.show();
-                  let temporizador;
-                  let tiempoRestante = 2;
-                  temporizador = setInterval(() => {
-                      tiempoRestante--; 
-                      if (tiempoRestante <= 0) {
-                          clearInterval(temporizador);
-                          modal2.hide();
-                      }
-                  }, 1000);
+          if(localStorage.currentUser==0){
+            enviarAlerta("Debe iniciar sesión");
+          }else if(document.getElementById("inputMensaje").value == ""){
+               enviarAlerta("Ingresa un mensaje");
             }
             else{
               const modal1Element = document.getElementById('modal_gat');
@@ -939,35 +930,11 @@ export async function asginarAbrirVistaMascota(m){
                 })
             
                 const data = await response.json();
-                document.getElementById("mensaje_alerta").innerText = "¡Correo Enviado!";
-                  const modal2Element = document.getElementById('alertModal6');
-                  const modal2 = new bootstrap.Modal(modal2Element);
-                  modal2.show();
-                  let temporizador;
-                  let tiempoRestante = 2;
-                  temporizador = setInterval(() => {
-                      tiempoRestante--; 
-                      if (tiempoRestante <= 0) {
-                          clearInterval(temporizador);
-                          modal2.hide();
-                      }
-                  }, 1000);
+                 enviarAlerta("¡Correo enviado!");
                   
               }catch(e){
                 console.log(e);
-                document.getElementById("mensaje_alerta").innerText = "Error al enviar correo";
-                  const modal2Element = document.getElementById('alertModal6');
-                  const modal2 = new bootstrap.Modal(modal2Element);
-                  modal2.show();
-                  let temporizador;
-                  let tiempoRestante = 2;
-                  temporizador = setInterval(() => {
-                      tiempoRestante--; 
-                      if (tiempoRestante <= 0) {
-                          clearInterval(temporizador);
-                          modal2.hide();
-                      }
-                  }, 1000);
+                enviarAlerta("Error al enviar correo");
                 modal.show();
               }finally{
                 setTimeout(() => modal1.hide(),470)
@@ -1005,4 +972,21 @@ async function obtenerUserByID(id) {
       const data = await response.json();
        
       return data.resultado[0];
+}
+
+
+export function enviarAlerta(alerta){
+  document.getElementById("mensaje_alerta").innerText = alerta;
+  const modal2Element = document.getElementById('alertModal6');
+  const modal2 = new bootstrap.Modal(modal2Element);
+  modal2.show();
+  let temporizador;
+  let tiempoRestante = 2;
+  temporizador = setInterval(() => {
+      tiempoRestante--; 
+      if (tiempoRestante <= 0) {
+          clearInterval(temporizador);
+          modal2.hide();
+      }
+  }, 1000);
 }

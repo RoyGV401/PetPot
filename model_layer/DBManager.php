@@ -190,6 +190,42 @@ class DBManager {
         return $resultado;
     }
 
+    public function updateItemPersonalidad($idMascota, $personalidades){
+
+
+        $link = $this->open();
+
+        $sql = "DELETE FROM itemPersonalidad where Mascota_idMascota = $idMascota";
+
+        $result = mysqli_query($link, $sql, MYSQLI_ASSOC) or die('Error query');
+$this->close($link);
+       
+       
+        foreach ($personalidades as $p) {
+            $link = $this->open();
+
+        $sql = "INSERT INTO itemPersonalidad (Mascota_idMascota, Personalidad_idPersonalidad) VALUES (?,?)";
+
+        $query = mysqli_prepare($link, $sql);
+
+        // Enlaza los parametros (reemplaza comodines)
+		// Tipos: i para enteros, s para string, d para double y b para blob
+		mysqli_stmt_bind_param(
+            $query, 
+            "ii",
+            $idMascota, $p
+        );
+
+        // Ejecuta la query
+		$resultado = mysqli_stmt_execute($query) or die('Error insert personalidades');
+
+       $this->close($link);
+
+        }
+        
+        return $resultado;
+    }
+
     public function createubicacion($latitud, $longitud){
        
       
@@ -307,7 +343,7 @@ class DBManager {
     {
         $link = $this->open();
 
-        $sql = "UPDATE mascotas SET nombre=?, descripcion=?, fecha_nacimiento=?, Sexo_idSexo=?, Tamanio_idTamanio=?, Historial_medico_idHistorial_medico=?, Raza_idRaza=?, esPeligrosa=? WHERE idMascota=" . $p->idMascota;
+        $sql = "UPDATE mascota SET nombre=?, descripcion=?, fecha_nacimiento=?, Sexo_idSexo=?, Tamanio_idTamanio=?, Historial_medico_idHistorial_medico=?, Raza_idRaza=?, esPeligrosa=?, Color_idColor=?, Ubicacion_idUbicaciones = ? WHERE idMascota=" . $p->idMascota;
 
         // Prepara la consulta
 		$query = mysqli_prepare($link, $sql);
@@ -316,7 +352,7 @@ class DBManager {
 		// Tipos: i para enteros, s para string, d para double y b para blob
 		mysqli_stmt_bind_param(
             $query, 
-            "sssiiiis",
+            "sssiiissii",
             $p->nombre,
             $p->descripcion,
             $p->fecha_nacimiento,
@@ -324,7 +360,9 @@ class DBManager {
             $p->Tamanio_idTamanio,
             $p->Historial_medico_idHistorial_medico,
             $p->Raza_idRaza,
-            $p->esPeligrosa 
+            $p->esPeligrosa,
+            $p->Color_idColor,
+            $p->Ubicacion_idUbicaciones
         );
 
         // Ejecuta la query
@@ -386,8 +424,14 @@ class DBManager {
     }
 
     public function createMultimedia($id, $doc){
+
         $link = $this->open();
 
+        $sql = "DELETE FROM Multimedia WHERE Mascota_idMascota='$id'";
+
+        $result = mysqli_query($link, $sql, MYSQLI_ASSOC) or die('Error query eliminar foto');
+
+        
         $sql = "INSERT INTO multimedia VALUES(null,?,?)";
 
         // Prepara la consulta
@@ -452,7 +496,7 @@ class DBManager {
 
         $link = $this->open();
 
-        $sql = "SELECT raza.nombre , raza.Especie_idEspecie FROM raza JOIN mascota on Raza_idRaza = idRaza WHERE idMascota = '$id'"; 
+        $sql = "SELECT raza.nombre , raza.Especie_idEspecie, raza.idRaza FROM raza JOIN mascota on Raza_idRaza = idRaza WHERE idMascota = '$id'"; 
 
         $result = mysqli_query($link, $sql, MYSQLI_ASSOC) or die('Error query');
 

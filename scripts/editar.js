@@ -1,6 +1,15 @@
-import {loadHeader, ALERTA} from "./header.js";
+import {loadHeader, ALERTA, ALERTA_GATO} from "./header.js";
 import { LOGIN_FORM } from "./login.js";
-import { cargarBotonesHeader, cargarExtras, cargarFuncionCookis, changeTo ,enviarAlerta} from "../main.js";
+import { cargarBotonesHeader,
+     cargarExtras, 
+     cargarFuncionCookis,
+      cargarColor,
+      cargarMascotas,
+       cargarMultimedia,
+        cargarPersonalidad,
+         changeTo 
+         ,enviarAlerta
+         ,cargarRaza} from "../main.js";
 
 
 
@@ -86,23 +95,145 @@ let foto = null;
 
 var lat = null;
 var lng = null;
-
+var idm;
 var usuario;
 
-window.onload = function(){
+window.onload = async function(){
+   
     cargarExtras();
     cargarFuncionCookis();
     cargarBotonesHeader();
+    cargarPersonalidades();
+    cargarEspecies();
+    initMap();
     onLoadThis();
     document.getElementById("extra_elements").innerHTML+= ALERTA;
+    document.getElementById("extra_elements").innerHTML+= ALERTA_GATO;
+    const urlParams = new URLSearchParams(window.location.search);
+    const idMascota = urlParams.get('id');
+    
+    var m = await cargarMascotas(idMascota);
+    m = m.resultado[0];
+   
+    let formData = new FormData();
+        formData.append("idMascota",idMascota);
+        const response = await fetch('endpointPersonalidad.php', {
+          method: 'POST',
+          body: formData
+        })
+         const data =await response.json();
+      
+          let pp= data.resultado;
+    
+    let color1 = await cargarColor(idMascota);
+    idm = m.idMascota;
+    
+    document.getElementById("inputNombre").value = m.nombre;
+    document.getElementById("inputDescripcion").value = m.descripcion;
+
+    let r = await cargarRaza(idMascota, true);
+
+    const newBtn = document.createElement('button');
+    newBtn.type = 'button';
+    newBtn.className = 'btn btn-info me-2 mb-2';
+    newBtn.textContent = r.nombre;
+    newBtn.id = 'elimi btn_'+r.idRaza; 
+    document.getElementById("btns_razas").appendChild(newBtn);
+    document.getElementById("div_raza").hidden = true;
+    raza = r.idRaza;
+
+    document.getElementById(newBtn.id).addEventListener('click', function (){
+       
+        document.getElementById("btn_lista_especie").disabled = false;
+        document.getElementById("btns_razas").removeChild(newBtn);
+        raza = null;
+    });
+
+    switch(r.Especie_idEspecie){
+            case "1": petSelected="perro"; document.getElementById("btn_lista_especie").innerText = "Perro"; break;
+            case "2": petSelected="gato"; document.getElementById("btn_lista_especie").innerText = "Gato"; break;
+            case "3": petSelected="otro"; document.getElementById("btn_lista_especie").innerText = "Otro"; document.getElementById("esPeligro").hidden = false; break;
+          }
+    document.getElementById("btn_lista_especie").disabled = true;      
+          
+       
+    color1.nombre = color1.nombre.replaceAll("\r","");
+   
+    color = color1.nombre;
+    document.getElementById("btn_lista").innerText = color1.nombre;
+    
+    if(m.Sexo_idSexo==1){
+        document.getElementById("macho").checked = true;
+    }else{
+        document.getElementById("hembra").checked = true;
+    }
+   
+    switch (m.Tamanio_idTamanio) {
+        case "1": document.getElementById("pequeno").checked = true; break;
+        case "2": document.getElementById("mediano").checked = true; break;
+        case "3": document.getElementById("grande").checked = true; break;
+    }
+    var pp2 = [];
+    console.log(pp);
+
+
+    for (let index = 0; index < pp.length; index++) {
+        try{
+             pp2.push(pp[index]);
+        }catch{
+
+        } 
+    }
+     
+    let btns = document.getElementById("btns_personalidades");
+    personalidades.forEach(p => {
+        pp2.forEach(p2 => {
+         
+             if(p==p2.descripcion.replaceAll("\r","")){
+                
+                const safeId = 'perso btn_' + p.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_]/g, '');
+        
+                const newBtn = document.createElement('button');
+                newBtn.type = 'button';
+                newBtn.className = 'btn btn-info me-2 mb-2';
+                newBtn.textContent = p2.descripcion.replaceAll("\r","");
+                newBtn.id = 'elimi btn_'+p2.descripcion.replaceAll("\r",""); 
+                persos.push({"id":personalidades.indexOf(p2.descripcion.replaceAll("\r",""))+1,"nombre":p2.descripcion.replaceAll("\r","")});
+                // Añadimos el botón al contenedor
+                btns.appendChild(newBtn);
+
+                document.getElementById(safeId).hidden = true;
+
+                document.getElementById(newBtn.id).addEventListener('click', function (){
+                    
+                    persos.splice(persos.findIndex(s=> s.nombre == p2.descripcion.replaceAll("\r","")),1);
+                    console.log(persos);
+                    document.getElementById(safeId).hidden = false;
+                    btns.removeChild(newBtn);
+                 });
+             }else{
+              //  console.log(p2.descripcion.replaceAll("\r","")+"YYYY"+p);
+             }
+        
+        });
+       
+    });
+
+     
+    document.getElementById("fechaSeleccionada").value = m.fecha_nacimiento;  
+    let images = await cargarMultimedia(idMascota,false);
+ 
+    document.getElementById("imagePreview").src =  images[0].documento;
+      imagePreview.style.display = 'block';
+      foto = images[0].documento;
+   
+            
 }
 
 function onLoadThis(){
     loadHeader();
     cargarCropper();
-    cargarPersonalidades();
-    cargarEspecies();
-    initMap();
+    
 
      document.getElementById("esPeligro").hidden = true;
     document.getElementById("div_raza").hidden = true;
@@ -168,6 +299,7 @@ function onLoadThis(){
         var tamanio = obtenerTamanio()+1;
         let fecha = document.getElementById("fechaSeleccionada").value;
      
+        console.log(persos);
         
         if(nombre!=""&&descripcion!=""&&esp!=4&&raza!=null&&sexo!=null&&tamanio>=1&&persos[0]!=null&&fecha!=""&&foto!=null&&color!=null)
         {
@@ -192,7 +324,7 @@ function onLoadThis(){
                     formData.append("Ubicacion_idUbicaciones",resultado.resultado[0].idUbicaciones);
                 }
 
-
+                formData.append("idMascota",idm);
             fetch('endpointSavePet.php', {
             method: 'POST',
             body: formData
@@ -201,15 +333,13 @@ function onLoadThis(){
             .then(data => {
                 let formData = new FormData();
                 persos.forEach((p,index) => {
+                    console.log(p.id);
                     formData.append(`Personalidad_idPersonalidad[]`+index+1,p.id)
                 });
 
-                fetch('endpointshowultimomascota.php', {
-                method: 'GET',
-                })
-                .then(response => response.json())
-                .then(data => {
-                    formData.append("idMascota", data[0].idMascota);
+                
+                    formData.append("idMascota", idm);
+                    formData.append("update",true);
                     console.log(formData.get("idMascota"));
                     fetch('endpointSaveitempersonalidad.php', {
                     method: 'POST',
@@ -218,13 +348,13 @@ function onLoadThis(){
                     .then(response => response.json())
                     .then(async data2 => {
                         console.log(data2);
-                        await guardarFoto(data[0].idMascota);
+                        await guardarFoto(idm);
                         
                             
                         enviarAlerta("¡Mascota registrada!");
                         
                     });
-                });
+               
             });
         }else{
             enviarAlerta("Debes ingresar todos sus datos.");
@@ -585,7 +715,7 @@ function initMap() {
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
-            exito,
+           exito,
             error,
             opciones
         );
@@ -595,11 +725,8 @@ function initMap() {
 }
 
 function exito(posicion) {
+    
     const coordenadas = posicion.coords;
-    console.log('Tu ubicación actual es:');
-    console.log(`Latitud: ${coordenadas.latitude}`);
-    console.log(`Longitud: ${coordenadas.longitude}`);
-    console.log(`Precisión: ${coordenadas.accuracy} metros`);
     
     const map = new google.maps.Map(document.getElementById("map"), {
         center: { lat: coordenadas.latitude, lng: coordenadas.longitude },
