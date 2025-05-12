@@ -1,5 +1,5 @@
 import {loadHeader, ALERTA,ELIMINA} from "./header.js";
-import { onMainLoad, changeTo,cargarColor, cargarMascotas, cargarMultimedia, crearTargetaMascota, crearTargetaPersonalidad} from "../main.js";
+import { onMainLoad, changeTo,cargarColor, cargarMascotas,enviarAlerta, cargarMultimedia, crearTargetaMascota, crearTargetaPersonalidad} from "../main.js";
 
 var mascotas;
 
@@ -52,8 +52,29 @@ async function onLoadThis(){
           modal1.show();
         }
 
-        confirmar.onclick = function(){
-          alert(m.nombre);
+        confirmar.onclick = async function(){
+          const modal2Element = document.getElementById('modal_elimina');
+          const modal2 = new bootstrap.Modal(modal2Element);
+          let formData = new FormData();
+          formData.append('idMascota',m.idMascota);
+          formData.append('bandera','T');
+          
+          const response = await  fetch('adoptado.php', {
+              method: 'POST',
+              body: formData
+            })
+        
+            const data = await response.json();
+            console.log(data);
+            if(data.success){
+              button.disabled;
+               modal2.hide();
+               enviarAlerta("¡Felicidades!");
+              
+            }else{
+              enviarAlerta("Error en guardado")
+            }
+             
         }
       });
     

@@ -164,6 +164,21 @@ class DBManager {
         return $rows;
     }
 
+    public function updateAdoptado($id,$bandera)
+    {
+        $link = $this->open();
+
+        $sql = "UPDATE mascota SET adoptado = '$bandera'  WHERE idMascota=$id";
+
+        $result = mysqli_query($link, $sql, MYSQLI_ASSOC) or die('Error query');
+
+       
+
+        $this->close($link);
+
+        return $result;
+    }
+
     public function showPetsUser($id)
     {
         $link = $this->open();
