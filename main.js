@@ -997,20 +997,55 @@ async function obtenerUserByID(id) {
 }
 
 
-export async function enviarAlerta(alerta){
+export async function enviarAlerta(alerta) {
   document.getElementById("mensaje_alerta").innerText = alerta;
   const modal2Element = document.getElementById('alertModal6');
   const modal2 = new bootstrap.Modal(modal2Element);
   modal2.show();
-  let temporizador;
-  let tiempoRestante = 2;
-  temporizador = setInterval(() => {
-      tiempoRestante--; 
-      if (tiempoRestante <= 0) {
-          clearInterval(temporizador);
-          modal2.hide();
-      }
-  }, 1000);
+
+  return new Promise((resolve) => {  
+      let temporizador;
+      let tiempoRestante = 2;
+      temporizador = setInterval(() => {
+          tiempoRestante--;
+          if (tiempoRestante <= 0) {
+              clearInterval(temporizador);
+              modal2.hide();
+      
+              modal2Element.addEventListener('hidden.bs.modal', resolve, { once: true });
+          }
+      }, 1000);
+  });
+}
+
+async function initMap(late,log){
+
+ const myLatLng1 = { lat: Number(late), lng: Number(log) }; 
+  
+  const map = new google.maps.Map(document.getElementById("map"), {
+      center: myLatLng1,
+      zoom: 12,
+
+
+mapTypeControl: false,
+scaleControl: false,
+streetViewControl: false,
+
+  });
+  google.maps.event.trigger(map, 'resize');
+  map.setCenter(myLatLng1); // Re-centrar después del resize
+  let markers = [];
+  markers.push(
+      new google.maps.Marker({
+          map,
+          title: "Ubicación de la mascota",
+          position: myLatLng1,
+          icon: {
+            url: 'resources/dsdfw.png',
+            scaledSize: new google.maps.Size(50, 50),
+          }
+      })
+  );
 }
 
 export async function loadPetsToCarousel() {
