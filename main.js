@@ -1039,7 +1039,7 @@ async function initMap(late,log){
             title: "Ubicación de la mascota",
             position: myLatLng1,
             icon: {
-              url: 'resources/dsdfw.png',
+              url: 'resources/markador1.png',
               scaledSize: new google.maps.Size(50, 50),
             }
         })
