@@ -103,6 +103,7 @@ window.onload = async function(){
 
 function onLoadThis(){
     loadHeader();
+    if(!location.href.includes("busqueda.html"))
     initMap();
     document.getElementById('main_logo').onclick = function () {
       location.href = `index.html`;
@@ -760,7 +761,8 @@ function error(err) {
         });
         map.fitBounds(bounds);
     });
-
+    console.log(location.hash);
+    if(location.hash!='busqueda.html')
     map.addListener("click", (e) => {
         markers.forEach((marker) => marker.setMap(null));
         markers = [];

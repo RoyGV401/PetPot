@@ -910,73 +910,7 @@ export async function asginarAbrirVistaMascota(m){
        location.href = `editarMascota.html?id=${encodeURIComponent(m.idMascota)}`;
       }
       else{
-        let usuario = await obtenerUserByID(localStorage.currentUser);
-        let usuario2 = await obtenerUserByID(m.Usuario_idUsuario);
-
-       const modal1Element = document.getElementById('modal_conta');
-        const modal1 = new bootstrap.Modal(modal1Element);
-         setTimeout(()=>{ modal1.show(); },400);
-  
-      
-            
-            
-              let ubis = await cargarUbicacion(m.idMascota);
-            let es = await cargarRaza(m.idMascota,true);
-         
-              initMap(ubis.latitud, ubis.longitud,es.Especie_idEspecie);
-              
-              
-         
-
-      
-         document.getElementById("descMas").innerText = m.descripcion;
-         document.getElementById("nombreUsr").innerText = "Nombre: " + user.nombre;
-         document.getElementById("corrUsr").innerText = "Correo: " +user.correo;
-         document.getElementById("nombreMas").innerText =  m.nombre;
-       
-         
-         document.getElementById("btn_mail").onclick = async function (){
-          if(localStorage.currentUser==0){
-            enviarAlerta("Debe iniciar sesión");
-          }else if(document.getElementById("inputMensaje").value == ""){
-               enviarAlerta("Ingresa un mensaje");
-            }
-            else{
-              const modal1Element = document.getElementById('modal_gat');
-              const modal1 = new bootstrap.Modal(modal1Element);
-              let formData = new FormData();
-              
-                const modal = bootstrap.Modal.getInstance(document.getElementById('modal_mail'));
-                // Cerrar el modal
-                modal.hide();
-              try{
-                modal1.show()
-                
-              formData.append('email_r', usuario2.correo);
-              formData.append('email', usuario.correo);
-              formData.append('mascota', m.nombre);
-              formData.append('usuario_r', usuario2.nombre);
-              formData.append('usuario', usuario.nombre);
-              formData.append('cuerpo',document.getElementById("inputMensaje").value);
-
-              const response = await  fetch('enviar_mensaje.php', {
-                  method: 'POST',
-                  body: formData
-                })
-            
-                const data = await response.json();
-                 enviarAlerta("¡Correo enviado!");
-                  
-              }catch(e){
-                console.log(e);
-                enviarAlerta("Error al enviar correo");
-                modal.show();
-              }finally{
-                setTimeout(() => modal1.hide(),470)
-              }
-              
-            }
-          }
+        await abrirV(m,user);
       }
         
   }
@@ -1193,4 +1127,73 @@ export async function loadPetsToCarousel() {
       `;
     }
   }
+}
+
+export async function abrirV(m,user) {
+    let usuario = await obtenerUserByID(localStorage.currentUser);
+        let usuario2 = await obtenerUserByID(m.Usuario_idUsuario);
+       const modal1Element = document.getElementById('modal_conta');
+        const modal1 = new bootstrap.Modal(modal1Element);
+         setTimeout(()=>{ modal1.show(); },400);
+  
+      
+        
+            
+              let ubis = await cargarUbicacion(m.idMascota);
+            let es = await cargarRaza(m.idMascota,true);
+         
+              initMap(ubis.latitud, ubis.longitud,es.Especie_idEspecie);
+              
+              
+         
+
+      
+         document.getElementById("descMas").innerText = m.descripcion;
+         document.getElementById("nombreUsr").innerText = "Nombre: " + user.nombre;
+         document.getElementById("corrUsr").innerText = "Correo: " +user.correo;
+         document.getElementById("nombreMas").innerText =  m.nombre;
+       
+         
+         document.getElementById("btn_mail").onclick = async function (){
+          if(localStorage.currentUser==0){
+            enviarAlerta("Debe iniciar sesión");
+          }else if(document.getElementById("inputMensaje").value == ""){
+               enviarAlerta("Ingresa un mensaje");
+            }
+            else{
+              const modal1Element = document.getElementById('modal_gat');
+              const modal1 = new bootstrap.Modal(modal1Element);
+              let formData = new FormData();
+              
+                const modal = bootstrap.Modal.getInstance(document.getElementById('modal_mail'));
+                // Cerrar el modal
+                modal.hide();
+              try{
+                modal1.show()
+                
+              formData.append('email_r', usuario2.correo);
+              formData.append('email', usuario.correo);
+              formData.append('mascota', m.nombre);
+              formData.append('usuario_r', usuario2.nombre);
+              formData.append('usuario', usuario.nombre);
+              formData.append('cuerpo',document.getElementById("inputMensaje").value);
+
+              const response = await  fetch('enviar_mensaje.php', {
+                  method: 'POST',
+                  body: formData
+                })
+            
+                const data = await response.json();
+                 enviarAlerta("¡Correo enviado!");
+                  
+              }catch(e){
+                console.log(e);
+                enviarAlerta("Error al enviar correo");
+                modal.show();
+              }finally{
+                setTimeout(() => modal1.hide(),470)
+              }
+              
+            }
+          }
 }

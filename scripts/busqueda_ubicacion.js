@@ -1,11 +1,18 @@
+import { crearTargetaMascota, enviarAlerta, cargarColor, cargarRaza, asginarAbrirVistaMascota, abrirV, cargarMultimedia } from "../main.js";
+import {loadHeader, ALERTA,ALERTA_GATO, CONTACTA, MAIL} from "./header.js";
 
 window.addEventListener('load', function () {
+      document.getElementById("extra_elements").innerHTML+= ALERTA;
+    document.getElementById("extra_elements").innerHTML += ALERTA_GATO;
+        document.getElementById("extra_elements").innerHTML += MAIL;
+    document.getElementById("extra_elements").innerHTML += CONTACTA;
+
     const range = this.document.getElementById('range');
     let searchRange = 6;
     range.value = 6;
     const currentRange = this.document.getElementById('currentRange');
-    range.addEventListener('input', ()=>{
-        updateSearch();
+    range.addEventListener('change', async ()=>{
+       await updateSearch();
         searchRange = range.value != 0 ? range.value : 1;
         currentRange.innerHTML = searchRange + "km"
     });
@@ -13,7 +20,7 @@ window.addEventListener('load', function () {
     const btnPerros = this.document.getElementById('btnPerros');
     const btnGatos = this.document.getElementById('btnGatos');
     const btnOtros = this.document.getElementById('btnOtros');
-    const searchResults = this.document.getElementById('searchResults');
+    const dmain = this.document.getElementById("mainCuerpo");
 
     btnPerros.addEventListener('click', ()=>{
         updateSearch();
@@ -63,101 +70,123 @@ window.addEventListener('load', function () {
             btnOtros.setAttribute('isActive', 'true');
         }
     });
-
+const modal1Element = document.getElementById('modal_gat');
+    const modal1 = new bootstrap.Modal(modal1Element);
+   
+    
     async function updateSearch()
     {
+        
+        // Dentro de tu función:
+allMarkers.forEach(m => m.setMap(null)); // Quitar todos los markers del mapa
+allMarkers = []; // Limpiar el array
         const response = await fetch('endpointshowpets.php', {
             method: 'POST',
         });
-        searchResults.innerHTML = '';
+        dmain.innerHTML = '';
         const petsTo = await response.json();
         const result = petsTo.resultado.filter(s=>s.adoptado!='T');
         const toShow = result;
-        
-       
+       const row = document.createElement("div");
+        row.className = "row g-4"; // gap between cards
+        dmain.appendChild(row);
 
-        for (const c of toShow) 
-        {
+        toShow.forEach(async c => {
             console.log(JSON.stringify(c))
-            const imagenes = await cargarMultimedia(c.idMascota, false);
-            const col = document.createElement("div");
             const rawDistance = await getProximity(c);
             const distance = rawDistance.toFixed(1);
-            if (Math.round(distance) > searchRange) return;
-            col.className = "col-sm-12 col-md-4 mt-3 col-lg-4"; // adjust based on screen size
-            col.innerHTML = `
-              <div id=card${c.idMascota} class= "card h-100 max-height-1 w-100 p-4 shadow-sm"></div>
-            `;
-            searchResults.appendChild(col);
             
-            let sexoM;
-            let tamM;
-            
-            if(c.Sexo_idSexo==1){
-              sexoM="Macho";}
-            else{
-              sexoM="Hembra";}
-            
-            switch (c.Tamanio_idTamanio) 
-            {
-                case '1':  tamM ="Grande"; break;
-                case '2':  tamM ="Mediano"; break;
-                case '3':  tamM= "Pequeño"; break;
-                default: break;
-            }
 
-            let personalityString = await getPersonalityString(c);
-            console.log(personalityString)
-            getProximity(c)
-            const card = document.getElementById("card"+c.idMascota);
-            card.innerHTML = 
-            ` 
-              <img src="${imagenes[0].documento}" class="card-img-top img-fluid rounded imgPetSelect" id="${c.idMascota}"  alt="${c.nombre}"></img>
-              <div class="card-body d-flex flex-column">
-              <h5 class="card-title text-center h3 fw-bold">${c.nombre}</h5>
-              <hr>
-              <div class="mb-3">
-              <h6 class="fw-bold">Personalidad:</h6>
-                ${personalityString}
-              </div>  
-              <p class="mb-1"><strong>Sexo:</strong> ${sexoM}</p>
-              <p class="mb-1"><strong>Tamaño:</strong> ${tamM}</p>
-          
-              <p class="mb-3"><strong>Edad:</strong> ${c.fecha_nacimiento}</p>
-              <div class="mt-auto">
-              <p class="fw-semibold text-muted"><strong>Cercanía:</strong> ${distance} km</p>
-              </div>
-              </div>
-            `;
-          }
+
+
+if (!(Math.round(distance) > searchRange)) {
+    let personalityString = await getPersonalityString(c);
+    console.log(personalityString)
+    let color = await cargarColor(c.idMascota);
+    await crearTargetaMascota(dmain,c,color,personalityString);
+    let image = await cargarMultimedia(c.idMascota,false);
+
+    let ubis = await cargarUbicacion(c.idMascota);
+    let es = await cargarRaza(c.idMascota,true);
+    let myLatLng1 = {lat: Number(ubis.latitud), lng: Number(ubis.longitud)}
+    let img;
+    switch(es.Especie_idEspecie){
+        case '1': img = './resources/marker3.png'; break;
+        case '2': img = './resources/marker_gato.png'; break;
+        case '3': img = './resources/marker_turt.png'; break;
     }
 
-    updateSearch();
+    const marker = new google.maps.Marker({
+        map,
+        title: "Ubicación de la mascota",
+        position: myLatLng1,
+        icon: {
+            url: img,
+            scaledSize: new google.maps.Size(48.1, 68.25),
+            anchor: new google.maps.Point(25, 50),
+            origin: new google.maps.Point(0, 0),
+        }
+    });
+    
+    const infowindow = new google.maps.InfoWindow({
+        content: `
+            <div class="marker-menu" style="background-color: #f23b0d">
+             <img src="${image[0].documento}" style="max-width:12rem" id="${c.idMascota}" alt="${c.nombre}">
+          <div class="card-body d-flex flex-column" id="card${c.idMascota}">
+          <h5 class="card-title text-center h3 fw-bold text-center" style="color: aliceblue">${c.nombre}</h5>
+          <h6 class="card-title text-center h5 fw-bold text-center" style="color: aliceblue">${es.nombre}</h6>
+          <hr>
+            <div class="m-2 p-3" style="background-color:rgb(242 166 90); border-radius: 5%">
+            <h6 class="fw-bold" style="color:aliceblue">Personalidad:</h6>
+              ${personalityString}
+            </div>  
+          <h6 style="color:aliceblue"><strong>Sexo:</strong> ${color.nombre}</h6>
+            </div>
+        `,
+        maxWidth: "3rem",
+        headerDisabled  : true,
+    });
 
-});
+    marker.addListener("click", async function () {
+         if (currentInfoWindow) {
+        currentInfoWindow.close(); // Cerrar el InfoWindow anterior
+    }
+    currentInfoWindow = infowindow; // Guardar el nuevo como actual
+    infowindow.open(map, marker); 
+    });
 
-async function cargarMultimedia(id,esUsuario){
-    let formData = new FormData();
-    if(esUsuario)
-      formData.append("idUsuario",id);
-    else
-      formData.append("idMascota",id);
-
-   const response = await fetch('endpointMultimedia.php', {
-      method: 'POST',
-      body: formData
-    })
-      const data =await response.json();
-      return data.resultado;
+    allMarkers.push(marker); // <-- Guardar el marker globalmente
 }
 
+    });
+
+          
+
+    }
+
+
+    
+    try{
+         modal1.show();
+        updateSearch();
+            
+ initMap()
+    }finally{
+    setTimeout(() => modal1.hide(), 1000); 
+    }
+});
+
+let allMarkers = []; // Global
+let currentInfoWindow = null;
+
+var map;
 
  async function getPersonalityString(m) {
     let personalidades = await cargarPersonalidad(m.idMascota)
     var personalityString="";
       personalidades.forEach(p => {
         personalityString += `
-        <p class="h6"> <i class="bi bi-award"></i> ${p.descripcion}</p>
+        <p class="h6" style="color:aliceblue"> <i class="bi bi-award"></i> ${p.descripcion}</p>
         `
       });
       return personalityString;
@@ -232,4 +261,109 @@ async function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
 
 function deg2rad(deg) {
   return deg * (Math.PI/180)
+}
+
+
+function initMap() {
+    const opciones = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+    };
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            exito,
+            error,
+            opciones
+        );
+    } else {
+        enviarAlerta("No se pudo obtener la localización");
+        location.href = "index.html";
+
+    }
+}
+
+function exito(posicion) {
+    const coordenadas = posicion.coords;
+    
+        map = new google.maps.Map(document.getElementById("map1"), {
+        center: { lat: coordenadas.latitude, lng: coordenadas.longitude },
+        zoom: 12,
+        mapTypeControl: false,
+        scaleControl: false,
+        streetViewControl: false,
+
+    });
+
+   
+    let markers = [];
+    const myLatLng = { lat: coordenadas.latitude, lng: coordenadas.longitude };
+
+    markers.push(
+        new google.maps.Marker({
+            map,
+            title: "Mi ubicación",
+            position: myLatLng,
+            icon: {
+            url: './resources/markador_user.png',
+            scaledSize: new google.maps.Size(48.1, 68.25),
+            anchor: new google.maps.Point(25, 50),
+            origin: new google.maps.Point(0, 0),
+          }
+        })
+    );
+    
+}
+
+async function error(err) {
+  await enviarAlerta("No se pudo obtener la ubicación");
+  location.href = "index.html";
+}
+
+// Hacer la función initMap disponible globalmente
+window.initMap = initMap;
+
+
+async function guardarFoto(id){
+    let formData = new FormData();
+    formData.append("Mascota_idMascota",id);
+    formData.append("documento",foto);
+
+      const response = await fetch('endpointSavemultimedia.php', {
+            method: 'POST',
+            body: formData
+            })
+            const data = await response.json();
+            console.log(data);
+            return data;
+}
+
+async function buscaUsuario(){
+    let formData = new FormData();
+    //console.log(localStorage.currentUser);
+    formData.append('correo', localStorage.currentUser);
+    const response = await  fetch('endpointshowuser.php', {
+        method: 'POST',
+        body: formData
+      })
+   
+      const data = await response.json();
+       
+      return data.resultado[0].idUsuario;
+        
+}
+
+async function  guardarUbicacion() {
+    let formData = new FormData();
+    formData.append("latitud",lat);
+    formData.append("longitud",lng);
+
+    const response = await fetch('endpointsavelocation.php', {
+        method: 'POST',
+        body: formData
+        })
+    const data = await response.json();
+       
+    return data;
 }
