@@ -42,7 +42,7 @@ export const HEADER = `
             <div class="collapse navbar-collapse" id="navbarNav">
               <ul class="navbar-nav ms-auto mb-2 mb-lg-0 h6">
                 <li class="nav-item pb-0 pt-0">
-                  <a class="nav-link fw-normal hov-txt-white-to-brown pb-0 pt-0" href="#"
+                  <a class="nav-link fw-normal hov-txt-white-to-brown pb-0 pt-0" href="busqueda.html"
                     >Búsqueda por ubicación</a
                   >
                 </li>
@@ -178,8 +178,13 @@ export const CONTACTA = `
                   <h3 style=" font-size: 1rem;" id="corrUsr"></h3>
                 </div>
                 <div class="card h-25  p-4 m-3 shadow-sm">
+                  
                   <div class="map-container">
-                  <div id="map"></div>
+                  <div id="map">
+                  
+          
+                  </div>
+                 
                   </div>
                 </div>
 

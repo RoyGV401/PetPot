@@ -71,7 +71,7 @@ window.addEventListener('load', function () {
         });
         searchResults.innerHTML = '';
         const petsTo = await response.json();
-        const result = petsTo.resultado;
+        const result = petsTo.resultado.filter(s=>s.adoptado!='T');
         const toShow = result;
         
        
@@ -177,7 +177,7 @@ async function cargarPersonalidad(id){
       return data.resultado;
 }
 
-async function getProximity(pet) {
+export async function getProximity(pet) {
     const petLocation = await cargarUbicacion(pet.idMascota);
     const petLat = petLocation.latitud;
     const petLon = petLocation.longitud;

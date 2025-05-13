@@ -67,7 +67,8 @@ const colores= [
 ,"Carey (Tortie)"
 ,"Bicolor"
 ,"Siames (Punto de color)"
-,"Chinchilla"
+,"Chinchilla",
+"Otro"
 ];
 
 const  especies = [
@@ -151,8 +152,8 @@ window.onload = async function(){
     document.getElementById("inputDescripcion").value = m.descripcion;
 
     let r = await cargarRaza(idMascota, true);
-
-    const newBtn = document.createElement('button');
+    if(r.Especie_idEspecie==1){
+        const newBtn = document.createElement('button');
     newBtn.type = 'button';
     newBtn.className = 'btn btn-info me-2 mb-2';
     newBtn.textContent = r.nombre;
@@ -167,14 +168,20 @@ window.onload = async function(){
         document.getElementById("btns_razas").removeChild(newBtn);
         raza = null;
     });
+    }else if(r.Especie_idEspecie==2){
+        raza = 279;
+    }else{
+        raza = 280;
+    }
+    
 
     switch(r.Especie_idEspecie){
-            case "1": petSelected="perro"; document.getElementById("btn_lista_especie").innerText = "Perro"; break;
+            case "1": petSelected="perro"; document.getElementById("btn_lista_especie").disabled = true;   document.getElementById("btn_lista_especie").innerText = "Perro"; break;
             case "2": petSelected="gato"; document.getElementById("btn_lista_especie").innerText = "Gato"; break;
-            case "3": petSelected="otro"; document.getElementById("btn_lista_especie").innerText = "Otro"; document.getElementById("esPeligro").hidden = false; break;
+            case "3": petSelected="otro";  document.getElementById("btn_lista_especie").innerText = "Otro"; document.getElementById("esPeligro").hidden = false; break;
           }
-    document.getElementById("btn_lista_especie").disabled = true;      
-          
+        
+
        
     color1.nombre = color1.nombre.replaceAll("\r","");
    
@@ -480,8 +487,8 @@ function cargarRazas(){
             document.getElementById("div_raza").hidden = false;
             switch (especie) {
                 case 'perro': petSelected = "perro"; document.getElementById("esPeligro").hidden = true; document.getElementById("esPeligrosa").checked = null; btn_esp.innerText = "Perro"; buscarRazas(especie); break;
-                case 'gato': petSelected = "gato"; document.getElementById("esPeligro").hidden = true; document.getElementById("esPeligrosa").checked = null; btn_esp.innerText = "Gato"; buscarRazas(especie); break;
-                case 'otro': petSelected = "otro"; document.getElementById("esPeligro").hidden = false; btn_esp.innerText = "Otro"; buscarRazas(especie); break;
+                case 'gato': petSelected = "gato"; document.getElementById("div_raza").hidden = true; raza=279; document.getElementById("esPeligro").hidden = true; document.getElementById("esPeligrosa").checked = null; btn_esp.innerText = "Gato"; buscarRazas(especie); break;
+                case 'otro': petSelected = "otro"; document.getElementById("div_raza").hidden = true; raza=280; document.getElementById("esPeligro").hidden = false; btn_esp.innerText = "Otro"; buscarRazas(especie); break;
                 default:   break;
             }
         });

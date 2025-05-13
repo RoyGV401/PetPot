@@ -396,7 +396,7 @@ $this->close($link);
     {
         $link = $this->open();
 
-        $sql = "INSERT INTO mascota VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?)";
+        $sql = "INSERT INTO mascota VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,'F')";
         
         // Prepara la consulta
 		$query = mysqli_prepare($link, $sql);

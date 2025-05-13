@@ -40,8 +40,15 @@ async function onLoadThis(){
         button.style = "color: aliceblue;"
         button.style = "width: 100%"
         button.innerText = "Adoptado";
+     
         button.id = "btnAdoptado" + m.idMascota;
-        document.getElementById("contents").appendChild(button);
+        if(m.adoptado=='T')
+        button.disabled = true;
+        let cont = document.getElementById("contents");
+        cont.id += m.idMascota;
+        
+        
+        cont.appendChild(button);
 
         let confirmar = document.getElementById("btn_confirmacion");
         confirmar.id += m.idMascota;
@@ -53,8 +60,7 @@ async function onLoadThis(){
         }
 
         confirmar.onclick = async function(){
-          const modal2Element = document.getElementById('modal_elimina');
-          const modal2 = new bootstrap.Modal(modal2Element);
+          
           let formData = new FormData();
           formData.append('idMascota',m.idMascota);
           formData.append('bandera','T');
@@ -63,13 +69,13 @@ async function onLoadThis(){
               method: 'POST',
               body: formData
             })
-        
             const data = await response.json();
-            console.log(data);
             if(data.success){
-              button.disabled;
-               modal2.hide();
-               enviarAlerta("¡Felicidades!");
+             
+              
+              await enviarAlerta("¡Felicidades!")
+             
+              location.reload();
               
             }else{
               enviarAlerta("Error en guardado")

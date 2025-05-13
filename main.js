@@ -5,6 +5,7 @@ import { USERS } from "./scripts/users.js";
 import {loadHeader, ALERTA,ALERTA_GATO, CONTACTA, MAIL} from "./scripts/header.js";
 import {CUERPO} from "./scripts/busqueda.js";
 import { cargarUbicacion } from "./scripts/editar.js";
+import { getProximity } from "./scripts/busqueda_ubicacion.js";
 
 var mascotas;
 
@@ -225,7 +226,7 @@ function iniButtons()
   catch{}
 }
 
-export function checkForReturn()
+export async function checkForReturn()
 {
  
     history.pushState(null, null, location.href);
@@ -406,7 +407,9 @@ export function cargarFuncionBarra(){
          const row = document.createElement("div");
             row.className = "row g-4"; // gap between cards
              dmain.appendChild(row); //checar
-        mascotas.forEach(async m => {
+             let mas = mascotas.filter(s=>s.adoptado!='T');
+             
+        mas.forEach(async m => {
           
           var tex="";
            tex+= m.nombre+m.descripcion;
@@ -865,7 +868,7 @@ export async function crearTargetaMascota(dmain,m,color,personalityString){
           
               <p class="mb-3"><strong>Edad:</strong> ${m.fecha_nacimiento}</p>
                 <div class="mt-auto">
-                <p class="fw-semibold text-muted"><strong>Cercanía:</strong> [Aquí puedes agregar distancia o zona]</p>
+                <p id="cerca${m.idMascota}" class="fw-semibold text-muted"></p>
                 </div>
               </div>
               <div class="row">
@@ -875,7 +878,14 @@ export async function crearTargetaMascota(dmain,m,color,personalityString){
               </div>
               `;
               
-             
+             const rawDistance = await getProximity(m);
+             if(rawDistance!="Desconocida"){
+            const distance = rawDistance.toFixed(1);
+            document.getElementById("cerca"+m.idMascota).innerHTML = `<strong>Cercanía:</strong> ${distance} Km`;
+             }else{
+              document.getElementById("cerca"+m.idMascota).innerHTML = ``
+             }
+           
                //--------------CARGAR FUNCIÓN REDIRECCIÓN PANTALLA ADOPTAR----------
               asginarAbrirVistaMascota(m);  
 }
@@ -905,19 +915,25 @@ export async function asginarAbrirVistaMascota(m){
 
        const modal1Element = document.getElementById('modal_conta');
         const modal1 = new bootstrap.Modal(modal1Element);
-
-        // Escuchar el evento 'shown.bs.modal' que se dispara cuando el modal está completamente visible
-        modal1Element.addEventListener('shown.bs.modal', async function() {
-            let ubis = await cargarUbicacion(m.idMascota);
+         setTimeout(()=>{ modal1.show(); },400);
+  
+      
+            
+            
+              let ubis = await cargarUbicacion(m.idMascota);
             let es = await cargarRaza(m.idMascota,true);
-            await initMap(ubis.latitud, ubis.longitud,es.Especie_idEspecie);
-        });
+         
+              initMap(ubis.latitud, ubis.longitud,es.Especie_idEspecie);
+              
+              
+         
 
-        modal1.show();
+      
          document.getElementById("descMas").innerText = m.descripcion;
          document.getElementById("nombreUsr").innerText = "Nombre: " + user.nombre;
          document.getElementById("corrUsr").innerText = "Correo: " +user.correo;
          document.getElementById("nombreMas").innerText =  m.nombre;
+       
          
          document.getElementById("btn_mail").onclick = async function (){
           if(localStorage.currentUser==0){
@@ -1016,7 +1032,89 @@ export async function enviarAlerta(alerta) {
 }
 
 async function initMap(late,log,esp){
+
+  const opciones = {
+        enableHighAccuracy: true,
+        timeout: 9000,
+        maximumAge: 0
+    };
+
+  
+  if (navigator.geolocation) {
+           navigator.geolocation.getCurrentPosition(async (position) => {
+               await exi(position,esp,late, log);
+            },
+            async (err) => {
+               await error(esp, lat, lng);
+            },
+            opciones
+        );
+      } else {
+          enviarAlerta("Tu navegador no soporta geolocalización");
+      }
+
+  
+
+
+
+}
+
+async function exi(position,esp,late,log){
   let img;
+  switch(esp){
+    case '1': img = 'resources/marker3.png'; break;
+    case '2': img = 'resources/marker_gato.png'; break;
+    case '3': img = 'resources/marker_turt.png'; break;
+  }
+
+ const myLatLng1 = { lat: Number(late), lng: Number(log) }; 
+  
+  const map = await new google.maps.Map(document.getElementById("map"), {
+      center: myLatLng1,
+      zoom: 15,
+
+
+mapTypeControl: false,
+scaleControl: false,
+streetViewControl: false,
+
+  });
+  
+  await google.maps.event.trigger(map, 'resize');
+  await map.setCenter(myLatLng1); // Re-centrar después del resize
+  let markers = [];
+  markers.push(
+      new google.maps.Marker({
+          map,
+          title: "Ubicación de la mascota",
+          position: myLatLng1,
+          icon: {
+            url: img,
+            scaledSize: new google.maps.Size(48.1, 68.25),
+            anchor: new google.maps.Point(25, 50),
+            origin: new google.maps.Point(0, 0),
+          }
+      })
+  );
+
+   markers.push(
+      new google.maps.Marker({
+          map,
+          title: "Tu ubicacion",
+          position: {lat: Number(position.coords.latitude), lng: Number(position.coords.longitude)},
+          icon: {
+            url: 'resources/markador_user.png',
+            scaledSize: new google.maps.Size(48.1, 68.25),
+            anchor: new google.maps.Point(25, 50),
+            origin: new google.maps.Point(0, 0),
+          }
+      })
+  );
+} 
+
+function error(esp,late,log){
+  
+    let img;
   switch(esp){
     case '1': img = 'resources/marker3.png'; break;
     case '2': img = 'resources/marker_gato.png'; break;
@@ -1052,6 +1150,7 @@ streetViewControl: false,
           }
       })
   );
+
 }
 
 export async function loadPetsToCarousel() {
