@@ -103,8 +103,11 @@ window.onload = async function(){
 
 function onLoadThis(){
     loadHeader();
-    if(!location.href.includes("busqueda.html"))
-    initMap();
+    if(!location.href.includes("busqueda.html")){
+        
+        initMap();
+    }
+    
     document.getElementById('main_logo').onclick = function () {
       location.href = `index.html`;
     };
@@ -596,6 +599,7 @@ function comprobarLargo(lista){
 
 
 function initMap() {
+
     const opciones = {
         enableHighAccuracy: true,
         timeout: 5000,
@@ -647,6 +651,12 @@ function exito(posicion) {
             map,
             title: "Mi ubicación",
             position: myLatLng,
+            icon: {
+            url: 'resources/markador_user.png',
+            scaledSize: new google.maps.Size(48.1, 68.25),
+            anchor: new google.maps.Point(25, 50),
+            origin: new google.maps.Point(0, 0),
+          }
         })
     );
     
@@ -671,6 +681,12 @@ function exito(posicion) {
                     map,
                     title: place.name,
                     position: place.geometry.location,
+                    icon: {
+                    url: 'resources/markador_user.png',
+                    scaledSize: new google.maps.Size(48.1, 68.25),
+                    anchor: new google.maps.Point(25, 50),
+                    origin: new google.maps.Point(0, 0),
+          }
                 })
             );
               lat = place.geometry.location.lat();
@@ -722,6 +738,12 @@ function error(err) {
             map,
             title: place.name,
             position: place.geometry.location,
+            icon: {
+            url: 'resources/markador_user.png',
+            scaledSize: new google.maps.Size(48.1, 68.25),
+            anchor: new google.maps.Point(25, 50),
+            origin: new google.maps.Point(0, 0),
+          }
         })
     );
 
@@ -746,6 +768,12 @@ function error(err) {
                     map,
                     title: place.name,
                     position: place.geometry.location,
+                    icon: {
+            url: 'resources/markador_user.png',
+            scaledSize: new google.maps.Size(48.1, 68.25),
+            anchor: new google.maps.Point(25, 50),
+            origin: new google.maps.Point(0, 0),
+          }
                 })
             );
             

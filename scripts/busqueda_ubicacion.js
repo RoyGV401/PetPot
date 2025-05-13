@@ -2,10 +2,12 @@ import { crearTargetaMascota, enviarAlerta, cargarColor, cargarRaza, asginarAbri
 import {loadHeader, ALERTA,ALERTA_GATO, CONTACTA, MAIL} from "./header.js";
 
 window.addEventListener('load', function () {
-      document.getElementById("extra_elements").innerHTML+= ALERTA;
+    if(location.href.includes("busqueda.html")){
+         document.getElementById("extra_elements").innerHTML+= ALERTA;
     document.getElementById("extra_elements").innerHTML += ALERTA_GATO;
         document.getElementById("extra_elements").innerHTML += MAIL;
     document.getElementById("extra_elements").innerHTML += CONTACTA;
+    alert("yow");
 
     const range = this.document.getElementById('range');
     let searchRange = 6;
@@ -174,6 +176,8 @@ if (!(Math.round(distance) > searchRange)) {
     }finally{
     setTimeout(() => modal1.hide(), 1000); 
     }
+    }
+     
 });
 
 let allMarkers = []; // Global
