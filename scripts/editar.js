@@ -1,17 +1,12 @@
 import {loadHeader, ALERTA, ALERTA_GATO} from "./header.js";
-import { LOGIN_FORM } from "./login.js";
 import { cargarBotonesHeader,
-     cargarExtras, 
-     cargarFuncionCookis,
+     cargarExtras,
       cargarColor,
       cargarMascotas,
        cargarMultimedia,
-        cargarPersonalidad,
-         changeTo ,
-         checkForReturn
-         ,enviarAlerta
-         ,cargarRaza,
-         onMainLoad} from "../main.js";
+         enviarAlerta
+         ,cargarRaza
+         } from "../main.js";
 
 
 
@@ -106,22 +101,12 @@ window.onload = async function(){
    
     cargarPersonalidades();
     cargarEspecies();
-    checkForReturn();
     //await onMainLoad();
     await cargarExtras();
     await loadHeader();
     
 
-       document.getElementById('main_logo').onclick = function () {
-      location.href = `../index.html`;
-    };
-  
-    try
-    {
-      document.getElementById("btn_log").onclick = function () {
-        inicia_sesion(true);
-      };
-    } catch{}
+     
 
     await cargarBotonesHeader();
     
@@ -252,7 +237,17 @@ window.onload = async function(){
       imagePreview.style.display = 'block';
       foto = images[0].documento;
    
-            
+              document.getElementById('main_logo').onclick = function () {
+     
+      location.href = `./index.html`;
+    };
+  
+    try
+    {
+      document.getElementById("btn_log").onclick = function () {
+        inicia_sesion(true);
+      };
+    } catch{}
 }
 
 function onLoadThis(){
@@ -770,6 +765,12 @@ function exito(late, log) {
             map,
             title: "Mi ubicación",
             position: myLatLng1,
+              icon: {
+            url: 'resources/markador_user.png',
+            scaledSize: new google.maps.Size(48.1, 68.25),
+            anchor: new google.maps.Point(25, 50),
+            origin: new google.maps.Point(0, 0),
+          }
         })
     );
     
@@ -794,6 +795,12 @@ function exito(late, log) {
                     map,
                     title: place.name,
                     position: place.geometry.location,
+                      icon: {
+                        url: 'resources/markador_user.png',
+                        scaledSize: new google.maps.Size(48.1, 68.25),
+                        anchor: new google.maps.Point(25, 50),
+                        origin: new google.maps.Point(0, 0),
+                    }
                 })
             );
               lat = place.geometry.location.lat();
@@ -815,7 +822,13 @@ function exito(late, log) {
         markers.push(
             new google.maps.Marker({
                 position: e.latLng,
-                map: map
+                map: map,
+                  icon: {
+            url: 'resources/markador_user.png',
+            scaledSize: new google.maps.Size(48.1, 68.25),
+            anchor: new google.maps.Point(25, 50),
+            origin: new google.maps.Point(0, 0),
+          }
             })
         );
         lat = e.latLng.lat();

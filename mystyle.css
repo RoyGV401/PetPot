@@ -1116,4 +1116,9 @@ th {
     margin: 0 5px;
 }
 
-
+#boxPerso {
+  max-height: 19vmax; /* Ajusta según necesidad */
+  overflow-y: auto;
+  border: 1px solid #ccc; /* Opcional, para visualizar el área */
+  padding: 5px;
+}   

@@ -37,7 +37,7 @@ export const HEADER = `
           </div>
         </nav>
 
-        <nav id="second_bar" class="navbar generic-transition-1 basic-shadow navbar-expand-lg navbar-light bg-orange-alpha pt-0 pb-0">
+        <nav id="second_bar" class="navbar generic-transition-1 basic-shadow navbar-expand navbar-light bg-orange-alpha pt-0 pb-0">
           <div class="container-fluid">
             <div class="collapse navbar-collapse" id="navbarNav">
               <ul class="navbar-nav ms-auto mb-2 mb-lg-0 h6">

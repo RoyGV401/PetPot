@@ -68,25 +68,18 @@ export async function onMainLoad() {
 
     document.getElementById("extra_elements").innerHTML+= ALERTA;
     document.getElementById("extra_elements").innerHTML += ALERTA_GATO;
-        document.getElementById("extra_elements").innerHTML += MAIL;
+    document.getElementById("extra_elements").innerHTML += MAIL;
     document.getElementById("extra_elements").innerHTML += CONTACTA;
 
 
-  listar_mascotas();
-  changeBodyToPet();
-  checkForReturn();
 
   // -------------CARGAR ELEMENTOS QUE USAN FETCH-----------
-  await cargarMascotas();
+  mascotas = await cargarMascotas();
   cargarFuncionBarra();
  
   if(localStorage.currentUser==0||localStorage.currentUser=="null"){
     cargarFuncionCookis();
   }
- 
-
-  
-    
  
   // ---------------CARGAR LOGIN EN EL HTML-----------------
   cargarExtras();
@@ -114,114 +107,13 @@ export async function onMainLoad() {
 
 }
 
-function listar_mascotas() {
-  let dmain;
-  let mascotas;
-  if (document.location.href.includes("perros.html")) {
-    dmain = document.getElementById("main_div_perros");
-    mascotas = DOGS;
-  } else if (document.location.href.includes("gatos.html")) {
-    dmain = document.getElementById("main_div_gatos");
-    mascotas = CATS;
-  } else {
-    dmain = document.getElementById("main_div_otros");
-    mascotas = OTHERS;
-  }
-  if (!dmain) return;
-
-  // Clear previous content
-
-  // Create a responsive row container
-  const row = document.createElement("div");
-  row.className = "row g-4"; // gap between cards
-
-  mascotas.forEach((mascota) => {
-    const col = document.createElement("div");
-    col.className = "col-sm-12 col-md-4 mt-3 col-lg-4"; // adjust based on screen size
-
-    const card = document.createElement("div");
-    card.className = "card h-100 max-height-1 w-100 p-4 shadow-sm";
-    const personalidades = mascota.personalidad;
-    let personalityString = "";
-    personalidades.forEach(k => {
-      personalityString += `
-       <p class="h6"> <i class="bi bi-award"></i> ${k}</p>
-      `
-    });
-
-
-    card.innerHTML = `
-      <img src="${mascota.img}" class="card-img-top img-fluid rounded imgPetSelect" id="${mascota.id}"  alt="${mascota.name}">
-      <div class="card-body d-flex flex-column">
-        <h5 class="card-title text-center h3 fw-bold">${mascota.name}</h5>
-        <hr>
-        <div class="mb-3">
-          <h6 class="fw-bold">Personalidad:</h6>
-            ${personalityString}
-        </div>
-        <p class="mb-1"><strong>Sexo:</strong> ${mascota.sexo}</p>
-        <p class="mb-1"><strong>Tamaño:</strong> ${mascota.Tamano}</p>
-        <p class="mb-1"><strong>Color:</strong> ${mascota.color}</p>
-        <p class="mb-3"><strong>Edad:</strong> ${mascota.edad}</p>
-        <div class="mt-auto">
-          <p class="fw-semibold text-muted"><strong>Cercanía:</strong> [Aquí puedes agregar distancia o zona]</p>
-        </div>
-      </div>
-    `;
-
-    col.appendChild(card);
-    dmain.appendChild(col);
-  });
-
-  dmain.appendChild(row);
-}
-
-
-function changeBodyToPet()
-{
-  try
-  {
-    const petImages = document.getElementsByClassName('imgPetSelect');
-    for (let p of petImages) {
-      p.onclick = function () {
-        const petId = p.id;
-        let choosenPet = "";
-        PETS.every(pet => {
-          if (petId == pet.id)
-          {
-            choosenPet = pet;
-            return false;
-          }
-          else 
-          return true;
-        });
-        if (choosenPet != "")
-        {
-          const petInfo = createPetSelect(choosenPet);
-          const body = document.getElementById('blur');
-          window.doReturnNormally = false;
-          document.getElementById('extra_elements').innerHTML = ""
-          body.innerHTML = petInfo;
-          onMainLoad();
-          
-        }
-       
-      }
-    }
-  }
-  catch(ex)
-  {
-    
-  }
-}
-
 function iniButtons()
 {
   try
   {
-      const btnCat = document.getElementById('checkCats').onclick = function (){ changeTo('gatos.html')};
-      const btnDog = document.getElementById('checkDogs').onclick = function (){ changeTo('perros.html')};
-      const btnOthers = document.getElementById('checkOthers').onclick = function (){ changeTo('otros.html')};
+      const btnCat = document.getElementById('checkCats').onclick = function (){  location.href = `perros.html?id=${encodeURIComponent(2)}`;};
+      const btnDog = document.getElementById('checkDogs').onclick = function (){ location.href = `perros.html?id=${encodeURIComponent(1)}`;};
+      const btnOthers = document.getElementById('checkOthers').onclick = function (){  location.href = `perros.html?id=${encodeURIComponent(3)}`;};
   }
   catch{}
 }
@@ -301,7 +193,7 @@ export async function cargarMascotas(id=null,esUsuario=null){
             method: 'POST',
         })
           const data = await response.json();
-          mascotas = data.resultado;
+          return  data.resultado;
         }else if(esUsuario==false){
             let formData = new FormData();
             formData.append("idMascota",id);
@@ -411,36 +303,9 @@ export function cargarFuncionBarra(){
              
         mas.forEach(async m => {
           
-          var tex="";
-           tex+= m.nombre+m.descripcion;
-           let color = await cargarColor(m.idMascota);
-         
-           tex += color.nombre
-           
-           let raza = await cargarRaza(m.idMascota,true)
-       
-           tex+=raza.nombre;
-           
-           let personalidades = await cargarPersonalidad(m.idMascota);
-           personalidades.forEach(p => {
-              tex+=p.descripcion;
-           });
-      
-
-           switch(raza.Especie_idEspecie){
-            case "1": tex+= "perros"; break;
-            case "2": tex+= "gatos"; break;
-            case "3":  break;
-
-          }
+          var tex= await generarTexto(m);
+          let color = await cargarColor(m.idMascota);
           
-
-           switch (m.Tamanio_idTamanio) {
-            case '1': tex += "grande"; break;
-            case '2': tex += "mediano"; break;
-            case '3': tex += "pequeño"; break;
-            default: break;
-           }
           
            if(tex.trim().toLowerCase().includes(barra_busqueda.value.trim().toLowerCase())){
               if(m.Sexo_idSexo==1){
@@ -824,9 +689,9 @@ export async function cargarExtras(){
 }
 
 export async function crearTargetaMascota(dmain,m,color,personalityString){
-  
+            
             const col = document.createElement("div");
-            col.className = "col-sm-12 col-md-4 mt-3 col-lg-4"; // adjust based on screen size
+            col.className = "col-sm-12 col-md-4 my-3 col-lg-4"; // adjust based on screen size
 
             col.innerHTML = `
               <div id=cardo${m.idMascota} class= "card h-100 max-height-1 w-100 p-4 shadow-sm"></div>
@@ -866,10 +731,10 @@ export async function crearTargetaMascota(dmain,m,color,personalityString){
               <p class="mb-1"><strong>Tamaño:</strong> ${tamM}</p>
               <p class="mb-1"><strong>Color:</strong> ${color.nombre}</p>
           
-              <p class="mb-3"><strong>Edad:</strong> ${m.fecha_nacimiento}</p>
-                <div class="mt-auto">
-                <p id="cerca${m.idMascota}" class="fw-semibold text-muted"></p>
-                </div>
+              <p class=" mb-0"><strong>Edad:</strong> ${await calcularEdad(m)}</p>
+                
+                <p id="cerca${m.idMascota}" class="fw-semibold text-muted mt-1 mb-0"></p>
+                
               </div>
               <div class="row">
               <div class="col-3"></div>
@@ -1196,4 +1061,78 @@ export async function abrirV(m,user) {
               
             }
           }
+}
+
+export async function generarTexto(m) {
+  var tex;
+   tex+= m.nombre+m.descripcion;
+           let color = await cargarColor(m.idMascota);
+         
+           tex += color.nombre
+           
+           let raza = await cargarRaza(m.idMascota,true)
+       
+           tex+=raza.nombre;
+           
+           let personalidades = await cargarPersonalidad(m.idMascota);
+           personalidades.forEach(p => {
+              tex+=p.descripcion;
+           });
+      
+
+           switch(raza.Especie_idEspecie){
+            case "1": tex+= "perros"; break;
+            case "2": tex+= "gatos"; break;
+            case "3":  break;
+
+          }
+          
+
+           switch (m.Tamanio_idTamanio) {
+            case '1': tex += "grande"; break;
+            case '2': tex += "mediano"; break;
+            case '3': tex += "pequeño"; break;
+            default: break;
+           }
+           return tex;
+}
+
+function calcularEdad(m) {
+  const partes = m.fecha_nacimiento.split("/");
+  const dia = parseInt(partes[0], 10);
+  const mes = parseInt(partes[1], 10) - 1;
+  const anio = parseInt(partes[2], 10);
+
+  const nacimiento = new Date(anio, mes, dia);
+  const hoy = new Date();
+
+  if (isNaN(nacimiento.getTime())) {
+    return "Fecha inválida";
+  }
+
+  const diffMs = hoy - nacimiento;
+  const diffDias = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+  if (diffDias < 30) {
+    const unidad = diffDias === 1 ? "día" : "días";
+    return `${diffDias} ${unidad}`;
+  }
+
+  let edadAnios = hoy.getFullYear() - nacimiento.getFullYear();
+  let edadMeses = hoy.getMonth() - nacimiento.getMonth();
+  let edadDias = hoy.getDate() - nacimiento.getDate();
+
+  if (edadDias < 0) edadMeses--;
+  if (edadMeses < 0) {
+    edadAnios--;
+    edadMeses += 12;
+  }
+
+  if (edadAnios <= 0) {
+    const unidad = edadMeses === 1 ? "mes" : "meses";
+    return `${edadMeses} ${unidad}`;
+  }
+
+  const unidad = edadAnios === 1 ? "año" : "años";
+  return `${edadAnios} ${unidad}`;
 }

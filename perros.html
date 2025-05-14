@@ -7,6 +7,7 @@
       <link rel="stylesheet" href="scss/custom.css" />
       <link rel="stylesheet" href="reusable_styles.css" />
       <link rel="stylesheet" href="mystyle.css" />
+      <link rel="stylesheet" href="style_adopcion.css" />
       <link
          rel="icon"
          type="image/png"
@@ -15,8 +16,10 @@
          data-href-light="favicon-32x32.png"
          data-href-dark="favicon-32x32-dark.png"
       />
-      <script type="module" src="main.js"></script>
+      <script type="module" src="scripts/lista.js"></script>
       <script src="modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDT3TNU_yVdoPvLV3ZOb_T_RfpQ4tyJWfY&libraries=places&callback=initMap" async defer></script>
+
    </head>
    <extra id="extra_elements"></extra>
 
@@ -27,8 +30,8 @@
 
          <!-- Section: Showcase -->
          <section class="showcase-section text-center py-4">
-            <p class="h3">Perros</p>
-            <img src="resources/perros_blanco.png" id="img_logo_section" alt="">
+            <p class="h3" id="titles">Perros</p>
+            <img class="" style="width: 7vmax;" src="resources/perros_blanco.png" id="img_logo_section" alt="">
          </section>
 
          <div id="buscar_div">
@@ -50,12 +53,15 @@
             </table>
          </div>
 
+         
+
          <div class="main_div container-sm rounded-m px-3 pt-3">
 
             <div class="container my-1 px-2">
                <div class="container my-4" >
-                  <div class="row" id="main_div_perros">
-                     <div class="col-sm-12 col-md-4 col-lg-4 h-100">
+                  <div class="row">
+                     
+                    <div class="col-sm-12 col-md-4 col-lg-4 h-100">
                         <div class="card h-100 max-height-1 p-4 m-3 shadow-sm">
                            <!-- Sexo -->
                            <div class="mb-3">
@@ -94,7 +100,7 @@
                            </div>
          
                            <!-- Personalidad -->
-                           <div class="mb-3">
+                           <div class="mb-3" id=boxPerso>
                               <p class="fw-bold h5 pt-3 px-1">Personalidad:</p>
                               <div class="form-check">
                                  <input class="form-check-input" type="checkbox" id="alegre" />
@@ -118,8 +124,9 @@
                               </div>
                            </div>
                         </div>
+                       
                      </div>
-                     
+                    <div class=" row" style="display: contents;" id="mainCuerpo"></div>  
                   </div>
                </div>
             </div>

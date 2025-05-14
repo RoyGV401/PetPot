@@ -1,10 +1,10 @@
 import {loadHeader, ALERTA} from "./header.js";
 import { LOGIN_FORM } from "./login.js";
-import { cargarBotonesHeader, cargarExtras, cargarFuncionCookis, checkForReturn ,enviarAlerta} from "../main.js";
+import { cargarBotonesHeader, cargarExtras, cargarFuncionCookis ,enviarAlerta} from "../main.js";
 
 
 
-const personalidades = [
+export const personalidades = [
     "Activo",
     "Adaptable",
     "Ágil",
@@ -91,7 +91,6 @@ var lng = null;
 var usuario;
 
 window.onload = async function(){
-    await checkForReturn();
     await cargarExtras();
     if(localStorage.currentUser==0||localStorage.currentUser=="null")
     cargarFuncionCookis();
@@ -652,7 +651,7 @@ function exito(posicion) {
             title: "Mi ubicación",
             position: myLatLng,
             icon: {
-            url: 'resources/markador_user.png',
+            url: './resources/markador_user.png',
             scaledSize: new google.maps.Size(48.1, 68.25),
             anchor: new google.maps.Point(25, 50),
             origin: new google.maps.Point(0, 0),
@@ -682,7 +681,7 @@ function exito(posicion) {
                     title: place.name,
                     position: place.geometry.location,
                     icon: {
-                    url: 'resources/markador_user.png',
+                    url: './resources/markador_user.png',
                     scaledSize: new google.maps.Size(48.1, 68.25),
                     anchor: new google.maps.Point(25, 50),
                     origin: new google.maps.Point(0, 0),
@@ -739,7 +738,7 @@ function error(err) {
             title: place.name,
             position: place.geometry.location,
             icon: {
-            url: 'resources/markador_user.png',
+            url: './resources/markador_user.png',
             scaledSize: new google.maps.Size(48.1, 68.25),
             anchor: new google.maps.Point(25, 50),
             origin: new google.maps.Point(0, 0),
@@ -769,7 +768,7 @@ function error(err) {
                     title: place.name,
                     position: place.geometry.location,
                     icon: {
-            url: 'resources/markador_user.png',
+            url: './resources/markador_user.png',
             scaledSize: new google.maps.Size(48.1, 68.25),
             anchor: new google.maps.Point(25, 50),
             origin: new google.maps.Point(0, 0),
@@ -798,7 +797,13 @@ function error(err) {
         markers.push(
             new google.maps.Marker({
                 position: e.latLng,
-                map: map
+                map: map,
+                  icon: {
+                url: './resources/markador_user.png',
+                scaledSize: new google.maps.Size(48.1, 68.25),
+                anchor: new google.maps.Point(25, 50),
+                origin: new google.maps.Point(0, 0),
+            }
             })
         );
         
