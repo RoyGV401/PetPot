@@ -246,7 +246,7 @@ export async function cargarPersonalidad(id){
           body: formData
         })
          const data =await response.json();
-       console.log(data);
+  
           return data.resultado;
 }
 
@@ -790,7 +790,7 @@ async function obtenerUserByPet(m) {
           body: formData
         })
         const data = await response.json();
-        console.log(data);
+        
         return data.resultado[0];
 } 
 

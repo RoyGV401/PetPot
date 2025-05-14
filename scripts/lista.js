@@ -2,6 +2,7 @@ import { cargarMascotas, generarTexto, crearTargetaMascota, cargarColor , crearT
 import { ALERTA,ALERTA_GATO,MAIL,CONTACTA, loadHeader } from "./header.js";
 import { personalidades } from "./adopcion.js";
 
+
 var tex;
 var mascotas = [];
 window.onload = async function(){
@@ -43,6 +44,7 @@ window.onload = async function(){
         document.getElementById("grande").onclick = async function(){
          await cargarMascos(document.getElementById("busqueda").value);
         }
+        
 
     await cargarMascos();
     await cargarP();
@@ -90,6 +92,12 @@ async function cargarMascos(palabra=null){
         if(r.Especie_idEspecie!=idEspecie)
             return
         tex = await generarTexto(m);
+        var ppp = []
+        if(document.querySelector('input[name="ppp"]:checked')!=null)
+         document.querySelectorAll('input[name="ppp"]:checked').forEach(e=>{
+            ppp.push(e.id);
+        })
+
         
         if(palabra==""||palabra==undefined||tex.trim().toLowerCase().includes(palabra.trim().toLowerCase())){
 
@@ -97,6 +105,23 @@ async function cargarMascos(palabra=null){
             var tamano = document.querySelector('input[name="tamano"]:checked');
             var persona = document.querySelector('input[name="persos"]:checked');
             const pirso = await cargarPersonalidad(m.idMascota);
+            
+            var b = true;
+            
+            if(ppp.length>0){
+                b=false;
+            ppp.forEach(p => {
+                pirso.forEach(p2 => {
+                    if(p==p2.descripcion.replaceAll("\r",""))
+                    {
+                        console.log(p+"--"+p2)
+                        b=true;
+                        return;
+                    }
+                });
+            });
+        }
+            
             if(sexo==null){
                sexo ={'id':null}
             }
@@ -115,9 +140,9 @@ async function cargarMascos(palabra=null){
                   case 'mediano': tamano.id = 2;break;
                   case 'pequeno': tamano.id = 3; break;
                }
-               console.log(persona.id);
-            if(sexo.id==m.Sexo_idSexo&&tamano.id==m.Tamanio_idTamanio||sexo.id==null && tamano.id==null|| sexo.id==m.Sexo_idSexo && tamano.id == null || tamano.id== m.Tamanio_idTamanio && sexo.id == null ){
-             
+               
+            if(sexo.id==m.Sexo_idSexo&&tamano.id==m.Tamanio_idTamanio||sexo.id==null && tamano.id==null|| sexo.id==m.Sexo_idSexo && tamano.id == null || tamano.id== m.Tamanio_idTamanio && sexo.id == null){
+            if(b==true)
               personalidades.some(async (p,index) => {
                   if(index==persona.id||persona.id==null){
                      let color = await cargarColor(m.idMascota);
@@ -141,18 +166,34 @@ async function cargarMascos(palabra=null){
 }
 
 async function cargarP() {
-    
     personalidades.forEach(p => {
+        const safeId = p;
         const div = document.createElement("div");
         div.className = "form-check";
-        div.id = "formPersos";
-        div.innerHTML = `
+       
         
-            <input class="form-check-input" type="checkbox" name="persos" id="check${p}" />
-            <label class="form-check-label" for="alegre">${p}</label>
-        
-    `;
+        const input = document.createElement("input");
+        input.type = "checkbox";
+        input.className = "form-check-input";
+        input.name = "ppp";
+        input.id = safeId;
+        input.onclick=function(){
+            cargarMascos(document.getElementById("busqueda").value);
+        };
+
+        const label = document.createElement("label");
+        label.className = "form-check-label";
+        label.htmlfor = safeId;
+        label.textContent = p;
+
+        div.appendChild(input);
+        div.appendChild(label)
         document.getElementById("boxPerso").appendChild(div);
+       
+
+     
+
+        // Asignar el evento justo después de crearlo
+        
     });
-    
 }
