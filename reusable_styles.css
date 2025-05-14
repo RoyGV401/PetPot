@@ -28,3 +28,8 @@
 {
     pointer-events: none;
 }
+
+.carta-jijija{
+    border: solid brown 2vw;
+    border-radius: 2vw/3vw;
+}

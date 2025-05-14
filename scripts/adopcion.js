@@ -1,6 +1,6 @@
 import {loadHeader, ALERTA} from "./header.js";
 import { LOGIN_FORM } from "./login.js";
-import { cargarBotonesHeader, cargarExtras, cargarFuncionCookis ,enviarAlerta} from "../main.js";
+import { cargarBotonesHeader, cargarExtras, cargarFuncionCookis ,enviarAlerta, inicia_sesion} from "../main.js";
 
 
 
@@ -100,23 +100,15 @@ window.onload = async function(){
     document.getElementById("extra_elements").innerHTML+= ALERTA;
 }
 
-function onLoadThis(){
-    loadHeader();
+async function onLoadThis(){
+    await loadHeader();
     if(!location.href.includes("busqueda.html")){
         
         initMap();
     }
     
-    document.getElementById('main_logo').onclick = function () {
-      location.href = `index.html`;
-    };
-  
-    try
-    {
-      document.getElementById("btn_log").onclick = function () {
-        inicia_sesion(true);
-      };
-    } catch{}
+   
+    
     try
     {
         cargarCropper();
@@ -156,7 +148,7 @@ function onLoadThis(){
 
 
     document.getElementById("btn_enviar").onclick = async function(){
-        if(localStorage.currentUser==0){
+        if(localStorage.currentUser==0||localStorage.currentUser=="null"||localStorage.currentUser==null){
             
             enviarAlerta("Debes iniciar sesión");
             return;
@@ -253,6 +245,15 @@ function onLoadThis(){
             
         }
     }
+
+     document.getElementById('main_logo').onclick = function () {
+      location.href = `index.html`;
+    };
+  
+    
+      document.getElementById("btn_log").onclick =  function () {
+         inicia_sesion(true);
+      };
 }
 //Leer el documento y ver que cosas son importantes para un DBA en un solo doc pDF EN TEAMS A LAS TARDAR entre el 19 y el 23
 

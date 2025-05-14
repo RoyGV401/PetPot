@@ -132,7 +132,7 @@ export async function checkForReturn()
 
 }
 
-function inicia_sesion(isFromClick){
+export async function inicia_sesion(isFromClick){
 
   const correo = document.getElementById("input_correo_log").value;
   const contra = document.getElementById("input_contra_log").value;
@@ -700,7 +700,7 @@ export async function crearTargetaMascota(dmain,m,color,personalityString){
 
             const card = document.getElementById("cardo"+m.idMascota);
            
-            
+            card.className += "carta-jijija";
 
             let sexoM;
             let imagenes = await cargarMultimedia(m.idMascota,false);

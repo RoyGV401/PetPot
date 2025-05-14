@@ -286,7 +286,8 @@ function onLoadThis(){
 
 
     document.getElementById("btn_enviar").onclick = async function(){
-        if(localStorage.currentUser==0){
+
+        if(localStorage.currentUser==0||localStorage.currentUser=="null"){
             
             enviarAlerta("Debes iniciar sesión");
             return;
