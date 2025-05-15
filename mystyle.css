@@ -296,6 +296,15 @@ aside p {
     background-size: 35%;
 }
 
+.main_div_c {
+    margin-top: 0;
+    background-color: rgb(253 236 220);
+    background-image: url(resources/merge.png);
+    background-attachment: fixed;
+    background-size: 10%;
+    background-repeat: repeat;
+
+}
 
 
 .main_div_perros {
@@ -435,6 +444,15 @@ h2 {
 
 .sub_div_1 {
     background-color: rgb(255, 255, 255);
+    width: 100%;
+    border-radius: 0.5vh;
+    padding-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.sub_div_1_c {
+    background-color: rgba(243, 131, 67, 0.9);
     width: 100%;
     border-radius: 0.5vh;
     padding-bottom: 0;
@@ -1122,3 +1140,50 @@ th {
   border: 1px solid #ccc; /* Opcional, para visualizar el área */
   padding: 5px;
 }   
+
+    .seticon {
+     
+      
+      animation: girar 2s linear infinite;
+      /* Para que gire en su centro */
+      transform-origin: center center;
+    }
+
+    @keyframes girar {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    footer {
+      background-color: rgb(255, 89, 0);;
+      color: #d1d1d1;
+      padding: 20px 0;
+    }
+
+    .footer-divider {
+      border-top: 1px solid #ffffff;
+      margin-bottom: 20px;
+    }
+
+    .social-icons i {
+      font-size: 1.5rem;
+      margin-left: 15px;
+      color: #ffffff;
+    }
+
+    .brand-icon {
+      color: #ffffff;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-weight: bold;
+      font-family: monospace;
+    }
+
+    .mageSi{
+        width: 4vmax;
+        filter: invert(100%);
+    }

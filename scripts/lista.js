@@ -1,4 +1,4 @@
-import { cargarMascotas, generarTexto, crearTargetaMascota, cargarColor , crearTargetaPersonalidad, cargarRaza, cargarBotonesHeader,cargarExtras,cargarFuncionBarra, cargarPersonalidad} from "../main.js";
+import { cargarMascotas, generarTexto, crearTargetaMascota, cargarColor , crearTargetaPersonalidad, cargarRaza, cargarBotonesHeader,cargarExtras,cargarFuncionBarra, cargarPersonalidad, inicia_sesion} from "../main.js";
 import { ALERTA,ALERTA_GATO,MAIL,CONTACTA, loadHeader } from "./header.js";
 import { personalidades } from "./adopcion.js";
 
@@ -48,6 +48,25 @@ window.onload = async function(){
 
     await cargarMascos();
     await cargarP();
+
+     document.getElementById("fechaSeleccionada").value = m.fecha_nacimiento;  
+        let images = await cargarMultimedia(idMascota,false);
+     
+        document.getElementById("imagePreview").src =  images[0].documento;
+          imagePreview.style.display = 'block';
+          foto = images[0].documento;
+       
+                  document.getElementById('main_logo').onclick = function () {
+         
+          location.href = `./index.html`;
+        };
+      
+        try
+        {
+          document.getElementById("btn_log").onclick = function () {
+            inicia_sesion(true);
+          };
+        } catch{}
 }
 
 function cargarFuncionBarra2(){
@@ -114,7 +133,6 @@ async function cargarMascos(palabra=null){
                 pirso.forEach(p2 => {
                     if(p==p2.descripcion.replaceAll("\r",""))
                     {
-                        console.log(p+"--"+p2)
                         b=true;
                         return;
                     }

@@ -343,10 +343,10 @@ async function guardarFoto(id){
             return data;
 }
 
-async function buscaUsuario(){
+export async function buscaUsuario(){
     let formData = new FormData();
     //console.log(localStorage.currentUser);
-    formData.append('correo', localStorage.currentUser);
+    formData.append('idUsuario', localStorage.currentUser);
     const response = await  fetch('endpointshowuser.php', {
         method: 'POST',
         body: formData
@@ -354,7 +354,7 @@ async function buscaUsuario(){
    
       const data = await response.json();
        
-      return data.resultado[0].idUsuario;
+      return data.resultado[0];
         
 }
 

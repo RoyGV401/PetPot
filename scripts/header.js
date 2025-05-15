@@ -28,7 +28,7 @@ export const HEADER = `
               </button>
               <ul class="dropdown-menu dropdown-menu-end">
                 <li><a class="dropdown-item mt-3 h5" href="./tusMascotas.html">Tus mascotas</a></li>
-                <li><a class="dropdown-item mt-3 h5" href="#">Configuracion</a></li>
+                <li><a class="dropdown-item mt-3 h5" href="configuracion.html">Configuracion</a></li>
                 <li><a class="dropdown-item mt-3 h5" href="#" data-bs-toggle="modal" data-bs-target="#confirmLogOut">Salir</a></li>
               </ul>
             </div>

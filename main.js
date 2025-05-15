@@ -343,11 +343,7 @@ export async function cargarBotonesHeader(){
      }
   }
   //abrir_login();
-  document.getElementById("btn_regis").onclick = function ()
-  {
-    
-    var expReg= /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
-    var regexp_pass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/;
+  document.getElementById("btn_regis").onclick =function(){
     let inputNombre =document.getElementById("input_nombre");
     let inputContra = document.getElementById("input_contra");
     let inputApeP = document.getElementById("input_apellidoP");
@@ -356,112 +352,8 @@ export async function cargarBotonesHeader(){
     let inputCorreo = document.getElementById("input_correo");
     let inputCurp = document.getElementById("input_curp");
     let inputC2 = document.getElementById("input_confirm_contra");
+    registro(null,inputNombre,inputContra,inputApeP,inputApeM,inputTel,inputCorreo,inputCurp,inputC2);}
 
-
-
-    if(inputNombre.value!=null && inputContra!=null && inputApeP!= null && inputApeM!= null && inputTel!=null && inputCorreo!=null
-   && inputC2 != null && inputCurp !=null 
-    ){
-      var esValido = expReg.test(inputCorreo.value);
-      if(esValido==true){
-        if(inputContra.value==inputC2.value){
-          if(regexp_pass.test(inputContra.value)){
-            const formData = new FormData();
-            formData.append('nombre', inputNombre.value);
-            formData.append('contrasenia', inputContra.value);
-            formData.append('correo',inputCorreo.value);
-            formData.append('telefono',inputTel.value);
-            formData.append('apellidoP', inputApeP.value);
-            formData.append('apellidoM', inputApeM.value);
-            formData.append('curp', inputCurp.value);
-
-            fetch('endpointregister.php', {
-              method: 'POST',
-              body: formData
-            })
-              .then(response => response.json())
-              .then(data => {
-                console.log(data);
-                if (data.success) {
-                 
-                   document.getElementById("mensaje_alerta").innerText = "¡Usuario registrado!";
-                  const modal1Element = document.getElementById('alertModal6');
-                  const modal1 = new bootstrap.Modal(modal1Element);
-                  modal1.show();
-                  let temporizador;
-                  let tiempoRestante = 2;
-                  temporizador = setInterval(() => {
-                      tiempoRestante--; 
-                      if (tiempoRestante <= 0) {
-                          clearInterval(temporizador);
-                          modal1.hide();
-                          location.reload();
-                      }
-                  }, 1000);
-                         // Recargar para ver los cambios
-                      }
-                    });
-          }else{
-             document.getElementById("mensaje_alerta").innerText = "La contraseña debe de ser de minimo 8 caracteres, maximo 15, un digito y un caracter especial sin espacios";
-            const modal1Element = document.getElementById('alertModal6');
-            const modal1 = new bootstrap.Modal(modal1Element);
-            modal1.show();
-            let temporizador;
-            let tiempoRestante = 2;
-            temporizador = setInterval(() => {
-                tiempoRestante--; 
-                if (tiempoRestante <= 0) {
-                    clearInterval(temporizador);
-                    modal1.hide();
-                }
-            }, 1000);
-          }
-        }else{
-          document.getElementById("mensaje_alerta").innerText = "Las contraseñas no son iguales.";
-            const modal1Element = document.getElementById('alertModal6');
-            const modal1 = new bootstrap.Modal(modal1Element);
-            modal1.show();
-            let temporizador;
-            let tiempoRestante = 2;
-            temporizador = setInterval(() => {
-                tiempoRestante--; 
-                if (tiempoRestante <= 0) {
-                    clearInterval(temporizador);
-                    modal1.hide();
-                }
-            }, 1000);
-        }
-      }else{
-        document.getElementById("mensaje_alerta").innerText = "Ingrese un correo electrónico válido."
-            const modal1Element = document.getElementById('alertModal6');
-            const modal1 = new bootstrap.Modal(modal1Element);
-            modal1.show();
-            let temporizador;
-            let tiempoRestante = 2;
-            temporizador = setInterval(() => {
-                tiempoRestante--; 
-                if (tiempoRestante <= 0) {
-                    clearInterval(temporizador);
-                    modal1.hide();
-                }
-            }, 1000);
-      }
-    }else{
-      document.getElementById("mensaje_alerta").innerText = "Ingrese todos los datos para continuar.";
-            const modal1Element = document.getElementById('alertModal6');
-            const modal1 = new bootstrap.Modal(modal1Element);
-            modal1.show();
-            let temporizador;
-            let tiempoRestante = 2;
-            temporizador = setInterval(() => {
-                tiempoRestante--; 
-                if (tiempoRestante <= 0) {
-                    clearInterval(temporizador);
-                    modal1.hide();
-                }
-            }, 1000);
-    }
-  };
 
   const pRecuperar = document.getElementById("btn_recuperar");
   
@@ -1136,3 +1028,54 @@ function calcularEdad(m) {
   const unidad = edadAnios === 1 ? "año" : "años";
   return `${edadAnios} ${unidad}`;
 }
+
+ export async function registro (id=null,inputNombre,inputContra,inputApeP,inputApeM,inputTel,inputCorreo,inputCurp,inputC2)
+  {
+    var expReg= /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
+    var regexp_pass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/;
+
+    if(inputNombre.value!=null && inputContra!=null && inputApeP!= null && inputApeM!= null && inputTel!=null && inputCorreo!=null
+   && inputC2 != null && inputCurp !=null 
+    ){
+      console.log(inputCorreo.value);
+      var esValido = expReg.test(inputCorreo.value);
+      if(esValido==true){
+        if(inputContra.value==inputC2.value){
+          if(regexp_pass.test(inputContra.value)){
+            const formData = new FormData();
+            formData.append('nombre', inputNombre.value);
+            formData.append('contrasenia', inputContra.value);
+            formData.append('correo',inputCorreo.value);
+            formData.append('telefono',inputTel.value);
+            formData.append('apellidoP', inputApeP.value);
+            formData.append('apellidoM', inputApeM.value);
+            formData.append('curp', inputCurp.value);
+
+            if(id!=null)
+              formData.append('id',id)
+
+            fetch('endpointregister.php', {
+              method: 'POST',
+              body: formData
+            })
+              .then(response => response.json())
+              .then(async data => {
+                if (data.success) {
+                  await enviarAlerta("¡Datos registrados!");
+                  
+                  location.reload();
+                }
+              });
+          }else{
+            enviarAlerta("La contraseña debe de ser de minimo 8 caracteres, maximo 15, un digito y un caracter especial sin espacios");
+          }
+        }else{
+          enviarAlerta("Las contraseñas no son iguales.");
+        }
+      }else{
+        enviarAlerta("Ingrese un correo electrónico válido.");
+      }
+    }else{
+      enviarAlerta("Ingrese todos los datos para continuar.");
+    }
+  }

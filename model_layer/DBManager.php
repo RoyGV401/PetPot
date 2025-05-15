@@ -128,6 +128,31 @@ class DBManager {
         return $resultado;
     }
 
+    public function updateUser($usr, $pass, $correo, $telefono, $apelldioP, $apellidoM, $curp,$id)
+    {
+        $link = $this->open();
+
+        $sql = "UPDATE usuario SET nombre=?, contrasenia= SHA1(?), correo=?, telefono=?, apellidoP=?, apellidoM=?, curp=? WHERE idUsuario = ?";
+
+        // Prepara la consulta
+		$query = mysqli_prepare($link, $sql);
+
+        // Enlaza los parametros (reemplaza comodines)
+		// Tipos: i para enteros, s para string, d para double y b para blob
+		mysqli_stmt_bind_param(
+            $query, 
+            "sssssssi",
+            $usr, $pass, $correo, $telefono, $apelldioP, $apellidoM, $curp, $id
+        );
+
+        // Ejecuta la query
+		$resultado = mysqli_stmt_execute($query) or die('Error insert');
+
+        $this->close($link);
+
+        return $resultado;
+    }
+
     public function showPets()
     {
         $link = $this->open();
