@@ -1158,32 +1158,3 @@ th {
       }
     }
 
-    footer {
-      background-color: rgb(255, 89, 0);;
-      color: #d1d1d1;
-      padding: 20px 0;
-    }
-
-    .footer-divider {
-      border-top: 1px solid #ffffff;
-      margin-bottom: 20px;
-    }
-
-    .social-icons i {
-      font-size: 1.5rem;
-      margin-left: 15px;
-      color: #ffffff;
-    }
-
-    .brand-icon {
-      color: #ffffff;
-      padding: 5px 10px;
-      border-radius: 5px;
-      font-weight: bold;
-      font-family: monospace;
-    }
-
-    .mageSi{
-        width: 4vmax;
-        filter: invert(100%);
-    }
