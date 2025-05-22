@@ -28,13 +28,16 @@ window.onload = function(){
 async function onLoadThis(){
     loadHeader();
     mascotas = await cargarMascotas(localStorage.currentUser,true);
-    
+    document.getElementById("main_div_busqueda").innerHTML = "";
          const row = document.createElement("div");
             row.className = "row g-4"; // gap between cards
              document.getElementById("main_div_busqueda").appendChild(row); //checar
 
-    mascotas.resultado.forEach(async m => {
+    for(const m of mascotas.resultado){
+
+    
         await crearTargetaMascota(document.getElementById("main_div_busqueda"),m,await cargarColor(m.idMascota),await crearTargetaPersonalidad(m));
+        console.log("for");
         let button = document.createElement("button");
         button.className = "btn btn-danger";
         button.style = "color: aliceblue;"
@@ -42,22 +45,25 @@ async function onLoadThis(){
         button.innerText = "Adoptado";
      
         button.id = "btnAdoptado" + m.idMascota;
-        if(m.adoptado=='T')
-        button.disabled = true;
+
         let cont = document.getElementById("contents");
         cont.id += m.idMascota;
         
         
         cont.appendChild(button);
 
-        let confirmar = document.getElementById("btn_confirmacion");
-        confirmar.id += m.idMascota;
+        if(m.adoptado=='T')
+        button.disabled = true;
 
-        button.onclick = function(){
+        
+       button.onclick = function(){
           const modal1Element = document.getElementById('modal_elimina');
           const modal1 = new bootstrap.Modal(modal1Element);
           modal1.show();
-        }
+
+                  let confirmar = document.getElementById("btn_confirmacion");
+        confirmar.id += m.idMascota;
+
 
         confirmar.onclick = async function(){
           
@@ -82,7 +88,10 @@ async function onLoadThis(){
             }
              
         }
-      });
+        }
+
+
+      }
     
     
 }
