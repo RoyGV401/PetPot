@@ -42,7 +42,7 @@ async function cargarInfo(){
     document.getElementById("btn_actualiza").onclick = async function(){await registro(user.idUsuario,inputNombre,inputContra,inputApeP,inputApeM,inputTel,inputCorreo,inputCurp,inputC2)};
 }
 
-async function cargarbtn(){
+export async function cargarbtn(){
     document.getElementById('main_logo').onclick = function () {         
     location.href = `./index.html`;
     };      

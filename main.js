@@ -19,7 +19,18 @@ export function changeTo(path) {
 //IMPORANTE: Ahora todo lo que se quiera hacer al cargar se debe colocar en la funcion onMainLoad, dado que JS solo reconoce el último window.onload, asi que
 //colocar varios practicamente no hace nada, siendo que solo se ejecutará el último.
 window.onload = function () {
-  onMainLoad();
+  document.getElementById("extra_elements").innerHTML += ALERTA_GATO;
+        const modal1Element = document.getElementById('modal_gat');
+    const modal1 = new bootstrap.Modal(modal1Element);
+  try{
+    modal1.show();
+     onMainLoad();
+  }catch{
+
+  }finally{
+    setTimeout(()=>modal1.hide(),500);
+  }
+ 
 }
 
 
@@ -67,7 +78,7 @@ export function getCookieValue(cname) {
 export async function onMainLoad() {
 
     document.getElementById("extra_elements").innerHTML+= ALERTA;
-    document.getElementById("extra_elements").innerHTML += ALERTA_GATO;
+    
     document.getElementById("extra_elements").innerHTML += MAIL;
     document.getElementById("extra_elements").innerHTML += CONTACTA;
 
@@ -183,11 +194,7 @@ export function enviar(){
 }
 
 export async function cargarMascotas(id=null,esUsuario=null){
-    const modal1Element = document.getElementById('modal_gat');
-    const modal1 = new bootstrap.Modal(modal1Element);
-   
-    try{
-       modal1.show();
+
        if(id==null&&esUsuario==null){
            const response = await fetch('endpointshowpets.php', {
             method: 'POST',
@@ -214,11 +221,7 @@ export async function cargarMascotas(id=null,esUsuario=null){
           const data = await response.json();
           return data;
         }      
-    }catch(error){
-      console.log("Error cargar mascotas",error);
-    }finally{
-    setTimeout(() => modal1.hide(), 470); 
-    }
+
        
 }
 
@@ -673,7 +676,7 @@ export async function asginarAbrirVistaMascota(m){
   }
 }
 
-async function obtenerUserByPet(m) {
+export async function obtenerUserByPet(m) {
   const formData = new FormData();
   formData.append("idMascota",m)
   
@@ -846,43 +849,60 @@ streetViewControl: false,
 
 export async function loadPetsToCarousel() {
   if (document.location.href.includes("index.html")) {
-    const response = await fetch('endpointshowpets.php', {
-      method: 'POST',
-    });
+    const response = await fetch('endpointshowpets.php', { method: 'POST' });
     const petsTo = await response.json();
     const result = petsTo.resultado;
     const toShow = [];
-    const limit = result.length > 1 || 1;
+    const limit = result.length > 1 ? result.length : 1;
 
+    // Selección aleatoria sin repetir
     for (let j = 0; j < limit; j++) {
       const rand = Math.ceil(Math.random() * result.length);
       const cuPet = result[rand - 1];
-      toShow.push(cuPet);
+      if (!toShow.includes(cuPet)) toShow.push(cuPet);
+      else j--;
     }
 
     const carousel = document.getElementById('petCarousel');
+    carousel.innerHTML = "";
 
-    for (const c of toShow) {
+    // Generar ítems del carrusel (solo el PRIMERO con 'active')
+    for (const [index, c] of toShow.entries()) {
       const imagenes = await cargarMultimedia(c.idMascota, false);
       carousel.innerHTML += `
-        <div class="carousel-item active">
+        <div class="carousel-item ${index === 0 ? 'active' : ''}">
           <div class="row g-0 align-items-center">
             <div class="col-md-6">
-              <img
-                class="img-fluid w-100 h-100 object-fit-cover"
-                style="max-height: 400px"
-                alt="Imagen de ${c.nombre}"
-                src="${imagenes[0].documento ?? ''}" />
+              <img class="img-fluid w-100 h-100 object-fit-cover" 
+                   style="max-height: 400px" 
+                   alt="Imagen de ${c.nombre}" 
+                   src="${imagenes[0].documento ?? ''}" />
             </div>
-            <div class="col-md-6 bg-obish-gray text-white p-4 d-flex flex-column justify-content-center" style="min-height: 400px">
+            <div class="col-md-6 bg-obish-gray text-white p-4 d-flex flex-column justify-content-center" 
+                 style="min-height: 400px">
               <h2 class="fw-bold h2">¡Hola! soy <span class="text-warning">${c.nombre}</span></h2>
               <p class="h5 py-2">${c.descripcion}</p>
-              <a href="#" class="btn btn-primary btn-lg text-white fw-bolder align-self-start">Adóptame</a>
+              <button id="but_adodo_${c.nombre}" 
+                      class="btn btn-primary btn-lg text-white fw-bolder align-self-start">
+                Adóptame
+              </button>
             </div>
           </div>
         </div>
       `;
     }
+
+    // Reinicializar el carrusel después de cambiar el HTML
+    const carouselInstance = new bootstrap.Carousel(document.querySelector('#carouselExample'), {
+      interval: false 
+    });
+
+    // Asignar eventos de botones de adopción
+    toShow.forEach(c => {
+      document.getElementById("but_adodo_" + c.nombre).onclick = async function() {
+        await abrirV(c, await obtenerUserByPet(c.idMascota));
+      };
+    });
   }
 }
 
@@ -912,7 +932,7 @@ export async function abrirV(m,user) {
        
          
          document.getElementById("btn_mail").onclick = async function (){
-          if(localStorage.currentUser==0){
+          if(localStorage.currentUser==0||localStorage.currentUser=="null"||localStorage.currentUser==null){
             enviarAlerta("Debe iniciar sesión");
           }else if(document.getElementById("inputMensaje").value == ""){
                enviarAlerta("Ingresa un mensaje");
@@ -989,7 +1009,7 @@ export async function generarTexto(m) {
            return tex;
 }
 
-function calcularEdad(m) {
+export function calcularEdad(m) {
   const partes = m.fecha_nacimiento.split("/");
   const dia = parseInt(partes[0], 10);
   const mes = parseInt(partes[1], 10) - 1;

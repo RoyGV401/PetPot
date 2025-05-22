@@ -1,13 +1,17 @@
-import { crearTargetaMascota, enviarAlerta, cargarColor, cargarRaza, asginarAbrirVistaMascota, abrirV, cargarMultimedia } from "../main.js";
+import { crearTargetaMascota, enviarAlerta, cargarColor, cargarRaza, obtenerUserByPet, calcularEdad, cargarMultimedia,cargarBotonesHeader, abrirV } from "../main.js";
 import {loadHeader, ALERTA,ALERTA_GATO, CONTACTA, MAIL} from "./header.js";
+import { cargarbtn } from "./configuracion.js";
 
-window.addEventListener('load', function () {
+window.addEventListener('load', async function () {
     if(location.href.includes("busqueda.html")){
          document.getElementById("extra_elements").innerHTML+= ALERTA;
     document.getElementById("extra_elements").innerHTML += ALERTA_GATO;
         document.getElementById("extra_elements").innerHTML += MAIL;
     document.getElementById("extra_elements").innerHTML += CONTACTA;
-    alert("yow");
+    await loadHeader();
+    await cargarBotonesHeader();
+    await cargarbtn();
+
 
     const range = this.document.getElementById('range');
     let searchRange = 6;
@@ -18,60 +22,7 @@ window.addEventListener('load', function () {
         searchRange = range.value != 0 ? range.value : 1;
         currentRange.innerHTML = searchRange + "km"
     });
-
-    const btnPerros = this.document.getElementById('btnPerros');
-    const btnGatos = this.document.getElementById('btnGatos');
-    const btnOtros = this.document.getElementById('btnOtros');
     const dmain = this.document.getElementById("mainCuerpo");
-
-    btnPerros.addEventListener('click', ()=>{
-        updateSearch();
-        const act = btnPerros.getAttribute('isActive');
-        if (act == "true")
-        {
-            btnPerros.classList.remove('btn-primary');
-            btnPerros.classList.add('btn-secondary');
-            btnPerros.setAttribute('isActive', 'false');
-        }
-        else
-        {
-            btnPerros.classList.add('btn-primary');
-            btnPerros.classList.remove('btn-secondary');
-            btnPerros.setAttribute('isActive', 'true');
-        }
-    });
-    btnGatos.addEventListener('click', ()=>{
-        updateSearch();
-        const act = btnGatos.getAttribute('isActive');
-        if (act == "true")
-        {
-            btnGatos.classList.remove('btn-primary');
-            btnGatos.classList.add('btn-secondary');
-            btnGatos.setAttribute('isActive', 'false');
-        }
-        else
-        {
-            btnGatos.classList.add('btn-primary');
-            btnGatos.classList.remove('btn-secondary');
-            btnGatos.setAttribute('isActive', 'true');
-        }
-    });
-    btnOtros.addEventListener('click', ()=>{
-        updateSearch();
-        const act = btnOtros.getAttribute('isActive');
-        if (act == "true")
-        {
-            btnOtros.classList.remove('btn-primary');
-            btnOtros.classList.add('btn-secondary');
-            btnOtros.setAttribute('isActive', 'false');
-        }
-        else
-        {
-            btnOtros.classList.add('btn-primary');
-            btnOtros.classList.remove('btn-secondary');
-            btnOtros.setAttribute('isActive', 'true');
-        }
-    });
 const modal1Element = document.getElementById('modal_gat');
     const modal1 = new bootstrap.Modal(modal1Element);
    
@@ -102,10 +53,11 @@ allMarkers = []; // Limpiar el array
 
 
 if (!(Math.round(distance) > searchRange)) {
-    let personalityString = await getPersonalityString(c);
+    let personalityString = await getPersonalityString(c,true);
+    let personalityString2 = await getPersonalityString(c,false);
     console.log(personalityString)
     let color = await cargarColor(c.idMascota);
-    await crearTargetaMascota(dmain,c,color,personalityString);
+    await crearTargetaMascota(dmain,c,color,personalityString2);
     let image = await cargarMultimedia(c.idMascota,false);
 
     let ubis = await cargarUbicacion(c.idMascota);
@@ -142,13 +94,22 @@ if (!(Math.round(distance) > searchRange)) {
             <h6 class="fw-bold" style="color:aliceblue">Personalidad:</h6>
               ${personalityString}
             </div>  
-          <h6 style="color:aliceblue"><strong>Sexo:</strong> ${color.nombre}</h6>
+          <h6 style="color:aliceblue"><strong>Color:</strong> ${color.nombre}</h6>
+            <h6 style="color:aliceblue"><strong>Edad:</strong> ${calcularEdad(c)}</h6>
+            <button id="si${c.idMascota}"style="width: 100%; background-color: rgb(242 166 90); color: aliceblue;" class="btn">Contactar dueño</button>
+
             </div>
         `,
         maxWidth: "3rem",
-        headerDisabled  : true,
+
     });
 
+infowindow.addListener('domready', () => {
+    const button = document.getElementById("si"+c.idMascota);
+    button.addEventListener('click', async () => {
+        await abrirV(c, await obtenerUserByPet(c.idMascota));
+    });
+});
     marker.addListener("click", async function () {
          if (currentInfoWindow) {
         currentInfoWindow.close(); // Cerrar el InfoWindow anterior
@@ -185,13 +146,18 @@ let currentInfoWindow = null;
 
 var map;
 
- async function getPersonalityString(m) {
+ async function getPersonalityString(m,esMapa) {
     let personalidades = await cargarPersonalidad(m.idMascota)
     var personalityString="";
       personalidades.forEach(p => {
+        if(esMapa)
         personalityString += `
         <p class="h6" style="color:aliceblue"> <i class="bi bi-award"></i> ${p.descripcion}</p>
-        `
+        `;
+        else
+        personalityString += `
+        <p class="h6" style="color:black"> <i class="bi bi-award"></i> ${p.descripcion}</p>
+        `;        
       });
       return personalityString;
 
