@@ -21,6 +21,31 @@ export const LOGIN_FORM = `
     </div>
   </div>
 
+     <div class="modal fade" id="whoAreWe" tabindex="-1" aria-labelledby="LLAB" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+      <div class="modal-header col-12">
+        <div class="container justify-content-center">
+          <p class="h2 fw-bolder pt-2" id="introModalLabel">¡Bienvenido a PetPot!</p>
+        </div>
+      </div>
+
+      <div class="modal-body">
+        <p class="h6 fw-light">
+          PetPot es una plataforma dedicada a conectar mascotas en adopción con personas responsables y amorosas. 
+          Utilizamos tu ubicación para mostrarte animales que buscan un hogar cerca de ti, facilitando el proceso 
+          de adopción local y responsable. <br><br>
+          Nuestra misión es darle una segunda oportunidad a miles de animales, promoviendo la adopción consciente y 
+          ayudando a que encuentres a tu próximo mejor amigo de forma segura y cercana.
+        </p>
+      </div>
+
+      <div class="modal-footer justify-content-center">
+  <button type="button" class="btn btn-primary text-white" data-bs-dismiss="modal">Comenzar</button>
+</div>
+    </div>
+                  </div>
+                </div>
 
     <div class="modal fade" id="confirmLogOut" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">

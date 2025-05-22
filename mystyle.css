@@ -95,7 +95,7 @@ ul {
 
 .max-height-1
 {
-    min-height: 80vh;
+    min-height: 45vh;
 }
 
 .main_button {
@@ -1135,10 +1135,10 @@ th {
 }
 
 #boxPerso {
-  max-height: 19vmax; /* Ajusta según necesidad */
+  max-height: 25vmax; /* Ajusta según necesidad */
   overflow-y: auto;
   border: 1px solid #ccc; /* Opcional, para visualizar el área */
-  padding: 5px;
+  padding: 7px;
 }   
 
     .seticon {

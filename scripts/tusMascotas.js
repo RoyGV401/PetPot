@@ -42,7 +42,7 @@ async function onLoadThis(){
         button.className = "btn btn-danger";
         button.style = "color: aliceblue;"
         button.style = "width: 100%"
-        button.innerText = "Adoptado";
+        button.innerText = "Marcar como adoptado";
      
         button.id = "btnAdoptado" + m.idMascota;
 
