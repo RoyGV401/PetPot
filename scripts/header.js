@@ -36,6 +36,8 @@ export const HEADER = `
 
           </div>
         </nav>
+        
+
 
         <nav id="second_bar" class="navbar generic-transition-1 basic-shadow navbar-expand navbar-light bg-orange-alpha pt-0 pb-0">
           <div class="container-fluid">
@@ -51,8 +53,9 @@ export const HEADER = `
                     >Dar en adopción</a
                   >
                 </li>
+                 
                 <li class="nav-item pb-0 pt-0">
-                  <a class="nav-link fw-normal hov-txt-white-to-brown pb-0 pt-0" href="#"
+                  <a data-bs-toggle="modal" data-bs-target="#whoAreWe" class="nav-link fw-normal hov-txt-white-to-brown pb-0 pt-0" href="#"
                     >¿Quiénes Somos?</a
                   >
                 </li>
